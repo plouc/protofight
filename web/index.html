@@ -1,0 +1,36 @@
+<!doctype html>
+<html ng-app="protofight">
+<head>
+    <meta charset="utf-8">
+    <title>Protofight</title>
+    <meta name="viewport" content="width=device-width">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600|Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="vendor/normalize-css/normalize.css">
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="sass/protofight.css">
+</head>
+<body ng-controller="MainCtrl">
+    <aside class="site-nav">
+        <h2>navigation</h2>
+    </aside>
+    <div class="site-content" plouc-droppable drop="createNode">
+        <h1>Protofight</h1>
+    </div>
+    <aside class="components">
+        <h2>components</h2>
+        <div class="components__grid">
+            <div ng-repeat="component in components" plouc-draggable drag-data="component">
+                {{ component.name }}
+            </div>
+        </div>
+    </aside>
+
+    <script src="vendor/angular/angular.js"></script>
+    <script src="vendor/engine.io/engine.io.js"></script>
+    <script src="js/protofight.js"></script>
+    <script src="js/services/ws.js"></script>
+    <script src="js/directives/draggable.js"></script>
+    <script src="js/directives/droppable.js"></script>
+    <script src="js/controllers/MainCtrl.js"></script>
+</body>
+</html>
