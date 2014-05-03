@@ -2,10 +2,15 @@ html, body {
   height: 100%; }
 
 body {
-  font-family: "Open Sans", sans-serif; }
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px; }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Montserrat', sans-serif; }
+
+* {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
 
 .site-nav {
   position: fixed;
@@ -13,7 +18,16 @@ h1, h2, h3, h4, h5, h6 {
   left: 0;
   height: 100%;
   width: 260px;
-  background-color: #eee; }
+  background-color: #eee;
+  padding: 0 15px; }
+
+.site-nav__item {
+  cursor: pointer;
+  display: block;
+  padding: 7px 0;
+  font-weight: bold; }
+  .site-nav__item .fa {
+    margin-right: 7px; }
 
 .components {
   position: fixed;
@@ -21,8 +35,78 @@ h1, h2, h3, h4, h5, h6 {
   right: 0;
   height: 100%;
   width: 260px;
-  background-color: #eee; }
+  background-color: #eee;
+  padding: 10px 15px; }
 
 .site-content {
-  padding: 0 260px;
+  position: fixed;
+  top: 0;
+  right: 260px;
+  bottom: 0;
+  left: 260px;
   height: 100%; }
+
+.content-preview {
+  padding: 10px 15px;
+  height: 100%;
+  overflow-y: auto; }
+
+.switch-view {
+  position: absolute;
+  top: 10px;
+  right: 10px; }
+
+.raw-node-struct {
+  background-color: #1a2845;
+  color: #eee;
+  height: 100%;
+  margin: 0;
+  padding: 10px 15px;
+  font-family: consolas, menlo, monaco, monospace;
+  font-size: 12px;
+  overflow-y: auto; }
+
+.button {
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 2px;
+  padding: 4px 9px;
+  font-size: 14px;
+  font-weight: normal;
+  cursor: pointer;
+  border: none;
+  background-color: #253d66;
+  color: #eee; }
+  .button:hover {
+    background-color: #35678c;
+    color: #fff; }
+
+.button--danger {
+  background-color: #ff8551;
+  color: #fff; }
+  .button--danger:hover {
+    background-color: #ff9974;
+    color: #fff; }
+
+.button--s {
+  font-size: 12px;
+  padding: 3px 7px; }
+
+.button--full {
+  width: 100%; }
+
+.node {
+  display: block;
+  position: relative; }
+
+.node--container {
+  display: block;
+  min-height: 60px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 2px; }
+
+.node--container.over {
+  background-color: #eee;
+  border-color: #aaa; }

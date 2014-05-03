@@ -1,0 +1,5 @@
+<div class="node--container" plouc-droppable drop="createNode" node="node">
+    <h3>{{ node.name }} [{{ node.type }}]</h3>
+    <plouc-node ng-repeat="childNode in node.nodes" node="childNode">
+    </plouc-node>
+</div>

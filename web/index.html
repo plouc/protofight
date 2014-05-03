@@ -11,10 +11,26 @@
 </head>
 <body ng-controller="MainCtrl">
     <aside class="site-nav">
-        <h2>navigation</h2>
+        <h2>pages</h2>
+        <nav class="site-nav__items">
+            <a ng-click="setPage(pageNode)" ng-repeat="pageNode in pages"
+               class="site-nav__item">
+                <i class="fa fa-angle-right"></i>{{ pageNode.name }}
+            </a>
+        </nav>
     </aside>
-    <div class="site-content" plouc-droppable drop="createNode">
-        <h1>Protofight</h1>
+    <div class="site-content">
+        <div ng-if="viewMode == 'live'" class="content-preview">
+            <h1>Protofight</h1>
+            <plouc-node ng-if="pageNode" node="pageNode"></plouc-node>
+        </div>
+        <div ng-if="viewMode == 'struct'" class="raw-node-struct">
+            <pre ng-if="pageNode">{{ pageNode|json }}</pre>
+        </div>
+        <div class="switch-view">
+            <span class="button" ng-click="viewMode = 'live'">live</span>
+            <span class="button" ng-click="viewMode = 'struct'">raw</span>
+        </div>
     </div>
     <aside class="components">
         <h2>components</h2>
@@ -25,12 +41,14 @@
         </div>
     </aside>
 
+    <script src="vendor/jquery/dist/jquery.js"></script>
     <script src="vendor/angular/angular.js"></script>
     <script src="vendor/engine.io/engine.io.js"></script>
     <script src="js/protofight.js"></script>
     <script src="js/services/ws.js"></script>
     <script src="js/directives/draggable.js"></script>
     <script src="js/directives/droppable.js"></script>
+    <script src="js/directives/node.js"></script>
     <script src="js/controllers/MainCtrl.js"></script>
 </body>
 </html>

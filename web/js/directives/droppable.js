@@ -1,7 +1,8 @@
 angular.module('protofight').directive('ploucDroppable', function() {
     return {
         scope: {
-            drop: '&'
+            drop: '=',
+            node: '='
         },
         link: function(scope, element) {
             // again we need the native object
@@ -35,11 +36,17 @@ angular.module('protofight').directive('ploucDroppable', function() {
                 var rawData = e.dataTransfer.getData('Text');
                 var data = JSON.parse(rawData);
 
+                var newNode = {
+                    name:     data.name,
+                    type:     data.type,
+                    settings: {}
+                };
+                if (newNode.type === 'container') {
+                    newNode.nodes = [];
+                }
+
                 scope.$apply(function (scope) {
-                    var fn = scope.drop();
-                    if ('undefined' !== typeof fn) {
-                        fn(data);
-                    }
+                    scope.node.nodes.push(newNode);
                 });
 
                 return false;
