@@ -33,6 +33,10 @@ angular.module('protofight').controller('MainCtrl', [
             {
                 name: 'Node container',
                 type: 'container'
+            },
+            {
+                name: 'Breadcrumb',
+                type: 'breadcrumbs'
             }
         ];
 
@@ -55,6 +59,13 @@ angular.module('protofight').controller('MainCtrl', [
             NodeService.saveNode(page).then(function (node) {
                 _.assign(page, node);
                 console.log(page);
+            });
+        };
+
+
+        $scope.saveNode = function (node) {
+            console.log('saving node', node);
+            NodeService.saveNode(node).then(function (node) {
             });
         };
 

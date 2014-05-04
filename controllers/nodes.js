@@ -59,6 +59,31 @@ exports.create = function (req, res) {
     });
 };
 
+exports.update = function (req, res) {
+    var nodeUpdate = req.body;
+    Node.findById(req.params.id, function (err, node) {
+        if (err) {
+            console.error(err);
+            res.status(500);
+            return res.send({ status : 500 });
+        }
+
+        node.name = nodeUpdate.name;
+        if (nodeUpdate.settings) {
+            node.settings = nodeUpdate.settings;
+        }
+        node.save(function (err) {
+            if (err) {
+                console.error(err);
+                res.status(500);
+                return res.send({ status : 500 });
+            }
+
+            res.json(node);
+        });
+    });
+};
+
 exports.children = function (req, res) {
     Node.findChildren(req.params.id, function (err, children) {
         if (err) {
@@ -69,39 +94,6 @@ exports.children = function (req, res) {
         res.json(children);
     })
 };
-
-/*
-exports.get = function (req, res) {
-    App.findById(req.params.id, function (err, app) {
-        if (err) {
-            res.status(500);
-            return res.send({ status : 500 });
-        }
-
-        res.json(app);
-    });
-};
-
-exports.update = function (req, res) {
-    App.findById(req.params.id, function (err, app) {
-        if (err) {
-            res.status(500);
-            return res.send({ status : 500 });
-        }
-
-        app = extend(app, req.body);
-        app.save(function (err) {
-            if (err) {
-                console.error(err);
-                res.status(500);
-                return res.send({ status : 500 });
-            }
-
-            res.json(app);
-        });
-    });
-};
-*/
 
 exports.delete = function (req, res) {
     App.findById(req.params.id, function (err, app) {

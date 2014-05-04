@@ -117,8 +117,8 @@ $aside-width: 260px;
   }
 }
 .button--s {
-  font-size: 12px;
-  padding: 3px 7px;
+  font-size: 11px;
+  padding: 3px 6px;
 }
 .button--full {
   width: 100%;
@@ -140,6 +140,17 @@ $aside-width: 260px;
   margin-bottom: 7px;
   display: block;
 }
+.node__meta {
+  font-size: 12px;
+  list-style: none;
+  padding: 0;
+  li {
+    display: inline-block;
+  }
+  strong {
+    color: #225c82;
+  }
+}
 .node__controls {
   position: absolute;
   top:   5px;
@@ -153,4 +164,19 @@ $aside-width: 260px;
 .node--container.over {
   background-color: #eee;
   border-color: #aaa;
+}
+
+
+input[type="text"],
+input[type="url"] {
+  font-size: 14px;
+  border-radius: 2px;
+  border: 1px solid #ddd;
+  padding: 3px 7px;
+  background-color: #ddd;
+  &:focus {
+    border-color: #ccc;
+    background-color: #fff;
+    outline: none;
+  }
 }

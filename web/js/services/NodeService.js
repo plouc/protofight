@@ -22,7 +22,7 @@ angular.module('protofight').factory('NodeService', [
             },
             saveNode: function (node) {
                 if (node._id) {
-                    return node.put();
+                    return nodes.one(node._id).customPUT(node);
                 }
 
                 return nodes.post(node);

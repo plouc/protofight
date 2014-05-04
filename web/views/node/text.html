@@ -1,13 +1,13 @@
 <div class="node">
-    <div class="node__controls">
-        <span ng-if="!node.edit" class="button button--s" ng-click="node.edit = true">edit</span>
-        <span ng-if="node.edit" class="button button--s" ng-click="node.edit = false">preview</span>
-    </div>
+    <div ng-include="'views/node/_commands.html'" class="node__controls"></div>
     <div ng-if="!node.edit" class="node--preview">
         {{ node.settings.content || 'no content' }}
     </div>
     <div ng-if="node.edit" class="node--edit">
-        <span class="node__title">{{ node.name }} [{{ node.type }}:{{ node._id }}]</span>
-        <textarea ng-model="node.settings.content"></textarea>
+        <form ng-submit="saveNode(node)">
+            <input ng-model="node.name" type="text">
+            <div ng-include="'views/node/_meta.html'"></div>
+            <textarea ng-model="node.settings.content"></textarea>
+        </form>
     </div>
 </div>

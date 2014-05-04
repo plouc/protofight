@@ -106,8 +106,8 @@ h2 {
     color: #fff; }
 
 .button--s {
-  font-size: 12px;
-  padding: 3px 7px; }
+  font-size: 11px;
+  padding: 3px 6px; }
 
 .button--full {
   width: 100%; }
@@ -126,6 +126,15 @@ h2 {
   margin-bottom: 7px;
   display: block; }
 
+.node__meta {
+  font-size: 12px;
+  list-style: none;
+  padding: 0; }
+  .node__meta li {
+    display: inline-block; }
+  .node__meta strong {
+    color: #225c82; }
+
 .node__controls {
   position: absolute;
   top: 5px;
@@ -138,3 +147,16 @@ h2 {
 .node--container.over {
   background-color: #eee;
   border-color: #aaa; }
+
+input[type="text"],
+input[type="url"] {
+  font-size: 14px;
+  border-radius: 2px;
+  border: 1px solid #ddd;
+  padding: 3px 7px;
+  background-color: #ddd; }
+  input[type="text"]:focus,
+  input[type="url"]:focus {
+    border-color: #ccc;
+    background-color: #fff;
+    outline: none; }

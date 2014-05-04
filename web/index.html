@@ -28,7 +28,7 @@
             <div ng-if="node" ng-include="'views/node/' + node.type + '.html'"></div>
         </div>
         <div ng-if="viewMode == 'struct'" class="raw-node-struct">
-            <pre ng-if="node">{{ node|json }}</pre>
+            <pre ng-if="node">{{ node|rawNode|json }}</pre>
         </div>
         <div class="switch-view">
             <span class="button" ng-click="viewMode = 'live'">live</span>
@@ -50,6 +50,7 @@
     <script src="vendor/lodash/dist/lodash.js"></script>
     <script src="vendor/restangular/src/restangular.js"></script>
     <script src="js/protofight.js"></script>
+    <script src="js/filters/rawNode.js"></script>
     <script src="js/services/lodash.js"></script>
     <script src="js/services/ws.js"></script>
     <script src="js/services/NodeService.js"></script>

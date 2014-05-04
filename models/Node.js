@@ -6,6 +6,7 @@ var NodeSchema = new Schema({
     parent:    { type: Schema.Types.ObjectId, ref: 'Node', default: null },
     type:      { type: String, default: '' },
     depth:     { type: Number },
+    settings:  Schema.Types.Mixed,
     ancestors: [
         {
             type: Schema.Types.ObjectId,
