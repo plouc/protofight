@@ -23,16 +23,19 @@
         </nav>
     </aside>
     <div class="site-content">
-        <div ng-if="viewMode == 'live'" class="content-preview">
-            <h1>Protofight</h1>
-            <div ng-if="node" ng-include="'views/node/' + node.type + '.html'"></div>
+        <div ng-if="viewMode == 'struct'" class="content-struct">
+            <div ng-if="node" ng-include="'views/node/struct/' + node.type + '.html'"></div>
         </div>
-        <div ng-if="viewMode == 'struct'" class="raw-node-struct">
+        <div ng-if="viewMode == 'preview'" class="content-preview">
+            <div ng-if="node" ng-include="'views/node/preview/' + node.type + '.html'"></div>
+        </div>
+        <div ng-if="viewMode == 'raw'" class="raw-node-struct">
             <pre ng-if="node">{{ node|rawNode|json }}</pre>
         </div>
         <div class="switch-view">
-            <span class="button" ng-click="viewMode = 'live'">live</span>
-            <span class="button" ng-click="viewMode = 'struct'">raw</span>
+            <span ng-click="viewMode = 'struct'"><i class="fa fa-sitemap"></i>structure</span>
+            <span ng-click="viewMode = 'preview'"><i class="fa fa-eye"></i>preview</span>
+            <span ng-click="viewMode = 'raw'"><i class="fa fa-code"></i>raw</span>
         </div>
     </div>
     <aside class="components">
@@ -49,6 +52,8 @@
     <script src="vendor/engine.io/engine.io.js"></script>
     <script src="vendor/lodash/dist/lodash.js"></script>
     <script src="vendor/restangular/src/restangular.js"></script>
+    <script src="vendor/ace-builds/src/ace.js"></script>
+    <script src="vendor/ace-builds/src/mode-markdown.js"></script>
     <script src="js/protofight.js"></script>
     <script src="js/filters/rawNode.js"></script>
     <script src="js/services/lodash.js"></script>
@@ -56,6 +61,8 @@
     <script src="js/services/NodeService.js"></script>
     <script src="js/directives/draggable.js"></script>
     <script src="js/directives/droppable.js"></script>
+    <script src="js/directives/ace.js"></script>
+    <script src="js/directives/breadcrumbs.js"></script>
     <script src="js/controllers/MainCtrl.js"></script>
 </body>
 </html>

@@ -63,15 +63,38 @@ h2 {
   left: 260px;
   height: 100%; }
 
-.content-preview {
-  padding: 10px 15px;
+.content-struct {
+  padding: 50px 15px 10px 15px;
   height: 100%;
   overflow-y: auto; }
 
 .switch-view {
   position: absolute;
   top: 10px;
-  right: 10px; }
+  right: 10px;
+  background-color: rgba(34, 92, 130, 0.75);
+  color: #ddd;
+  border-radius: 2px;
+  font-size: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35); }
+  .switch-view span {
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 10px 5px 7px;
+    border-left: 1px solid #225c82;
+    margin-left: -4px; }
+    .switch-view span:hover {
+      background-color: #225c82;
+      color: #fff; }
+  .switch-view span:first-child {
+    border-radius: 2px 0 0 2px;
+    border-left: none;
+    margin-left: 0; }
+  .switch-view span:last-child {
+    border-radius: 0 2px 2px 0; }
+  .switch-view .fa {
+    margin-right: 5px;
+    color: #ffb695; }
 
 .raw-node-struct {
   background-color: #1a2845;
@@ -115,10 +138,14 @@ h2 {
 .node {
   display: block;
   position: relative;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   padding: 7px 12px;
   border-radius: 2px;
-  margin-bottom: 7px; }
+  margin-bottom: 7px;
+  background-color: #eee; }
+
+.node--editing {
+  background-color: #fff; }
 
 .node__title {
   font-family: 'Montserrat', sans-serif;
@@ -129,7 +156,8 @@ h2 {
 .node__meta {
   font-size: 12px;
   list-style: none;
-  padding: 0; }
+  padding: 0;
+  color: #999; }
   .node__meta li {
     display: inline-block; }
   .node__meta strong {
@@ -148,13 +176,15 @@ h2 {
   background-color: #eee;
   border-color: #aaa; }
 
+textarea,
 input[type="text"],
 input[type="url"] {
   font-size: 14px;
   border-radius: 2px;
   border: 1px solid #ddd;
   padding: 3px 7px;
-  background-color: #ddd; }
+  background-color: #eee; }
+  textarea:focus,
   input[type="text"]:focus,
   input[type="url"]:focus {
     border-color: #ccc;

@@ -17,6 +17,11 @@ angular.module('protofight').factory('NodeService', [
             nodes: function (params) {
                 return apps.getList(params);
             },
+            pick: function (ids) {
+                return nodes.customGET('pick', {
+                    ids: ids
+                });
+            },
             node: function (id) {
                 return nodes.get(id);
             },

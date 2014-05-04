@@ -4,7 +4,7 @@ angular.module('protofight').filter('rawNode', [
         function filterProps(node) {
             var nodeData = {};
             for (var p in node) {
-                if (p == 'name' || p == 'depth' || p == '_id' || p == 'settings' || p == 'type') {
+                if (p == 'name' || p == 'createdAt' || p == 'updatedAt' || p == 'depth' || p == '_id' || p == 'settings' || p == 'type') {
                     nodeData[p] = node[p];
                 } else if (p == 'nodes') {
                     var nodes = node.nodes;

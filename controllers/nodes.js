@@ -84,6 +84,19 @@ exports.update = function (req, res) {
     });
 };
 
+exports.pick = function (req, res) {
+    Node.find({
+        '_id': { $in: req.query.ids }
+    }, function (err, nodes) {
+        var result = {};
+        nodes.forEach(function (node) {
+            result[node._id] = node;
+        });
+
+        res.json(result);
+    });
+};
+
 exports.children = function (req, res) {
     Node.findChildren(req.params.id, function (err, children) {
         if (err) {

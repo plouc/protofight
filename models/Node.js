@@ -7,6 +7,8 @@ var NodeSchema = new Schema({
     type:      { type: String, default: '' },
     depth:     { type: Number },
     settings:  Schema.Types.Mixed,
+    createdAt: Date,
+    updatedAt: Date,
     ancestors: [
         {
             type: Schema.Types.ObjectId,
@@ -24,7 +26,10 @@ var NodeSchema = new Schema({
 NodeSchema.pre('save', function (next) {
     var node = this;
 
+    node.updatedAt = new Date();
+
     if (node.isNew) {
+        node.createdAt = new Date();
         if (node.parent) {
             mongoose.model('Node').findById(node.parent, function (err, parent) {
                 if (err) {

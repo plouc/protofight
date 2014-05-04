@@ -1,0 +1,13 @@
+<div class="node" ng-class="{ 'node--editing': node.edit }">
+    <div ng-include="'views/node/struct/_commands.html'" class="node__controls"></div>
+    <div ng-if="!node.edit" class="node--preview">
+        breadcrumbs
+    </div>
+    <div ng-if="node.edit" class="node--edit">
+        <form ng-submit="saveNode(node)">
+            <input ng-model="node.name" type="text">
+            <div ng-include="'views/node/struct/_meta.html'"></div>
+            <input ng-model="node.settings.targetNode">
+        </form>
+    </div>
+</div>

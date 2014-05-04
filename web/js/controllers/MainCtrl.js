@@ -40,7 +40,7 @@ angular.module('protofight').controller('MainCtrl', [
             }
         ];
 
-        $scope.viewMode = 'live';
+        $scope.viewMode = 'struct';
 
         $scope.setPage = function (pageNode) {
             $scope.node = pageNode;
@@ -65,7 +65,8 @@ angular.module('protofight').controller('MainCtrl', [
 
         $scope.saveNode = function (node) {
             console.log('saving node', node);
-            NodeService.saveNode(node).then(function (node) {
+            NodeService.saveNode(node).then(function (savedNode) {
+                node.updatedAt = savedNode.updatedAt;
             });
         };
 
