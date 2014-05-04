@@ -45,9 +45,7 @@ angular.module('protofight').directive('ploucDroppable', function() {
                     newNode.nodes = [];
                 }
 
-                scope.$apply(function (scope) {
-                    scope.node.nodes.push(newNode);
-                });
+                scope.drop(scope.node, newNode);
 
                 return false;
             }, false);

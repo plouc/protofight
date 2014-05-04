@@ -2,11 +2,24 @@
 
 angular.module('protofight').controller('MainCtrl', [
     '$scope',
+    '_',
+    'NodeService',
     'WS',
     function (
         $scope,
+        _,
+        NodeService,
         WS
     ) {
+
+        $scope.pages = [];
+        NodeService.root().then(function (root) {
+            $scope.root = root;
+            $scope.root.getList('children').then(function (children) {
+                $scope.pages = children;
+            });
+        });
+
         $scope.components = [
             {
                 name: 'Text node',
@@ -24,37 +37,33 @@ angular.module('protofight').controller('MainCtrl', [
 
         $scope.viewMode = 'live';
 
-        $scope.pages = [
-            {
-                name: 'Home',
-                type: 'container',
-                nodes: []
-            },
-            {
-                name: 'FAQ',
-                type: 'container',
-                nodes: []
-            },
-            {
-                name: 'Contact',
-                type: 'container',
-                nodes: []
-            },
-            {
-                name: 'About',
-                type: 'container',
-                nodes: []
-            }
-        ];
         $scope.setPage = function (pageNode) {
-            $scope.pageNode = pageNode;
+            $scope.node = pageNode;
+        };
+
+        $scope.createPage = function () {
+            var page = {
+                name:   'New page',
+                type:   'container',
+                nodes:  [],
+                parent: $scope.root._id
+            };
+
+            $scope.pages.push(page);
+
+            NodeService.saveNode(page).then(function (node) {
+                _.assign(page, node);
+                console.log(page);
+            });
         };
 
         $scope.createNode = function (node, nodeSpec) {
             console.log('createNode', node, nodeSpec);
             var newNode = {
-                name:  nodeSpec.name,
-                type:  nodeSpec.type
+                name:       nodeSpec.name,
+                type:       nodeSpec.type,
+                processing: true,
+                parent:     node._id
             };
 
             if (newNode.type === 'container') {
@@ -62,7 +71,17 @@ angular.module('protofight').controller('MainCtrl', [
             }
 
             node.nodes.push(newNode);
-            WS.send(newNode);
+            NodeService.saveNode(newNode).then(function (node) {
+                _.assign(newNode, node);
+                console.log(newNode);
+            });
+
+            /*
+            WS.send(JSON.stringify({
+                action:  'node.new',
+                payload: newNode
+            }));
+            */
         };
     }
 ]);

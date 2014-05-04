@@ -12,6 +12,7 @@
 <body ng-controller="MainCtrl">
     <aside class="site-nav">
         <h2>pages</h2>
+        <a class="button button--full" ng-click="createPage()">new page</a>
         <nav class="site-nav__items">
             <a ng-click="setPage(pageNode)" ng-repeat="pageNode in pages"
                class="site-nav__item">
@@ -22,10 +23,10 @@
     <div class="site-content">
         <div ng-if="viewMode == 'live'" class="content-preview">
             <h1>Protofight</h1>
-            <plouc-node ng-if="pageNode" node="pageNode"></plouc-node>
+            <div ng-if="node" ng-include="'views/node/' + node.type + '.html'"></div>
         </div>
         <div ng-if="viewMode == 'struct'" class="raw-node-struct">
-            <pre ng-if="pageNode">{{ pageNode|json }}</pre>
+            <pre ng-if="node">{{ node|json }}</pre>
         </div>
         <div class="switch-view">
             <span class="button" ng-click="viewMode = 'live'">live</span>
@@ -44,11 +45,14 @@
     <script src="vendor/jquery/dist/jquery.js"></script>
     <script src="vendor/angular/angular.js"></script>
     <script src="vendor/engine.io/engine.io.js"></script>
+    <script src="vendor/lodash/dist/lodash.js"></script>
+    <script src="vendor/restangular/src/restangular.js"></script>
     <script src="js/protofight.js"></script>
+    <script src="js/services/lodash.js"></script>
     <script src="js/services/ws.js"></script>
+    <script src="js/services/NodeService.js"></script>
     <script src="js/directives/draggable.js"></script>
     <script src="js/directives/droppable.js"></script>
-    <script src="js/directives/node.js"></script>
     <script src="js/controllers/MainCtrl.js"></script>
 </body>
 </html>

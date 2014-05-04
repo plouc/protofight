@@ -1,7 +1,20 @@
-angular.module('protofight', []);
+angular.module('protofight', [
+    'restangular'
+]);
 
 angular.module('protofight').config(function () {
 });
+
+angular.module('protofight').config([
+    'RestangularProvider',
+    function (
+        RestangularProvider
+    ) {
+        RestangularProvider.setRestangularFields({
+            id: '_id'
+        });
+    }
+]);
 
 angular.module('protofight').run([
     'WS',

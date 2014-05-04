@@ -1,5 +1,13 @@
 <div class="node">
-    <h3>{{ node.name }} [{{ node.type }}]</h3>
-    <pre>{{ node.settings.content }}</pre>
-    <textarea ng-model="node.settings.content"></textarea>
+    <div class="node__controls">
+        <span ng-if="!node.edit" class="button button--s" ng-click="node.edit = true">edit</span>
+        <span ng-if="node.edit" class="button button--s" ng-click="node.edit = false">preview</span>
+    </div>
+    <div ng-if="!node.edit" class="node--preview">
+        {{ node.settings.content || 'no content' }}
+    </div>
+    <div ng-if="node.edit" class="node--edit">
+        <span class="node__title">{{ node.name }} [{{ node.type }}:{{ node._id }}]</span>
+        <textarea ng-model="node.settings.content"></textarea>
+    </div>
 </div>

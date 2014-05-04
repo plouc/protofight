@@ -1,18 +1,51 @@
-var express = require('express');
-var app     = express();
-var server  = require('http').createServer(app);
-var io      = require('engine.io').attach(server);
+var express  = require('express');
+var app      = express();
+var server   = require('http').createServer(app);
+var io       = require('engine.io').attach(server);
+var Node     = require('./models/Node');
+var env      = process.env.NODE_ENV || 'development';
+var config   = require('./config/config')[env];
+var mongoose = require('mongoose');
 
+var connectMongo = function () {
+    var options = { server: { socketOptions: { keepAlive: 1 } } }
+    mongoose.connect(config.db, options)
+};
+connectMongo();
+
+app.use(express.bodyParser());
 app.use(express.static(__dirname + '/web'));
-
 app.get('/', function(req, res, next){
     res.sendfile('index.html');
 });
+require('./config/routing')(app);
 
-io.on('connection', function(socket){
+function createNode(nodeData, io) {
+    console.log('saving node', nodeData);
+    var node = new Node(nodeData);
+    node.save(function (err) {
+        if (err) {
+            console.error(err);
+        }
+
+        console.log('node saved', node);
+    });
+};
+
+io.on('connection', function (socket) {
+    console.log('connection');
     socket.on('message', function (message) {
-        console.log(message);
-        socket.send('pong');
+        var data = JSON.parse(message);
+        console.log(data.action);
+        if (data.action) {
+            switch (data.action) {
+                case 'node.new':
+                    createNode(data.payload, io);
+                    break;
+                default:
+                    break;
+            }
+        }
     });
 });
 
