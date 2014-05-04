@@ -1,7 +1,7 @@
 <div class="node" ng-class="{ 'node--editing': node.edit }">
     <div ng-include="'views/node/struct/_commands.html'" class="node__controls"></div>
     <div ng-if="!node.edit" class="node--preview">
-        {{ node.settings.content || 'no content' }}
+        <strong>{{ node.settings.lang || 'unknown lang' }}</strong> code block
     </div>
     <div ng-if="node.edit" class="node--edit">
         <form ng-submit="saveNode(node)">
@@ -10,9 +10,11 @@
             </p>
             <div ng-include="'views/node/struct/_meta.html'"></div>
             <p>
+                <label>language</label>
                 <input ng-model="node.settings.lang" type="text">
             </p>
             <p>
+                <label>code</label><br>
                 <textarea ng-model="node.settings.content"></textarea>
             </p>
             <p>

@@ -67,9 +67,9 @@ angular.module('protofight').controller('MainCtrl', [
 
 
         $scope.saveNode = function (node) {
-            console.log('saving node', node);
             NodeService.saveNode(node).then(function (savedNode) {
                 node.updatedAt = savedNode.updatedAt;
+                node.edit = false;
             });
         };
 
