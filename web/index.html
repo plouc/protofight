@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="vendor/normalize-css/normalize.css">
     <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="sass/protofight.css">
+    <link rel="stylesheet" href="vendor/highlightjs/styles/solarized_dark.css">
 </head>
 <body ng-controller="MainCtrl">
     <aside class="site-nav">
@@ -47,14 +48,16 @@
         </div>
     </aside>
 
+    <!-- vendors -->
     <script src="vendor/jquery/dist/jquery.js"></script>
     <script src="vendor/angular/angular.js"></script>
     <script src="vendor/angular-sanitize/angular-sanitize.js"></script>
     <script src="vendor/engine.io/engine.io.js"></script>
     <script src="vendor/lodash/dist/lodash.js"></script>
     <script src="vendor/restangular/src/restangular.js"></script>
-    <script src="vendor/ace-builds/src/ace.js"></script>
-    <script src="vendor/ace-builds/src/mode-markdown.js"></script>
+    <script src="vendor/highlightjs/highlight.pack.js"></script>
+    <script src="vendor/angular-highlightjs/angular-highlightjs.js"></script>
+    <!-- custom -->
     <script src="js/protofight.js"></script>
     <script src="js/filters/rawNode.js"></script>
     <script src="js/services/lodash.js"></script>
@@ -62,7 +65,6 @@
     <script src="js/services/NodeService.js"></script>
     <script src="js/directives/draggable.js"></script>
     <script src="js/directives/droppable.js"></script>
-    <script src="js/directives/ace.js"></script>
     <script src="js/directives/breadcrumbs.js"></script>
     <script src="js/controllers/MainCtrl.js"></script>
 </body>

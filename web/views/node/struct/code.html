@@ -5,13 +5,19 @@
     </div>
     <div ng-if="node.edit" class="node--edit">
         <form ng-submit="saveNode(node)">
-            <input ng-model="node.name" type="text">
+            <p>
+                <input ng-model="node.name" type="text">
+            </p>
             <div ng-include="'views/node/struct/_meta.html'"></div>
             <p>
                 <input ng-model="node.settings.lang" type="text">
             </p>
             <p>
                 <textarea ng-model="node.settings.content"></textarea>
+            </p>
+            <p>
+                <button class="button" type="submit">save</button>
+                <span class="button" ng-click="node.edit = false">cancel</span>
             </p>
         </form>
     </div>

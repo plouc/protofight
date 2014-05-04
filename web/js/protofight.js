@@ -1,6 +1,7 @@
 angular.module('protofight', [
     'restangular',
-    'ngSanitize'
+    'ngSanitize',
+    'hljs'
 ]);
 
 angular.module('protofight').config(function () {
