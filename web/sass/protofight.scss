@@ -44,11 +44,15 @@ $aside-width: 260px;
 .site-nav__item {
   cursor: pointer;
   display: block;
-  padding: 7px 0;
+  padding: 7px 7px;
   font-weight: bold;
+  border-radius: 2px;
   .fa {
     margin-right: 7px;
   }
+}
+.site-nav__item--active {
+  background-color: #fff;
 }
 .components {
   position: fixed;

@@ -37,10 +37,14 @@ h2 {
 .site-nav__item {
   cursor: pointer;
   display: block;
-  padding: 7px 0;
-  font-weight: bold; }
+  padding: 7px 7px;
+  font-weight: bold;
+  border-radius: 2px; }
   .site-nav__item .fa {
     margin-right: 7px; }
+
+.site-nav__item--active {
+  background-color: #fff; }
 
 .components {
   position: fixed;

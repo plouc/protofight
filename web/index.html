@@ -12,10 +12,12 @@
 <body ng-controller="MainCtrl">
     <aside class="site-nav">
         <h2>pages</h2>
-        <a class="button button--full" ng-click="createPage()">new page</a>
+        <a class="button button--full" ng-click="createPage()">
+            <i class="fa fa-plus"></i> new page
+        </a>
         <nav class="site-nav__items">
             <a ng-click="setPage(pageNode)" ng-repeat="pageNode in pages"
-               class="site-nav__item">
+               class="site-nav__item" ng-class="{ 'site-nav__item--active': pageNode._id == node._id }">
                 <i class="fa fa-angle-right"></i>{{ pageNode.name }}
             </a>
         </nav>

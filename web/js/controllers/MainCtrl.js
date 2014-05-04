@@ -17,6 +17,7 @@ angular.module('protofight').controller('MainCtrl', [
             $scope.root = root;
             $scope.root.getList('children').then(function (children) {
                 $scope.pages = children;
+                $scope.node  = $scope.pages[0];
             });
         });
 
