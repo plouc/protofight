@@ -30,6 +30,8 @@ h2 {
        box-sizing: border-box;
 }
 
+@import "breadcrumbs";
+
 $aside-width: 260px;
 
 .site-nav {
@@ -75,6 +77,9 @@ $aside-width: 260px;
   padding: 50px 15px 10px 15px;
   height: 100%;
   overflow-y: auto;
+}
+.content-preview {
+  padding: 50px 15px 10px 15px;
 }
 .switch-view {
   position: absolute;

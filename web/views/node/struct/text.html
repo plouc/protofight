@@ -1,13 +1,15 @@
 <div class="node" ng-class="{ 'node--editing': node.edit }">
     <span ng-include="'views/node/struct/_commands.html'" class="node__controls"></span>
     <div ng-if="!node.edit" class="node--preview">
-        {{ node.settings.content || 'no content' }}
+        {{ node.name }}
     </div>
     <div ng-if="node.edit" class="node--edit">
         <form ng-submit="saveNode(node)">
             <input ng-model="node.name" type="text">
             <div ng-include="'views/node/struct/_meta.html'"></div>
             <textarea ng-model="node.settings.content"></textarea>
+
+            <button class="button" type="submit">save</button>
         </form>
     </div>
 </div>

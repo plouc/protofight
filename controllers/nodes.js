@@ -108,21 +108,14 @@ exports.children = function (req, res) {
     })
 };
 
-exports.delete = function (req, res) {
-    App.findById(req.params.id, function (err, app) {
+function deepNodeRemoval(node, res) {
+    Node.remove({ ancestors: node._id }, function (err) {
         if (err) {
             res.status(500);
             return res.send({ status : 500 });
         }
 
-        Api.remove({ app: app._id }, function (err) {
-            if (err) {
-                res.status(500);
-                return res.send({ status : 500 });
-            }
-        });
-
-        app.remove(function (err) {
+        node.remove(function (err) {
             if (err) {
                 res.status(500);
                 return res.send({ status : 500 });
@@ -131,5 +124,36 @@ exports.delete = function (req, res) {
             res.status(204);
             return res.end();
         });
+    });
+};
+
+exports.delete = function (req, res) {
+    Node.findById(req.params.id, function (err, node) {
+        if (err) {
+            res.status(500);
+            return res.send({ status : 500 });
+        }
+
+        if (!node) {
+            res.status(404);
+            return res.send({ status : 404 });
+        }
+
+        if (node.parent) {
+            Node.update(
+                { '_id': node.parent },
+                { $pull: { 'nodes': node._id } },
+                function (err, removedCount) {
+                    if (err) {
+                        res.status(500);
+                        return res.send({ status : 500 });
+                    }
+
+                    deepNodeRemoval(node, res);
+                }
+            );
+        } else {
+            deepNodeRemoval(node, res);
+        }
     });
 };

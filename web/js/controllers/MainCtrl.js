@@ -37,6 +37,10 @@ angular.module('protofight').controller('MainCtrl', [
             {
                 name: 'Breadcrumb',
                 type: 'breadcrumbs'
+            },
+            {
+                name: 'Navigation',
+                type: 'nav'
             }
         ];
 
@@ -58,7 +62,6 @@ angular.module('protofight').controller('MainCtrl', [
 
             NodeService.saveNode(page).then(function (node) {
                 _.assign(page, node);
-                console.log(page);
             });
         };
 
@@ -67,6 +70,12 @@ angular.module('protofight').controller('MainCtrl', [
             console.log('saving node', node);
             NodeService.saveNode(node).then(function (savedNode) {
                 node.updatedAt = savedNode.updatedAt;
+            });
+        };
+
+        $scope.removeNode = function (node) {
+            NodeService.remove(node._id).then(function () {
+
             });
         };
 
@@ -83,10 +92,9 @@ angular.module('protofight').controller('MainCtrl', [
                 newNode.nodes = [];
             }
 
-            node.nodes.push(newNode);
-            NodeService.saveNode(newNode).then(function (node) {
-                _.assign(newNode, node);
-                console.log(newNode);
+            NodeService.saveNode(newNode).then(function (savedNode) {
+                _.assign(newNode, savedNode);
+                node.nodes.push(savedNode);
             });
 
             /*

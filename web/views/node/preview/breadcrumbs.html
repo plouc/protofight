@@ -1,3 +1,4 @@
 <div class="breadcrumbs" breadcrumbs node="node">
-    <span ng-repeat="breadcrumb in breadcrumbs">{{ breadcrumb.name }}</span>
+    <span class="breadcrumb" ng-repeat="breadcrumb in breadcrumbs"
+          ng-class="{ 'breadcrumb--current': breadcrumb._id == node.parent }">{{ breadcrumb.name }}</span>
 </div>

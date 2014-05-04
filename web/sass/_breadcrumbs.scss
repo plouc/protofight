@@ -1,0 +1,24 @@
+.breadcrumbs {
+  margin: 10px 0;
+  list-style: none;
+  color: #777;
+  background-color: #eee;
+  border-radius: 2px;
+  padding: 5px 12px;
+}
+.breadcrumb {
+  display: inline-block;
+  &:before {
+    display: inline-block;
+    margin: 0 5px;
+    content: ":";
+    color: #225c82;
+  }
+  &:first-child:before {
+    display: none;
+  }
+}
+.breadcrumb--current {
+  font-weight: bold;
+  color: #333;
+}

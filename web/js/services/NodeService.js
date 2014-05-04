@@ -25,6 +25,9 @@ angular.module('protofight').factory('NodeService', [
             node: function (id) {
                 return nodes.get(id);
             },
+            remove: function (id) {
+                return nodes.one(id).customDELETE('');
+            },
             saveNode: function (node) {
                 if (node._id) {
                     return nodes.one(node._id).customPUT(node);

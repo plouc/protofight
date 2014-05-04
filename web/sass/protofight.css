@@ -25,6 +25,28 @@ h2 {
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
 
+.breadcrumbs {
+  margin: 10px 0;
+  list-style: none;
+  color: #777;
+  background-color: #eee;
+  border-radius: 2px;
+  padding: 5px 12px; }
+
+.breadcrumb {
+  display: inline-block; }
+  .breadcrumb:before {
+    display: inline-block;
+    margin: 0 5px;
+    content: ":";
+    color: #225c82; }
+  .breadcrumb:first-child:before {
+    display: none; }
+
+.breadcrumb--current {
+  font-weight: bold;
+  color: #333; }
+
 .site-nav {
   position: fixed;
   top: 0;
@@ -67,6 +89,9 @@ h2 {
   padding: 50px 15px 10px 15px;
   height: 100%;
   overflow-y: auto; }
+
+.content-preview {
+  padding: 50px 15px 10px 15px; }
 
 .switch-view {
   position: absolute;
