@@ -3,6 +3,6 @@ angular.module('protofight').factory('WS', [
     function (
         $window
     ) {
-        return $window.eio.Socket('ws://localhost:3000');
+        return $window.eio.Socket('ws://localhost:4000');
     }
 ]);

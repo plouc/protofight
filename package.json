@@ -14,9 +14,17 @@
     "mongoose": "latest",
     "cors": "^2.2.0",
     "angularjs-websocket-transport": "0.0.4",
-    "enchilada": "^0.8.1"
+    "enchilada": "^0.8.1",
+    "elasticsearch": "2.1.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "bower": "latest",
+    "grunt": "latest",
+    "grunt-cli": "latest",
+    "time-grunt": "latest",
+    "grunt-contrib-sass": "latest",
+    "grunt-contrib-watch": "latest"
+  },
   "engines": {
     "node": ">=0.10.0"
   },

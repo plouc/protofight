@@ -1,4 +1,4 @@
-<div class="node node--container" plouc-droppable drop="createNode" node="node"
+<div class="node node--row" plouc-droppable drop="createNode" node="node"
      ng-class="{ 'node--editing': node.edit }">
     <div ng-include="'views/node/struct/_commands.html'" class="node__controls"></div>
     <div ng-if="!node.edit" class="node--preview">
@@ -6,8 +6,18 @@
     </div>
     <div ng-if="node.edit" class="node--edit">
         <form ng-submit="saveNode(node)">
-            <input ng-model="node.name" type="text">
+            <p>
+                <input ng-model="node.name" type="text">
+            </p>
             <div ng-include="'views/node/struct/_meta.html'"></div>
+            <p>
+                <label>columns</label>
+                <input type="text" ng-model="node.settings.columns">
+            </p>
+            <p>
+                <button class="button" type="submit">save</button>
+                <span class="button" ng-click="node.edit = false">cancel</span>
+            </p>
         </form>
     </div>
     <div class="node--edit">

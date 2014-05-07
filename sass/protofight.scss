@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 html, body {
   height: 100%;
 }
@@ -20,28 +22,45 @@ h1 {
   margin-top: 0;
 }
 h2 {
-  padding-bottom: 10px;
+  padding-bottom: 7px;
   border-bottom: 1px solid #ccc;
   margin-bottom: 10px;
 }
 
-* {
-  -moz-box-sizing: border-box;
-       box-sizing: border-box;
+a {
+  color: inherit;
 }
 
-@import "breadcrumbs";
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+
+@mixin transition($value) {
+  -webkit-transition: #{$value}; /* Saf3.2+, Chrome */
+     -moz-transition: #{$value}; /* FF4+ */
+       -o-transition: #{$value}; /* Opera 10.5+ */
+          transition: #{$value};
+}
+
+@import 'core/__core';
+@import 'components/__components';
+
+@include button('.button', true);
+@include breadcrumbs('.breadcrumbs', true);
+
 
 $aside-width: 260px;
+$aside-toggle-size: 30px;
 
-.site-nav {
-  position: fixed;
-  top:  0;
-  left: 0;
-  height: 100%;
-  width: $aside-width;
-  background-color: #eee;
-  padding: 0 15px;
+@import "asides";
+
+.site-nav__toggle {
+  right: 0;
 }
 .site-nav__item {
   cursor: pointer;
@@ -56,15 +75,6 @@ $aside-width: 260px;
 .site-nav__item--active {
   background-color: #fff;
 }
-.components {
-  position: fixed;
-  top:   0;
-  right: 0;
-  height: 100%;
-  width: $aside-width;
-  background-color: #eee;
-  padding: 10px 15px;
-}
 .site-content {
   position: fixed;
   top: 0;
@@ -72,11 +82,18 @@ $aside-width: 260px;
   bottom: 0;
   left: $aside-width;
   height: 100%;
+  overflow-y: auto;
+  @include transition(all cubic-bezier(.16,.75,.41,.88) 300ms);
+}
+.site-content--left-closed {
+  left: $aside-toggle-size;
+}
+.site-content--right-closed {
+  right: $aside-toggle-size;
 }
 .content-struct {
   padding: 50px 15px 10px 15px;
   height: 100%;
-  overflow-y: auto;
 }
 .content-preview {
   padding: 50px 15px 10px 15px;
@@ -93,7 +110,7 @@ $aside-width: 260px;
   span {
     cursor: pointer;
     display: inline-block;
-    padding: 5px 10px 5px 7px;
+    padding: 7px 12px 7px 7px;
     border-left: 1px solid #225c82;
     margin-left: -4px;
     &:hover {
@@ -122,42 +139,7 @@ $aside-width: 260px;
   padding: 10px 15px;
   font-family: consolas, menlo, monaco, monospace;
   font-size: 12px;
-  overflow-y: auto;
 }
-
-.button {
-  display: inline-block;
-  text-decoration: none;
-  border-radius: 2px;
-  padding: 4px 9px;
-  font-size: 14px;
-  font-weight: normal;
-  cursor: pointer;
-  border: none;
-  background-color: #253d66;
-  color: #eee;
-  &:hover {
-    background-color: #35678c;
-    color: #fff;
-  }
-}
-.button--danger {
-  background-color: #ff8551;
-  color: #fff;
-  &:hover {
-    background-color: #ff9974;
-    color: #fff;
-  }
-}
-.button--s {
-  font-size: 11px;
-  padding: 3px 6px;
-}
-.button--full {
-  width: 100%;
-}
-
-
 
 .node {
   display: block;
@@ -205,17 +187,102 @@ $aside-width: 260px;
   border-color: #aaa;
 }
 
+.node--chart {
+  border: 1px solid #ccc;
+  border-radius: 2px;
+}
+
+.form-control,
 textarea,
 input[type="text"],
 input[type="url"] {
   font-size: 14px;
   border-radius: 2px;
   border: 1px solid #ddd;
-  padding: 3px 7px;
+  padding: 5px 7px;
   background-color: #eee;
   &:focus {
     border-color: #ccc;
     background-color: #fff;
     outline: none;
   }
+}
+.form-control--full {
+  width: 100%;
+}
+
+
+
+.menu {
+  background-color: #225c82;
+  color: #fff;
+  border-radius: 2px;
+  margin-bottom: 15px;
+  padding: 0 12px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+.menu__item {
+  a {
+    display: inline-block;
+    text-decoration: none;
+    padding: 7px 12px;
+    &:hover {
+      background-color: #2e7daf;
+    }
+  }
+}
+
+.component {
+  display: block;
+  padding: 5px 9px;
+  cursor: pointer;
+  border-radius: 2px;
+  &:hover {
+    background-color: #fff;
+  }
+}
+
+/* Contain floats: h5bp.com/q */
+%clearfix {
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+  *zoom: 1;
+}
+
+.grid__row {
+  margin-bottom: 15px;
+  margin-left: -15px;
+  @extend %clearfix;
+}
+.grid__cell {
+  padding-left: 15px;
+  float: left;
+}
+
+
+
+
+.grid__cell--1 {
+  width: 8.33%;
+}
+.grid__cell--2 {
+  width: 16.66%;
+}
+.grid__cell--3 {
+  width: 25%;
+}
+.grid__cell--4 {
+  width: 33.33%;
+}
+.grid__cell--5 {
+  width: 41.66%;
+}
+.grid__cell--6 {
+  width: 50%;
 }

@@ -1,0 +1,25 @@
+/* _____ SYSTEM TOOLS _____ */
+
+// define
+// this mixin makes it possible to have a file imported at multiple place and only be output the first time it is called
+// it is used for placeholders to prevent them from being repeated by each file depending on them
+
+$modules: () !default;
+@mixin define($uniqeRef) {
+  @if not index($modules, $uniqeRef) {
+    $modules: append($modules, $uniqeRef) !global;
+    @content;
+  }
+}
+
+@mixin skin($component, $ns, $variants) {
+  @include define($component + '-skin-' + $ns) {
+    @each $variant, $properties in $variants {
+      %#{$component + '-skin-' + $ns + $variant} {
+        @each $property, $value in $properties {
+          #{$property}: $value;
+        }
+      }
+    }
+  }
+}

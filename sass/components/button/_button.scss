@@ -1,0 +1,108 @@
+/*———————————————————————————————————————————————\
+
+  BUTTON COMPONENT
+
+\———————————————————————————————————————————————*/
+
+// dependencies
+@import 'sass/core/utils/_utils';
+
+
+
+/*———————————————————————————————————————————————\
+  BUTTON STRUCTURE
+\———————————————————————————————————————————————*/
+@include define('button') {
+  %button {
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 2px;
+    padding: 4px 9px;
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+    border: none;
+    border-radius: 2px;
+  }
+
+  %button--full {
+    width: 100%;
+  }
+
+  %button--s {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+
+  %button--danger {
+  }
+
+  %button--danger--hover {
+  }
+}
+
+
+@mixin button($selector, $defaultSkin: true) {
+  #{$selector} {
+    @extend %button;
+  }
+
+  #{$selector}--full {
+    @extend %button--full;
+  }
+
+  #{$selector}--s {
+    @extend %button--s;
+  }
+
+  #{$selector}--danger {
+    @extend %button--danger !optional;
+  }
+
+  @if $defaultSkin != false {
+    @include button-skin-default($selector);
+  }
+}
+
+
+
+/*———————————————————————————————————————————————\
+  BUTTON SKINNING
+\———————————————————————————————————————————————*/
+@include define('button-skin-default') {
+  %button-skin-default {
+    background-color: #253d66;
+    color: #eee;
+  }
+
+  %button-skin-default--hover {
+    background-color: #35678c;
+    color: #fff;
+  }
+
+  %button-skin-default--danger {
+    background-color: #ff8551;
+    color: #fff;
+  }
+
+  %button-skin-default--danger--hover {
+    background-color: #ff9974;
+    color: #fff;
+  }
+}
+
+@mixin button-skin-default($selector) {
+  #{$selector} {
+    @extend %button-skin-default;
+    &:hover {
+      @extend %button-skin-default--hover;
+    }
+  }
+
+  #{$selector}--danger {
+    @extend %button-skin-default--danger;
+    &:hover {
+      @extend %button-skin-default--danger--hover;
+    }
+  }
+}

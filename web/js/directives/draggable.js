@@ -11,7 +11,9 @@ angular.module('protofight').directive('ploucDraggable', function() {
 
             el.addEventListener('dragstart', function (e) {
                 e.dataTransfer.effectAllowed = 'move';
-                e.dataTransfer.setData('Text', JSON.stringify(scope.dragData));
+                e.dataTransfer.setData('text/plain', JSON.stringify(scope.dragData));
+                e.dataTransfer.setData('text/type:' + scope.dragData.type, '');
+
                 this.classList.add('drag');
 
                 return false;
@@ -20,6 +22,7 @@ angular.module('protofight').directive('ploucDraggable', function() {
             el.addEventListener('dragend', function (e) {
                 this.classList.remove('drag');
 
+                event.preventDefault();
                 return false;
             }, false);
         }

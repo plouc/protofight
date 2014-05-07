@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Node     = mongoose.model('Node');
 var extend   = require('util')._extend;
+var index    = require('../lib/index').index;
 
 /*
 exports.index = function (req, res) {
@@ -44,9 +45,6 @@ exports.root = function (req, res) {
 };
 
 exports.create = function (req, res) {
-
-    console.log(req.body);
-
     var node = new Node(req.body);
     node.save(function (err, node) {
         if (err) {
@@ -54,6 +52,8 @@ exports.create = function (req, res) {
             res.status(500);
             return res.send({ status : 500 });
         }
+
+        //index.add(node);
 
         res.json(node);
     });
@@ -94,6 +94,17 @@ exports.pick = function (req, res) {
         });
 
         res.json(result);
+    });
+};
+
+exports.search = function (req, res) {
+    var criteria = {};
+    if (req.query.q) {
+        criteria.name = { '$regex': '^' + req.query.q };
+    }
+
+    Node.find(criteria, function (err, nodes) {
+        res.json(nodes);
     });
 };
 

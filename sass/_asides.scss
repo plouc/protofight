@@ -1,0 +1,44 @@
+.aside {
+  width: $aside-width;
+  position: fixed;
+  top: 0;
+  height: 100%;
+  background-color: #eee;
+  @include transition(all cubic-bezier(.16,.75,.41,.88) 300ms);
+}
+.aside--left {
+  left: 0;
+  padding: 0 $aside-toggle-size + 10px 0 10px;
+  border-right: 1px solid #ddd;
+}
+.aside--left--closed {
+  left: -$aside-width + $aside-toggle-size;
+}
+.aside--right {
+  right: 0;
+  padding: 0 10px 0 $aside-toggle-size + 10px;
+  border-left: 1px solid #ddd;
+}
+.aside--right--closed {
+  right: -$aside-width + $aside-toggle-size;
+}
+.aside__toggle {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  font-size: 20px;
+  padding-top: 16px;
+  width:  $aside-toggle-size;
+  height: $aside-toggle-size;
+  text-align: center;
+  height: 100%;
+  &:hover {
+    background-color: #fff;
+  }
+}
+.aside__toggle--left {
+  right: 0;
+}
+.aside__toggle--right {
+  left: 0;
+}

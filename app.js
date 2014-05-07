@@ -6,12 +6,15 @@ var Node     = require('./models/Node');
 var env      = process.env.NODE_ENV || 'development';
 var config   = require('./config/config')[env];
 var mongoose = require('mongoose');
+var index    = require('./lib/index');
 
 var connectMongo = function () {
     var options = { server: { socketOptions: { keepAlive: 1 } } }
-    mongoose.connect(config.db, options)
+    mongoose.connect(config.mongoose.url, options)
 };
 connectMongo();
+
+//index.create(config.elasticsearch);
 
 app.use(express.bodyParser());
 app.use(express.static(__dirname + '/web'));
@@ -49,7 +52,7 @@ io.on('connection', function (socket) {
     });
 });
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 4000;
 server.listen(port, function(){
     console.log('\033[96mlistening on localhost:' + port + ' \033[39m');
 });

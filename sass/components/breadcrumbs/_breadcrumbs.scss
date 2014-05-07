@@ -1,0 +1,103 @@
+/*———————————————————————————————————————————————\
+
+  BREADCRUMBS COMPONENT
+
+\———————————————————————————————————————————————*/
+
+// dependencies
+@import 'sass/core/utils/_utils';
+
+
+
+/*———————————————————————————————————————————————\
+  BREADCRUMBS STRUCTURE
+\———————————————————————————————————————————————*/
+@include define('breadcrumbs') {
+  %breadcrumbs {
+    margin: 10px 0;
+    list-style: none;
+    border-radius: 2px;
+    padding: 5px 12px;
+  }
+
+  %breadcrumbs__item {
+    display: inline-block;
+  }
+
+  %breadcrumbs__item__before {
+    margin: 0 5px;
+    display: inline-block;
+  }
+
+  %breadcrumbs__item__before--first {
+    display: none;
+  }
+
+  %breadcrumbs__item--active {
+
+  }
+}
+
+
+@mixin breadcrumbs($selector, $defaultSkin: true) {
+  #{$selector} {
+    @extend %breadcrumbs;
+  }
+
+  #{$selector}__item {
+    @extend %breadcrumbs__item;
+    &:before {
+      @extend %breadcrumbs__item__before;
+    }
+    &:first-child:before {
+      @extend %breadcrumbs__item__before--first;
+    }
+    &._is-active {
+      @extend %breadcrumbs__item--active !optional;
+    }
+  }
+
+  @if $defaultSkin != false {
+    @include breadcrumbs-skin-default($selector);
+  }
+}
+
+
+
+/*———————————————————————————————————————————————\
+  BREADCRUMBS SKINNING
+\———————————————————————————————————————————————*/
+@include define('breadcrumbs-skin-default') {
+  %breadcrumbs-skin-default {
+    color: #777;
+    background-color: #eee;
+  }
+
+  %breadcrumbs-skin-default__item {
+    &:before {
+      content: "/";
+      color: #225c82;
+    }
+  }
+
+  %breadcrumbs-skin-default__item--active {
+    font-weight: bold;
+    color: #333;
+    &:before {
+      font-weight: normal;
+    }
+  }
+}
+
+@mixin breadcrumbs-skin-default($selector) {
+  #{$selector} {
+    @extend %breadcrumbs-skin-default;
+  }
+
+  #{$selector}__item {
+    @extend %breadcrumbs-skin-default__item;
+    &._is-active {
+      @extend %breadcrumbs-skin-default__item--active;
+    }
+  }
+}

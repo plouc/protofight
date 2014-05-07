@@ -1,7 +1,8 @@
 angular.module('protofight', [
     'restangular',
     'ngSanitize',
-    'hljs'
+    'hljs',
+    'nvd3ChartDirectives'
 ]);
 
 angular.module('protofight').config(function () {

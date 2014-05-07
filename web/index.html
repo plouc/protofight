@@ -5,25 +5,36 @@
     <title>Protofight</title>
     <meta name="viewport" content="width=device-width">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600|Montserrat:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="vendor/normalize-css/normalize.css">
+    <!--<link rel="stylesheet" href="vendor/normalize-css/normalize.css">-->
     <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="sass/protofight.css">
+    <link rel="stylesheet" href="css/protofight.css">
     <link rel="stylesheet" href="vendor/highlightjs/styles/solarized_dark.css">
+    <link rel="stylesheet" href="vendor/nvd3/nv.d3.css"/>
 </head>
 <body ng-controller="MainCtrl">
-    <aside class="site-nav">
-        <h2>pages</h2>
+    <aside class="aside aside--left" ng-init="asideLeft = true"
+           ng-class="{ 'aside--left--closed': !asideLeft }">
+        <h2>Nodes</h2>
+        <span class="aside__toggle aside__toggle--left" ng-click="asideLeft = !asideLeft">
+            <i class="fa" ng-class="{ 'fa-angle-left': asideLeft, 'fa-angle-right': !asideLeft }"></i>
+        </span>
         <a class="button button--full" ng-click="createPage()">
             <i class="fa fa-plus"></i> new page
         </a>
+        <p>
+            <input class="form-control form-control--full" type="search" ng-model="term" ng-init="term = ''">
+            <a class="button button--full" ng-click="search(term)"><i class="fa fa-search"></i> search</a>
+        </p>
         <nav class="site-nav__items">
             <a ng-click="setPage(pageNode)" ng-repeat="pageNode in pages"
+
                class="site-nav__item" ng-class="{ 'site-nav__item--active': pageNode._id == node._id }">
                 <i class="fa fa-angle-right"></i>{{ pageNode.name }}
             </a>
         </nav>
     </aside>
-    <div class="site-content">
+    <div class="site-content"
+         ng-class="{ 'site-content--left-closed': !asideLeft, 'site-content--right-closed': !asideRight }">
         <div ng-if="viewMode == 'struct'" class="content-struct">
             <div ng-if="node" ng-include="'views/node/struct/' + node.type + '.html'"></div>
         </div>
@@ -39,10 +50,14 @@
             <span ng-click="viewMode = 'raw'"><i class="fa fa-code"></i>raw</span>
         </div>
     </div>
-    <aside class="components">
+    <aside class="aside aside--right"  ng-init="asideRight = true"
+           ng-class="{ 'aside--right--closed': !asideRight }">
         <h2>components</h2>
+        <span class="aside__toggle aside__toggle--right" ng-click="asideRight = !asideRight">
+            <i class="fa" ng-class="{ 'fa-angle-left': !asideRight, 'fa-angle-right': asideRight }"></i>
+        </span>
         <div class="components__grid">
-            <div ng-repeat="component in components" plouc-draggable drag-data="component">
+            <div class="component" ng-repeat="component in components" plouc-draggable drag-data="component">
                 {{ component.name }}
             </div>
         </div>
@@ -57,15 +72,21 @@
     <script src="vendor/restangular/src/restangular.js"></script>
     <script src="vendor/highlightjs/highlight.pack.js"></script>
     <script src="vendor/angular-highlightjs/angular-highlightjs.js"></script>
+    <script src="vendor/d3/d3.js"></script>
+    <script src="vendor/nvd3/nv.d3.js"></script>
+    <script src="vendor/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
     <!-- custom -->
+    <script src="js/App.js" type="text/jsx"></script>
     <script src="js/protofight.js"></script>
     <script src="js/filters/rawNode.js"></script>
+    <script src="js/filters/nodeTemplate.js"></script>
     <script src="js/services/lodash.js"></script>
     <script src="js/services/ws.js"></script>
     <script src="js/services/NodeService.js"></script>
     <script src="js/directives/draggable.js"></script>
     <script src="js/directives/droppable.js"></script>
     <script src="js/directives/breadcrumbs.js"></script>
+    <script src="js/directives/menu.js"></script>
     <script src="js/controllers/MainCtrl.js"></script>
 </body>
 </html>
