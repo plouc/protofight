@@ -85,12 +85,16 @@ function buildTree(nodes, cb) {
         });
     }
 
-    cb(null, byDepth[lowestDepth]);
+    cb(null, byDepth[lowestDepth][0]);
 };
 
 NodeSchema.statics.findChildren = function (id, cb) {
     var query = this
-        .find({ ancestors: id })
+        .find()
+        .or([
+            { ancestors: id },
+            { _id:       id }
+        ])
         .sort({'name': 1});
 
     query.exec(function (err, nodes) {

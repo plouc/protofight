@@ -1,6 +1,7 @@
 var nodes = require('../controllers/nodes');
 
 module.exports = function (app) {
+    app.get('/nodes', nodes.list);
     app.get('/nodes/root', nodes.root);
     app.get('/nodes/search', nodes.search);
     app.post('/nodes', nodes.create);

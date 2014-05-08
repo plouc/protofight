@@ -4,6 +4,7 @@
   top: 0;
   height: 100%;
   background-color: #eee;
+  overflow-y: auto;
   @include transition(all cubic-bezier(.16,.75,.41,.88) 300ms);
 }
 .aside--left {

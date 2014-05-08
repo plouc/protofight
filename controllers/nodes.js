@@ -3,18 +3,20 @@ var Node     = mongoose.model('Node');
 var extend   = require('util')._extend;
 var index    = require('../lib/index').index;
 
-/*
-exports.index = function (req, res) {
-    App.list({}, function (err, apps) {
-        if (err) {
-            res.status(500);
-            return res.send({ status : 500 });
-        }
+exports.list = function (req, res) {
+    Node
+        .find()
+        .sort({'name': 1})
+        .limit(30)
+        .exec(function (err, nodes) {
+            if (err) {
+                res.status(500);
+                return res.send({ status : 500 });
+            }
 
-        res.json(apps);
-    });
+            res.json(nodes);
+        });
 };
-*/
 
 exports.root = function (req, res) {
     Node.findRoot(function (err, root) {

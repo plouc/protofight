@@ -265,7 +265,18 @@ input[type="url"] {
   float: left;
 }
 
-
+.node-menu__item {
+  cursor: pointer;
+  display: block;
+  padding: 5px 9px;
+  border-radius: 2px;
+  &:hover {
+    background-color: #fff;
+  }
+  &._is_active {
+    background-color: #eeee99;
+  }
+}
 
 
 .grid__cell--1 {
