@@ -1,6 +1,11 @@
 /** @jsx React.DOM */
 
 var NavBreadcrumbsNode = React.createClass({
+    propTypes: {
+        app:  React.PropTypes.instanceOf(Protofight).isRequired,
+        node: React.PropTypes.object.isRequired
+    },
+
     getInitialState: function() {
         return {
             items: []

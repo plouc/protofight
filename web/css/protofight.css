@@ -45,19 +45,20 @@ a {
   display: inline-block;
   text-decoration: none;
   border-radius: 2px;
-  padding: 4px 9px;
+  padding: 7px 9px;
   font-size: 14px;
   font-weight: normal;
   cursor: pointer;
   border: none;
-  border-radius: 2px; }
+  border-radius: 2px;
+  line-height: 1em; }
 
 .button--full {
   width: 100%; }
 
 .button--s {
   font-size: 11px;
-  padding: 3px 6px; }
+  padding: 4px 7px; }
 
 /*———————————————————————————————————————————————\
   BUTTON SKINNING
@@ -71,11 +72,19 @@ a {
   color: #fff; }
 
 .button--danger {
-  background-color: #ff8551;
+  background-color: #ff6352;
   color: #fff; }
 
 .button--danger:hover {
-  background-color: #ff9974;
+  background-color: #ff6352;
+  color: #fff; }
+
+.button--warning {
+  background-color: #ff8551;
+  color: #fff; }
+
+.button--warning:hover {
+  background-color: #ff8551;
   color: #fff; }
 
 /*———————————————————————————————————————————————\
@@ -208,11 +217,28 @@ a {
   right: 30px; }
 
 .content-struct {
+  display: none;
   padding: 50px 15px 10px 15px;
   height: 100%; }
+  .node-view--struct .content-struct {
+    display: block; }
 
 .content-preview {
+  display: none;
   padding: 50px 15px 10px 15px; }
+  .node-view--preview .content-preview {
+    display: block; }
+
+.content-raw {
+  display: none;
+  background-color: #1a2845;
+  color: #eee;
+  margin: 0;
+  padding: 10px 15px;
+  font-family: consolas, menlo, monaco, monospace;
+  font-size: 12px; }
+  .node-view--raw .content-raw {
+    display: block; }
 
 .switch-view {
   position: absolute;
@@ -223,33 +249,24 @@ a {
   border-radius: 2px;
   font-size: 12px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35); }
-  .switch-view span {
+  .switch-view > span {
     cursor: pointer;
     display: inline-block;
     padding: 7px 12px 7px 7px;
     border-left: 1px solid #225c82;
     margin-left: -4px; }
-    .switch-view span:hover {
+    .switch-view > span:hover {
       background-color: #225c82;
       color: #fff; }
-  .switch-view span:first-child {
+  .switch-view > span:first-child {
     border-radius: 2px 0 0 2px;
     border-left: none;
     margin-left: 0; }
-  .switch-view span:last-child {
+  .switch-view > span:last-child {
     border-radius: 0 2px 2px 0; }
   .switch-view .fa {
     margin-right: 5px;
     color: #ffb695; }
-
-.raw-node-struct {
-  background-color: #1a2845;
-  color: #eee;
-  height: 100%;
-  margin: 0;
-  padding: 10px 15px;
-  font-family: consolas, menlo, monaco, monospace;
-  font-size: 12px; }
 
 .node {
   display: block;
@@ -259,9 +276,17 @@ a {
   border-radius: 2px;
   margin-bottom: 7px;
   background-color: #eee; }
+  .node--edit {
+    display: none; }
 
 .node--editing {
   background-color: #fff; }
+  .node--editing .node--edit {
+    display: block; }
+  .node--editing .node__controls .fa-pencil {
+    display: none; }
+  .node--editing .node__controls .fa-eye {
+    display: inline-block; }
 
 .node__title {
   font-family: 'Montserrat', sans-serif;
@@ -283,6 +308,8 @@ a {
   position: absolute;
   top: 5px;
   right: 5px; }
+  .node__controls .fa-eye {
+    display: none; }
 
 .node--container {
   display: block;
@@ -302,14 +329,15 @@ input[type="text"],
 input[type="url"] {
   font-size: 14px;
   border-radius: 2px;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
   padding: 5px 7px;
-  background-color: #eee; }
+  background-color: #eee;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08) inset; }
   .form-control:focus,
   textarea:focus,
   input[type="text"]:focus,
   input[type="url"]:focus {
-    border-color: #ccc;
+    border-color: #bbb;
     background-color: #fff;
     outline: none; }
 

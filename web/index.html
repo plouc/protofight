@@ -1,68 +1,17 @@
 <!doctype html>
-<html <!--ng-app="protofight"-->>
+<html>
 <head>
     <meta charset="utf-8">
     <title>Protofight</title>
     <meta name="viewport" content="width=device-width">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600|Montserrat:400,700' rel='stylesheet' type='text/css'>
-    <!--<link rel="stylesheet" href="vendor/normalize-css/normalize.css">-->
     <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="css/protofight.css">
     <link rel="stylesheet" href="vendor/highlightjs/styles/solarized_dark.css">
     <link rel="stylesheet" href="vendor/nvd3/nv.d3.css"/>
 </head>
-<body ng-controller="MainCtrl">
-    <aside class="aside aside--left" ng-init="asideLeft = true"
-           ng-class="{ 'aside--left--closed': !asideLeft }">
-        <h2>Nodes</h2>
-        <span class="aside__toggle aside__toggle--left" ng-click="asideLeft = !asideLeft">
-            <i class="fa" ng-class="{ 'fa-angle-left': asideLeft, 'fa-angle-right': !asideLeft }"></i>
-        </span>
-        <div class="_js_node_instances">
-
-        </div>
-        <!--
-        <a class="button button--full" ng-click="createPage()">
-            <i class="fa fa-plus"></i> new page
-        </a>
-        <p>
-            <input class="form-control form-control--full" type="search" ng-model="term" ng-init="term = ''">
-            <a class="button button--full" ng-click="search(term)"><i class="fa fa-search"></i> search</a>
-        </p>
-        <nav class="site-nav__items">
-            <a ng-click="setPage(pageNode)" ng-repeat="pageNode in pages"
-
-               class="site-nav__item" ng-class="{ 'site-nav__item--active': pageNode._id == node._id }">
-                <i class="fa fa-angle-right"></i>{{ pageNode.name }}
-            </a>
-        </nav>
-        -->
-    </aside>
-    <div class="site-content"
-         ng-class="{ 'site-content--left-closed': !asideLeft, 'site-content--right-closed': !asideRight }">
-        <div class="content-struct">
-        </div>
-        <div ng-if="viewMode == 'preview'" class="content-preview">
-            <div ng-if="node" ng-include="'views/node/preview/' + node.type + '.html'"></div>
-        </div>
-        <div ng-if="viewMode == 'raw'" class="raw-node-struct">
-            <pre ng-if="node">{{ node|rawNode|json }}</pre>
-        </div>
-        <div class="switch-view">
-            <span ng-click="viewMode = 'struct'"><i class="fa fa-sitemap"></i>structure</span>
-            <span ng-click="viewMode = 'preview'"><i class="fa fa-eye"></i>preview</span>
-            <span ng-click="viewMode = 'raw'"><i class="fa fa-code"></i>raw</span>
-        </div>
-    </div>
-    <aside class="aside aside--right"  ng-init="asideRight = true"
-           ng-class="{ 'aside--right--closed': !asideRight }">
-        <h2>components</h2>
-        <span class="aside__toggle aside__toggle--right" ng-click="asideRight = !asideRight">
-            <i class="fa" ng-class="{ 'fa-angle-left': !asideRight, 'fa-angle-right': asideRight }"></i>
-        </span>
-        <div class="_js_components">
-        </div>
-    </aside>
+<body>
+    <div class="_js_proto"></div>
 
     <!-- VENDORS -->
     <script src="vendor/jquery/dist/jquery.js"></script>
@@ -73,8 +22,12 @@
 
 
     <!-- CUSTOM -->
+    <script src="js/lib/Protofight.js" type="text/jsx"></script>
+
     <script src="js/lib/react/NodeMenu.js" type="text/jsx"></script>
     <script src="js/lib/react/NodeTypes.js" type="text/jsx"></script>
+
+    <script src="js/lib/react/ProtofightApp.js" type="text/jsx"></script>
 
     <!-- content nodes -->
     <script src="js/lib/react/nodes/content/ContainerNode.js" type="text/jsx"></script>

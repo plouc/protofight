@@ -17,12 +17,13 @@
     display: inline-block;
     text-decoration: none;
     border-radius: 2px;
-    padding: 4px 9px;
+    padding: 7px 9px;
     font-size: 14px;
     font-weight: normal;
     cursor: pointer;
     border: none;
     border-radius: 2px;
+    line-height: 1em;
   }
 
   %button--full {
@@ -31,7 +32,13 @@
 
   %button--s {
     font-size: 11px;
-    padding: 3px 6px;
+    padding: 4px 7px;
+  }
+
+  %button--warning {
+  }
+
+  %button--warning--hover {
   }
 
   %button--danger {
@@ -59,6 +66,10 @@
     @extend %button--danger !optional;
   }
 
+  #{$selector}--warning {
+    @extend %button--warning !optional;
+  }
+
   @if $defaultSkin != false {
     @include button-skin-default($selector);
   }
@@ -81,12 +92,22 @@
   }
 
   %button-skin-default--danger {
-    background-color: #ff8551;
+    background-color: #ff6352;
     color: #fff;
   }
 
   %button-skin-default--danger--hover {
-    background-color: #ff9974;
+    background-color: #ff6352;
+    color: #fff;
+  }
+
+  %button-skin-default--warning {
+    background-color: #ff8551;
+    color: #fff;
+  }
+
+  %button-skin-default--warning--hover {
+    background-color: #ff8551;
     color: #fff;
   }
 }
@@ -103,6 +124,13 @@
     @extend %button-skin-default--danger;
     &:hover {
       @extend %button-skin-default--danger--hover;
+    }
+  }
+
+  #{$selector}--warning {
+    @extend %button-skin-default--warning;
+    &:hover {
+      @extend %button-skin-default--warning--hover;
     }
   }
 }

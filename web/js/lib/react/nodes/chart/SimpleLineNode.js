@@ -1,6 +1,11 @@
 /** @jsx React.DOM */
 
 var ChartSimpleLineNode = React.createClass({
+    propTypes: {
+        app:  React.PropTypes.instanceOf(Protofight).isRequired,
+        node: React.PropTypes.object.isRequired
+    },
+
     componentDidMount: function () {
 
         function sinAndCos() {
@@ -74,6 +79,87 @@ var ChartSimpleLineNode = React.createClass({
     render: function () {
         return (
             <svg />
+        );
+    }
+});
+
+
+
+var ChartSimpleLineEditNode = React.createClass({
+    propTypes: {
+        app:  React.PropTypes.instanceOf(Protofight).isRequired,
+        node: React.PropTypes.object.isRequired
+    },
+
+    getInitialState: function () {
+        return {
+            edit: false
+        };
+    },
+
+    onEditClick: function () {
+        this.setState({
+            edit: !this.state.edit
+        });
+    },
+
+    onSubmit: function (e) {
+        console.log(e);
+        e.preventDefault();
+        return false;
+    },
+
+    render: function () {
+        var classes  = 'node';
+        if (this.state.edit) {
+            classes += ' node--editing';
+        }
+
+        if (!this.props.node.settings) {
+            this.props.node.settings = {};
+        }
+
+        return (
+            <div className={ classes }>
+                <span className="node__title">{ this.props.node.name }</span>
+                <div className="node__controls">
+                    <span className="button button--s" onClick={ this.onEditClick }>
+                        <i className="fa fa-pencil"></i>
+                        <i className="fa fa-eye"></i>
+                    </span>
+                </div>
+                <div className="node--edit">
+                    <form onSubmit={ this.onSubmit }>
+                        <p>
+                            <label>Margin left</label>
+                            <input type="text" defaultValue={ this.props.node.settings.marginLeft } />
+
+                            <label>Margin right</label>
+                            <input type="text" defaultValue={ this.props.node.settings.marginRight } />
+                        </p>
+                        <p>
+                            <label>Show X axis</label>
+                            <input type="checkbox" defaultValue={ this.props.node.settings.showXaxis } />
+
+                            <label>Show Y axis</label>
+                            <input type="checkbox" defaultValue={ this.props.node.settings.showYaxis } />
+                        </p>
+
+                        <p>
+                            <label>Use interactive guideline</label>
+                            <input type="checkbox" defaultValue={ this.props.node.settings.useInteractiveGuideline } />
+                        </p>
+                        <p>
+                            <label>Transition duration</label>
+                            <input type="text" defaultValue={ this.props.node.settings.transitionDuration } />
+                        </p>
+                        <p>
+                            <button className="button" type="submit">save</button>
+                            <span className="button button--warning" onClick={ this.onEditClick }>cancel</span>
+                        </p>
+                    </form>
+                </div>
+            </div>
         );
     }
 });

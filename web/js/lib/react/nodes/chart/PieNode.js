@@ -1,6 +1,11 @@
 /** @jsx React.DOM */
 
 var ChartPieNode = React.createClass({
+    propTypes: {
+        app:  React.PropTypes.instanceOf(Protofight).isRequired,
+        node: React.PropTypes.object.isRequired
+    },
+
     componentDidMount: function () {
         nv.addGraph(function() {
             var chart = nv.models.pieChart()
