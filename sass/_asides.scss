@@ -11,9 +11,13 @@
   left: 0;
   padding: 0 $aside-toggle-size + 10px 0 10px;
   border-right: 1px solid #ddd;
+  .fa-angle-left  { display: inline-block; }
+  .fa-angle-right { display: none;         }
 }
 .aside--left--closed {
   left: -$aside-width + $aside-toggle-size;
+  .fa-angle-left  { display: none;         }
+  .fa-angle-right { display: inline-block; }
 }
 .aside--right {
   right: 0;

@@ -148,9 +148,17 @@ a {
   left: 0;
   padding: 0 40px 0 10px;
   border-right: 1px solid #ddd; }
+  .aside--left .fa-angle-left {
+    display: inline-block; }
+  .aside--left .fa-angle-right {
+    display: none; }
 
 .aside--left--closed {
   left: -230px; }
+  .aside--left--closed .fa-angle-left {
+    display: none; }
+  .aside--left--closed .fa-angle-right {
+    display: inline-block; }
 
 .aside--right {
   right: 0;

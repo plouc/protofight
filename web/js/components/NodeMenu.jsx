@@ -1,6 +1,10 @@
 /** @jsx React.DOM */
 
-var NodeMenu = React.createClass({
+'use strict';
+
+var React = require('react');
+
+exports.NodeMenu = React.createClass({
     render: function () {
         var children = [];
         this.props.nodes.forEach(function (node) {
@@ -12,7 +16,7 @@ var NodeMenu = React.createClass({
     }
 });
 
-var NodeMenuItem = React.createClass({
+exports.NodeMenuItem = React.createClass({
     getInitialState: function() {
         return {
             active: false

@@ -1,5 +1,10 @@
 /** @jsx React.DOM */
 
+'use strict';
+
+var React      = require('react');
+var Protofight = require('../lib/Protofight');
+
 var NodeType = React.createClass({
     propTypes: {
         app: React.PropTypes.instanceOf(Protofight).isRequired
@@ -17,6 +22,8 @@ var NodeType = React.createClass({
         );
     }
 });
+
+exports.NodeType = NodeType;
 
 var NodeTypes = React.createClass({
     propTypes: {
@@ -41,3 +48,5 @@ var NodeTypes = React.createClass({
         );
     }
 });
+
+exports.NodeTypes = NodeTypes;

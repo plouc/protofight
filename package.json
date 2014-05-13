@@ -13,9 +13,15 @@
     "engine.io": "^1.1.0",
     "mongoose": "latest",
     "cors": "^2.2.0",
-    "angularjs-websocket-transport": "0.0.4",
     "enchilada": "^0.8.1",
-    "elasticsearch": "2.1.4"
+    "elasticsearch": "2.1.4",
+    "browserify": "<4.0.0",
+    "grunt-browserify": "2.0.8",
+    "react": "0.10.0",
+    "reactify": "0.13.1",
+    "lodash": "2.4.1",
+    "d3": "^3.4.6",
+    "jquery": "2.1.1"
   },
   "devDependencies": {
     "bower": "latest",

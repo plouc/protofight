@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 
+var React = require('react');
+
 var NavBreadcrumbsNode = React.createClass({
     propTypes: {
         app:  React.PropTypes.instanceOf(Protofight).isRequired,

@@ -1,5 +1,8 @@
 /** @jsx React.DOM */
 
+var React = require('react');
+var d3    = require('d3');
+
 var ChartPieNode = React.createClass({
     propTypes: {
         app:  React.PropTypes.instanceOf(Protofight).isRequired,
@@ -62,3 +65,5 @@ var ChartPieNode = React.createClass({
         );
     }
 });
+
+exports.ChartPieNode = ChartPieNode;

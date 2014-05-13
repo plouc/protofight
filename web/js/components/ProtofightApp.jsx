@@ -1,5 +1,11 @@
 /** @jsx React.DOM */
 
+'use strict';
+
+var React      = require('react');
+var LeftPanel  = require('./LeftPanel.jsx');
+var RightPanel = require('./RightPanel.jsx');
+
 var ProtofightApp = React.createClass({
     getInitialState: function () {
         return {
@@ -29,58 +35,7 @@ var ProtofightApp = React.createClass({
     }
 });
 
-
-
-var LeftPanel = React.createClass({
-    getInitialState: function () {
-        return {
-            nodes: []
-        };
-    },
-
-    componentDidMount: function () {
-        this.props.app.listNodes()
-            .done(function (nodes) {
-                this.setState({
-                    nodes: nodes
-                });
-            }.bind(this));
-    },
-
-    render: function () {
-        //ng-class="{ 'aside--left--closed': !asideLeft }"
-        //{ 'fa-angle-left': asideLeft, 'fa-angle-right': !asideLeft }
-
-        return (
-            <aside className="aside aside--left">
-                <h2>Nodes</h2>
-                <span className="aside__toggle aside__toggle--left">
-                    <i className="fa"></i>
-                </span>
-                <NodeMenu app={ this.props.app } nodes={ this.state.nodes } nodeClickedHandler={ this.props.nodeClickedHandler } />
-            </aside>
-        )
-    }
-});
-
-
-
-var RightPanel = React.createClass({
-    render: function () {
-        //ng-class="{ 'aside--right--closed': !asideRight }"
-        //{ 'fa-angle-left': !asideRight, 'fa-angle-right': asideRight }
-
-        return (
-            <aside className="aside aside--right">
-                <h2>components</h2>
-                <span className="aside__toggle aside__toggle--right">
-                    <i className="fa"></i>
-                </span>
-                <NodeTypes app={ this.props.app } />
-            </aside>
-        );
-    }
-});
+module.exports = ProtofightApp;
 
 
 

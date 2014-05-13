@@ -1,6 +1,8 @@
 /** @jsx React.DOM */
 
-var LayoutRowNode = React.createClass({
+var React = require('react');
+
+var LayoutCellNode = React.createClass({
     propTypes: {
         app:  React.PropTypes.instanceOf(Protofight).isRequired,
         node: React.PropTypes.object.isRequired
@@ -8,16 +10,17 @@ var LayoutRowNode = React.createClass({
 
     render: function () {
         var children = protofight.buildChildNodeList(this.props.node, 'view');
+        var classes  = 'grid__cell grid__cell--' + this.props.node.settings.columns;
 
         return (
-            <div className="grid__row">{ children }</div>
+            <div className={ classes }>{ children }</div>
         );
     }
 });
 
 
 
-var LayoutRowEditNode = React.createClass({
+var LayoutCellEditNode = React.createClass({
     propTypes: {
         app:  React.PropTypes.instanceOf(Protofight).isRequired,
         node: React.PropTypes.object.isRequired

@@ -1,5 +1,10 @@
 /** @jsx React.DOM */
 
+'use strict';
+
+var React      = require('react');
+var Protofight = require('../../lib/Protofight');
+
 var ChartSimpleLineNode = React.createClass({
     propTypes: {
         app:  React.PropTypes.instanceOf(Protofight).isRequired,
@@ -83,6 +88,7 @@ var ChartSimpleLineNode = React.createClass({
     }
 });
 
+exports.ChartSimpleLineNode = ChartSimpleLineNode;
 
 
 var ChartSimpleLineEditNode = React.createClass({
@@ -163,3 +169,5 @@ var ChartSimpleLineEditNode = React.createClass({
         );
     }
 });
+
+exports.ChartSimpleLineEditNode = ChartSimpleLineEditNode;

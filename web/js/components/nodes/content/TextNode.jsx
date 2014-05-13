@@ -1,6 +1,8 @@
 /** @jsx React.DOM */
 
-var DataStaticJsonNode = React.createClass({
+var React = require('react');
+
+var ContentTextNode = React.createClass({
     propTypes: {
         app:  React.PropTypes.instanceOf(Protofight).isRequired,
         node: React.PropTypes.object.isRequired
@@ -8,7 +10,7 @@ var DataStaticJsonNode = React.createClass({
 
     render: function () {
         return (
-            <pre>{ this.props.settings.content }</pre>
+            <p>{ this.props.settings.content }</p>
         );
     }
 });

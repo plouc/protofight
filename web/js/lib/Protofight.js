@@ -1,3 +1,7 @@
+'use strict';
+
+var $ = require('jquery');
+
 function Protofight() {
     this.currentNode = null;
     this.baseApiUrl  = 'http://localhost:4000/';
@@ -295,3 +299,5 @@ Protofight.nodeTypes = [
         accept:    ['data.static_json']
     }
 ];
+
+module.exports = Protofight;
