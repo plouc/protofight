@@ -2,7 +2,8 @@
 
 'use strict';
 
-var React = require('react');
+var React             = require('react');
+var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
 
 var NavMenuItemNode = React.createClass({
     propTypes: {
@@ -12,17 +13,14 @@ var NavMenuItemNode = React.createClass({
     render: function () {
         return (
             <span className="menu__item">
-                <a href="#">{ this.props.node.name }</a>
+                <a href="#">{ this.props.node.settings.label }</a>
             </span>
         );
     }
 });
-
 exports.NavMenuItemNode = NavMenuItemNode;
 
 
-
-var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
 
 var NavMenuItemEditNode = React.createClass({
     mixins: [EditableNodeMixin],
@@ -59,7 +57,7 @@ var NavMenuItemEditNode = React.createClass({
 
         return (
             <div className={ classes }>
-                <span className="node__title">{ this.props.node.name }</span>
+                <span className="node__title">{ this.props.node.name }: { this.props.node.settings.label }</span>
                 <div className="node__controls">
                     <span className="button button--s" onClick={ this.onEditClick }>
                         <i className="fa fa-pencil"></i>
@@ -86,5 +84,4 @@ var NavMenuItemEditNode = React.createClass({
         );
     }
 });
-
 exports.NavMenuItemEditNode = NavMenuItemEditNode;

@@ -1,37 +1,41 @@
 'use strict';
 
-var $ = require('jquery');
+var $            = require('jquery');
 var EventEmitter = require('events').EventEmitter;
+var nodeTypes    = require('./nodeTypes');
+var React        = require('react');
 
-var React = require('react');
+var components = {
+    // DATA VIZ
+    ChartPieNode:            require('../components/nodes/chart/PieNode.jsx').ChartPieNode,
+    ChartPieEditNode:        require('../components/nodes/chart/PieNode.jsx').ChartPieEditNode,
+    ChartSimpleLineNode:     require('../components/nodes/chart/SimpleLineNode.jsx').ChartSimpleLineNode,
+    ChartSimpleLineEditNode: require('../components/nodes/chart/SimpleLineNode.jsx').ChartSimpleLineEditNode,
 
-// DATA VIZ
-var ChartPieNode            = require('../components/nodes/chart/PieNode.jsx').ChartPieNode;
-var ChartPieEditNode        = require('../components/nodes/chart/PieNode.jsx').ChartPieEditNode;
-var ChartSimpleLineNode     = require('../components/nodes/chart/SimpleLineNode.jsx').ChartSimpleLineNode;
-var ChartSimpleLineEditNode = require('../components/nodes/chart/SimpleLineNode.jsx').ChartSimpleLineEditNode;
+    // CONTENT
+    ContentContainerNode:     require('../components/nodes/content/ContainerNode.jsx').ContentContainerNode,
+    ContentContainerEditNode: require('../components/nodes/content/ContainerNode.jsx').ContentContainerEditNode,
+    ContentTextNode:          require('../components/nodes/content/TextNode.jsx').ContentTextNode,
 
-// CONTENT
-var ContentContainerNode     = require('../components/nodes/content/ContainerNode.jsx').ContentContainerNode;
-var ContentContainerEditNode = require('../components/nodes/content/ContainerNode.jsx').ContentContainerEditNode;
-var ContentTextNode          = require('../components/nodes/content/TextNode.jsx').ContentTextNode;
+    // DATA
+    DataStaticJsonNode: require('../components/nodes/data/StaticJsonNode.jsx').DataStaticJsonNode,
 
-// DATA
-var DataStaticJsonNode = require('../components/nodes/data/StaticJsonNode.jsx').DataStaticJsonNode;
+    // LAYOUT
+    LayoutCellNode:     require('../components/nodes/layout/CellNode.jsx').LayoutCellNode,
+    LayoutCellEditNode: require('../components/nodes/layout/CellNode.jsx').LayoutCellEditNode,
+    LayoutRowNode:      require('../components/nodes/layout/RowNode.jsx').LayoutRowNode,
+    LayoutRowEditNode:  require('../components/nodes/layout/RowNode.jsx').LayoutRowEditNode,
 
-// LAYOUT
-var LayoutCellNode     = require('../components/nodes/layout/CellNode.jsx').LayoutCellNode;
-var LayoutCellEditNode = require('../components/nodes/layout/CellNode.jsx').LayoutCellEditNode;
-var LayoutRowNode      = require('../components/nodes/layout/RowNode.jsx').LayoutRowNode;
-var LayoutRowEditNode  = require('../components/nodes/layout/RowNode.jsx').LayoutRowEditNode;
-
-// NAV
-var NavBreadcrumbsNode     = require('../components/nodes/nav/BreadcrumbsNode.jsx').NavBreadcrumbsNode;
-var NavBreadcrumbsEditNode = require('../components/nodes/nav/BreadcrumbsNode.jsx').NavBreadcrumbsEditNode;
-var NavMenuItemNode        = require('../components/nodes/nav/MenuItemNode.jsx').NavMenuItemNode;
-var NavMenuItemEditNode    = require('../components/nodes/nav/MenuItemNode.jsx').NavMenuItemEditNode;
-var NavMenuNode            = require('../components/nodes/nav/MenuNode.jsx').NavMenuNode;
-var NavMenuEditNode        = require('../components/nodes/nav/MenuNode.jsx').NavMenuEditNode;
+    // NAV
+    NavBreadcrumbsNode:         require('../components/nodes/nav/Breadcrumbs.jsx').NavBreadcrumbsNode,
+    NavBreadcrumbsEditNode:     require('../components/nodes/nav/Breadcrumbs.jsx').NavBreadcrumbsEditNode,
+    NavBreadcrumbsItemNode:     require('../components/nodes/nav/Breadcrumbs.jsx').NavBreadcrumbsItemNode,
+    NavBreadcrumbsItemEditNode: require('../components/nodes/nav/Breadcrumbs.jsx').NavBreadcrumbsItemEditNode,
+    NavMenuItemNode:            require('../components/nodes/nav/MenuItemNode.jsx').NavMenuItemNode,
+    NavMenuItemEditNode:        require('../components/nodes/nav/MenuItemNode.jsx').NavMenuItemEditNode,
+    NavMenuNode:                require('../components/nodes/nav/MenuNode.jsx').NavMenuNode,
+    NavMenuEditNode:            require('../components/nodes/nav/MenuNode.jsx').NavMenuEditNode
+};
 
 function Protofight (config) {
     EventEmitter.call(this);
@@ -81,9 +85,10 @@ Protofight.prototype.createNode = function (type, parent) {
     };
 
     var p = $.ajax({
-        url:    this.baseApiUrl + 'nodes',
-        method: 'POST',
-        data:   newNode
+        url:         this.baseApiUrl + 'nodes',
+        method:      'POST',
+        contentType: 'application/json',
+        data:        JSON.stringify(newNode)
     });
 
     this.augmentNode(newNode);
@@ -95,36 +100,41 @@ Protofight.prototype.createNode = function (type, parent) {
 
 Protofight.prototype.save = function (node) {
     var p = $.ajax({
-        url:    this.baseApiUrl + 'nodes',
-        method: 'PUT',
-        data:   node
+        url:         this.baseApiUrl + 'nodes/' + node._id,
+        method:      'PUT',
+        contentType: 'application/json',
+        data:        JSON.stringify(node)
     });
 };
 
+/**
+ * Returns matching react component for given node in given mode (view/edit).
+ *
+ * @param {object} node
+ * @param {string} mode
+ * @returns {*}
+ */
 Protofight.prototype.getNodeComponent = function (node, mode) {
-    for (var i = 0; i < Protofight.nodeTypes.length; i++) {
-        var type = Protofight.nodeTypes[i];
-        if (type.type === node.type) {
-            if (!type.component || !type.component[mode]) {
-                throw new Error('Node type "' + type.type + '" has an invalid configuration for mode "' + mode + '"');
-            }
+    var type = nodeTypes.getType(node.type);
 
-            try {
-                // @todo find a cleaner way to handle dynamic component creation…
-                return (eval(type.component[mode]))({
-                    key:  node._id,
-                    node: node,
-                    app:  this
-                });
-            } catch (e) {
-                throw new Error('"' + type.component + '" is not a valid component');
-            }
-        }
+    if (!type.component || !type.component[mode] || !components[type.component[mode]]) {
+        throw new Error('Unable to instantiate component for type "' + type.type + '" with mode "' + mode + '"');
     }
 
-    throw new Error('Unable to get component for node: ' + node.type);
+    return components[type.component[mode]]({
+        key:  node._id,
+        node: node,
+        app:  this
+    });
 };
 
+/**
+ * Build child node components from given parent node.
+ *
+ * @param {object} node
+ * @param {string} mode
+ * @returns {Array}
+ */
 Protofight.prototype.buildChildNodeList = function (node, mode) {
     var children = [];
     node.nodes.forEach(function (childNode) {
@@ -134,13 +144,22 @@ Protofight.prototype.buildChildNodeList = function (node, mode) {
     return children;
 };
 
+/**
+ * 'Augment' nodes with custom method according to its type.
+ *
+ * @param {array} nodes
+ */
 Protofight.prototype.augmentNodes = function (nodes) {
     nodes.forEach(function (node) {
         this.augmentNode(node);
     }.bind(this));
 };
 
-
+/**
+ * 'Augment' node with custom method according to its type.
+ *
+ * @param {object} node
+ */
 Protofight.prototype.augmentNode = function (node) {
     if (node.type === 'breadcrumbs') {
         node.getItems = function () {
@@ -157,204 +176,6 @@ Protofight.prototype.augmentNode = function (node) {
         this.augmentNodes(node.nodes);
     }
 };
-
-
-
-/**
- * Define all available nodes.
- */
-Protofight.nodeTypes = [
-    //---------------------------------------------------------
-    //
-    // CONTENT related types
-    //
-    //---------------------------------------------------------
-    {
-        name:      'Node container',
-        type:      'container',
-        component: {
-            view: 'ContentContainerNode',
-            edit: 'ContentContainerEditNode'
-        },
-        accept:   [
-            'code',
-            'text',
-            'menu',
-            'container',
-            'chart',
-            'breadcrumbs',
-            'layout.row'
-        ]
-    },
-    {
-        name:      'Text node',
-        type:      'text',
-        component: {
-            view: 'ContentTextNode',
-            edit: 'ContentTextNode'
-        },
-        accept:    null,
-        defaults: {
-            content: ''
-        }
-    },
-    {
-        name:      'Code node',
-        type:      'code',
-        component: {
-            view: 'ContentTextNode',
-            edit: 'ContentTextNode'
-        },
-        accept:    null,
-        defaults: {
-            lang:    '',
-            content: ''
-        }
-    },
-
-    //---------------------------------------------------------
-    //
-    // NAV related types
-    //
-    //---------------------------------------------------------
-    {
-        name:      'Breadcrumbs',
-        type:      'breadcrumbs',
-        component: {
-            view: 'NavBreadcrumbsNode',
-            edit: 'NavBreadcrumbsEditNode'
-        },
-        accept:    null
-    },
-    {
-        name:      'Menu',
-        type:      'menu',
-        component: {
-            view: 'NavMenuNode',
-            edit: 'NavMenuEditNode'
-        },
-        accept:    [
-            'menu.item'
-        ]
-    },
-    {
-        name:      'Menu item',
-        type:      'menu.item',
-        component: {
-            view: 'NavMenuItemNode',
-            edit: 'NavMenuItemEditNode'
-        },
-        accept:    null,
-        defaults:  {
-            label:  'Item label',
-            target: null
-        }
-    },
-
-    //---------------------------------------------------------
-    //
-    // DATA related types
-    //
-    //---------------------------------------------------------
-    {
-        name:      'Static json',
-        type:      'data.static_json',
-        component: {
-            view: 'DataStaticJsonNode',
-            edit: 'DataStaticJsonNode'
-        },
-        accept:    null,
-        defaults: {
-            content: '{}'
-        }
-    },
-
-    //---------------------------------------------------------
-    //
-    // LAYOUT related types
-    //
-    //---------------------------------------------------------
-    {
-        name:      'Row',
-        type:      'layout.row',
-        component: {
-            view: 'LayoutRowNode',
-            edit: 'LayoutRowEditNode'
-        },
-        defaults: {
-            columns: 12
-        },
-        accept:   [
-            'layout.cell'
-        ]
-    },
-    {
-        name:      'Cell',
-        type:      'layout.cell',
-        component: {
-            view: 'LayoutCellNode',
-            edit: 'LayoutCellEditNode'
-        },
-        defaults: {
-            columns:     12,
-            offsetLeft:  0,
-            offsetRight: 0
-        },
-        accept:   [
-            'code',
-            'text',
-            'menu',
-            'container',
-            'chart',
-            'breadcrumbs'
-        ]
-    },
-
-    //---------------------------------------------------------
-    //
-    // DATA VIZ related types
-    //
-    //---------------------------------------------------------
-    {
-        name:      'Chart',
-        type:      'chart',
-        component: {
-            view: 'ChartSimpleLineNode',
-            edit: 'ChartSimpleLineEditNode'
-        },
-        accept:    [
-            'data.static_json'
-        ]
-    },
-
-    {
-        name:      'Pie chart',
-        type:      'chart.pie',
-        component: {
-            view: 'ChartPieNode',
-            edit: 'ChartPieEditNode'
-        },
-        accept:    [
-            'data.static_json'
-        ],
-        defaults:  {
-            showLabels:         true,
-            showLegend:         false,
-            donut:              true,
-            transition:         true,
-            transitionDuration: 400
-        }
-    },
-    {
-        name:      'Simple line chart',
-        type:      'chart.simple_line',
-        component: {
-            view: 'ChartSimpleLineNode',
-            edit: 'ChartSimpleLineEditNode'
-        },
-        accept:    ['data.static_json']
-    }
-];
 
 exports.Protofight = Protofight;
 

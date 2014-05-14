@@ -14,7 +14,7 @@
   .fa-angle-left  { display: inline-block; }
   .fa-angle-right { display: none;         }
 }
-.aside--left--closed {
+.aside--left[data-state=closed] {
   left: -$aside-width + $aside-toggle-size;
   .fa-angle-left  { display: none;         }
   .fa-angle-right { display: inline-block; }
@@ -23,10 +23,15 @@
   right: 0;
   padding: 0 10px 0 $aside-toggle-size + 10px;
   border-left: 1px solid #ddd;
+  .fa-angle-left  { display: none;         }
+  .fa-angle-right { display: inline-block; }
 }
-.aside--right--closed {
+.aside--right[data-state=closed] {
   right: -$aside-width + $aside-toggle-size;
+  .fa-angle-left  { display: inline-block; }
+  .fa-angle-right { display: none;         }
 }
+
 .aside__toggle {
   cursor: pointer;
   position: absolute;

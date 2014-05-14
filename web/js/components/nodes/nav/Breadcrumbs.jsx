@@ -8,38 +8,22 @@ var EditableNodeMixin  = require('../../../mixins/EditableNodeMixin.jsx');
 var ContainerNodeMixin = require('../../../mixins/ContainerNodeMixin.jsx');
 
 var NavBreadcrumbsNode = React.createClass({
+    mixins: [
+        ContainerNodeMixin
+    ],
+
     propTypes: {
         node: React.PropTypes.object.isRequired
     },
 
-    getInitialState: function() {
-        return {
-            items: []
-        };
-    },
-
-    componentDidMount: function() {
-        this.props.node.getItems()
-            .done(function (items) {
-                var nodes = [];
-                for (var id in items) {
-                    var item = items[id];
-                    nodes.push(<span className="breadcrumbs__item" key={ item._id }>{ item.name }</span>);
-                }
-
-                this.setState({
-                    items: nodes
-                });
-            }.bind(this));
-    },
-
     render: function () {
+        var children = this.getChildrenNodes('view');
+
         return (
-            <div className="breadcrumbs">{ this.state.items }</div>
+            <div className="breadcrumbs">{ children }</div>
         );
     }
 });
-
 exports.NavBreadcrumbsNode = NavBreadcrumbsNode;
 
 
@@ -61,7 +45,7 @@ var NavBreadcrumbsEditNode = React.createClass({
     render: function () {
         var children = this.getChildrenNodes('edit');
 
-        var classes  = 'node';
+        var classes = 'node';
         if (this.state.edit) {
             classes += ' node--editing';
         }
@@ -89,5 +73,59 @@ var NavBreadcrumbsEditNode = React.createClass({
         );
     }
 });
-
 exports.NavBreadcrumbsEditNode = NavBreadcrumbsEditNode;
+
+
+
+var NavBreadcrumbsItemNode = React.createClass({
+    propTypes: {
+        node: React.PropTypes.object.isRequired
+    },
+
+    render: function () {
+        return (
+            <span className="breadcrumbs__item" key={ this.props.node._id }>{ this.props.node.name }</span>
+        );
+    }
+});
+exports.NavBreadcrumbsItemNode = NavBreadcrumbsItemNode;
+
+
+
+var NavBreadcrumbsItemEditNode = React.createClass({
+    mixins: [
+        EditableNodeMixin
+    ],
+
+    propTypes: {
+        node: React.PropTypes.object.isRequired
+    },
+
+    render: function () {
+        var classes = 'node';
+        if (this.state.edit) {
+            classes += ' node--editing';
+        }
+
+        return (
+            <div className={ classes }>
+                <span className="node__title">{ this.props.node.name }</span>
+                <div className="node__controls">
+                    <span className="button button--s" onClick={ this.onEditClick }>
+                        <i className="fa fa-pencil"></i>
+                        <i className="fa fa-eye"></i>
+                    </span>
+                </div>
+                <div className="node--edit">
+                    <form onSubmit={ this.handleSubmit }>
+                        <p>
+                            <button className="button" type="submit">save</button>
+                            <span className="button button--warning">cancel</span>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        );
+    }
+});
+exports.NavBreadcrumbsItemEditNode = NavBreadcrumbsItemEditNode;

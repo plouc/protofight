@@ -45,6 +45,7 @@ NodeSchema.pre('save', function (next) {
                 });
             });
         } else {
+            node.depth = 0;
             next();
         }
     } else {

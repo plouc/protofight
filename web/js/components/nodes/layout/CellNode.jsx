@@ -40,12 +40,21 @@ var LayoutCellEditNode = React.createClass({
         node: React.PropTypes.object.isRequired
     },
 
-    handleSubmit: function () {
+    _onSubmit: function (e) {
+        e.preventDefault();
+
+        var settings = {
+            columns: this.refs.columns.getDOMNode().value
+        };
+
+        this.props.node.settings = settings;
+        this.props.app.save(this.props.node);
+
         return false;
     },
 
     render: function () {
-        var children = this.getChildrenNodes('view');
+        var children = this.getChildrenNodes('edit');
 
         var classes  = 'node';
         if (this.state.edit) {
@@ -63,7 +72,7 @@ var LayoutCellEditNode = React.createClass({
                     </span>
                 </div>
                 <div className="node--edit">
-                    <form onSubmit={ this.handleSubmit }>
+                    <form onSubmit={ this._onSubmit }>
                         <p>
                             <label>Columns</label>
                             <input type="text" defaultValue={ this.props.node.settings.columns } ref="columns" />

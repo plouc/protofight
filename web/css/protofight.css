@@ -153,20 +153,28 @@ a {
   .aside--left .fa-angle-right {
     display: none; }
 
-.aside--left--closed {
+.aside--left[data-state=closed] {
   left: -230px; }
-  .aside--left--closed .fa-angle-left {
+  .aside--left[data-state=closed] .fa-angle-left {
     display: none; }
-  .aside--left--closed .fa-angle-right {
+  .aside--left[data-state=closed] .fa-angle-right {
     display: inline-block; }
 
 .aside--right {
   right: 0;
   padding: 0 10px 0 40px;
   border-left: 1px solid #ddd; }
+  .aside--right .fa-angle-left {
+    display: none; }
+  .aside--right .fa-angle-right {
+    display: inline-block; }
 
-.aside--right--closed {
+.aside--right[data-state=closed] {
   right: -230px; }
+  .aside--right[data-state=closed] .fa-angle-left {
+    display: inline-block; }
+  .aside--right[data-state=closed] .fa-angle-right {
+    display: none; }
 
 .aside__toggle {
   cursor: pointer;
@@ -287,10 +295,13 @@ a {
   background-color: #eee; }
   .node--edit {
     display: none; }
+  .node__controls > * {
+    display: block;
+    float: right; }
 
 .node--editing {
   background-color: #fff; }
-  .node--editing .node--edit {
+  .node--editing > .node--edit {
     display: block; }
   .node--editing .node__controls .fa-pencil {
     display: none; }
@@ -403,6 +414,31 @@ input[type="url"] {
   .node-menu__item._is_active {
     background-color: #eeee99; }
 
+.node-type-selector > .button {
+  display: block; }
+.node-type-selector__list {
+  z-index: 1000;
+  font-size: 12px;
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 7px;
+  background-color: #fff;
+  border-radius: 2px;
+  padding: 5px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.35); }
+  .node-type-selector__list__item {
+    display: block;
+    white-space: pre;
+    padding: 3px 10px;
+    cursor: pointer;
+    border-radius: 2px; }
+    .node-type-selector__list__item:hover {
+      background-color: #c8e8e8; }
+.node-type-selector--opened .node-type-selector__list {
+  display: block; }
+
 .grid__cell--1 {
   width: 8.33%; }
 
@@ -420,3 +456,6 @@ input[type="url"] {
 
 .grid__cell--6 {
   width: 50%; }
+
+.grid__cell--12 {
+  width: 100%; }

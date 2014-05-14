@@ -7,7 +7,7 @@ module.exports = {
         };
     },
 
-    onEditClick: function () {
+    onEditClick: function (e) {
         this.setState({
             edit: !this.state.edit
         });

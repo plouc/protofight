@@ -80,8 +80,17 @@ var ChartPieEditNode = React.createClass({
         node: React.PropTypes.object.isRequired
     },
 
-    onSubmit: function (e) {
+    _onSubmit: function (e) {
         e.preventDefault();
+
+        var settings = {
+            showLabel:  this.refs.showLabel.getDOMNode().value,
+            showLegend: this.refs.showLegend.getDOMNode().value
+        };
+        console.log('saving chart pie node', settings);
+
+
+
 
         return false;
     },
@@ -106,29 +115,14 @@ var ChartPieEditNode = React.createClass({
                     </span>
                 </div>
                 <div className="node--edit">
-                    <form onSubmit={ this.onSubmit }>
+                    <form onSubmit={ this._onSubmit }>
                         <p>
-                            <label>Margin left</label>
-                            <input type="text" defaultValue={ this.props.node.settings.marginLeft } />
-
-                            <label>Margin right</label>
-                            <input type="text" defaultValue={ this.props.node.settings.marginRight } />
+                            <label>Show label</label>
+                            <input type="checkbox" defaultValue={ this.props.node.settings.showLabel } ref="showLabel" />
                         </p>
                         <p>
-                            <label>Show X axis</label>
-                            <input type="checkbox" defaultValue={ this.props.node.settings.showXaxis } />
-
-                            <label>Show Y axis</label>
-                            <input type="checkbox" defaultValue={ this.props.node.settings.showYaxis } />
-                        </p>
-
-                        <p>
-                            <label>Use interactive guideline</label>
-                            <input type="checkbox" defaultValue={ this.props.node.settings.useInteractiveGuideline } />
-                        </p>
-                        <p>
-                            <label>Transition duration</label>
-                            <input type="text" defaultValue={ this.props.node.settings.transitionDuration } />
+                            <label>Show legend</label>
+                            <input type="checkbox" defaultValue={ this.props.node.settings.showLegend } ref="showLegend" />
                         </p>
                         <p>
                             <button className="button" type="submit">save</button>

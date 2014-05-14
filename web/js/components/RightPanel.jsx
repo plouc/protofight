@@ -6,15 +6,27 @@ var React     = require('react');
 var NodeTypes = require('./NodeTypes.jsx').NodeTypes;
 
 var RightPanel = React.createClass({
+    getInitialState: function () {
+        return {
+            closed: false
+        };
+    },
+
+    _onToggleClick: function (e) {
+        this.setState({
+            closed: !this.state.closed
+        });
+    },
+
     render: function () {
-        //ng-class="{ 'aside--right--closed': !asideRight }"
-        //{ 'fa-angle-left': !asideRight, 'fa-angle-right': asideRight }
+        var state = this.state.closed ? 'closed' : 'opened';
 
         return (
-            <aside className="aside aside--right">
-                <h2>components</h2>
-                <span className="aside__toggle aside__toggle--right">
-                    <i className="fa"></i>
+            <aside className="aside aside--right" data-state={ state }>
+                <h2>Components</h2>
+                <span className="aside__toggle aside__toggle--right" onClick={ this._onToggleClick }>
+                    <i className="fa fa-angle-left"></i>
+                    <i className="fa fa-angle-right"></i>
                 </span>
                 <NodeTypes app={ this.props.app } />
             </aside>

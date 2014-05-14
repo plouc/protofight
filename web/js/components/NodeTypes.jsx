@@ -2,8 +2,8 @@
 
 'use strict';
 
-var React = require('react');
-var protofight;
+var React     = require('react');
+var nodeTypes = require('../lib/nodeTypes');
 
 var NodeType = React.createClass({
     propTypes: {
@@ -11,6 +11,8 @@ var NodeType = React.createClass({
 
     onClick: function (e) {
         e.preventDefault();
+
+        console.log('onClick', this.props.data);
 
         this.props.app.createNode(this.props.data);
     },
@@ -29,10 +31,8 @@ var NodeTypes = React.createClass({
     },
 
     getInitialState: function() {
-        var nodeTypes = require('../lib/Protofight').Protofight.nodeTypes;
-
         return {
-            nodeTypes: nodeTypes
+            nodeTypes: nodeTypes.all
         };
     },
 

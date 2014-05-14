@@ -12,25 +12,19 @@ var LeftPanel = React.createClass({
         };
     },
 
-    onToggleClick: function (e) {
+    _onToggleClick: function (e) {
         this.setState({
             closed: !this.state.closed
         });
     },
 
-    componentDidMount: function () {
-    },
-
     render: function () {
-        var classes = 'aside aside--left';
-        if (this.state.closed) {
-            classes += ' aside--left--closed';
-        }
+        var state = this.state.closed ? 'closed' : 'opened';
 
         return (
-            <aside className={ classes }>
+            <aside className="aside aside--left" data-state={ state }>
                 <h2>Nodes</h2>
-                <span className="aside__toggle aside__toggle--left" onClick={ this.onToggleClick }>
+                <span className="aside__toggle aside__toggle--left" onClick={ this._onToggleClick }>
                     <i className="fa fa-angle-left"></i>
                     <i className="fa fa-angle-right"></i>
                 </span>
