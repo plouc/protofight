@@ -7,7 +7,7 @@ exports.list = function (req, res) {
     Node
         .find()
         .sort({'name': 1})
-        .limit(30)
+        .limit(100)
         .exec(function (err, nodes) {
             if (err) {
                 res.status(500);

@@ -6,11 +6,13 @@ var React              = require('react');
 var NodeTypeSelector   = require('../../NodeTypeSelector.jsx');
 var EditableNodeMixin  = require('../../../mixins/EditableNodeMixin.jsx');
 var ContainerNodeMixin = require('../../../mixins/ContainerNodeMixin.jsx');
+var LiveNodeMixin      = require('../../../mixins/LiveNodeMixin.jsx');
 
 
 var LayoutCellNode = React.createClass({
     mixins: [
-        ContainerNodeMixin
+        ContainerNodeMixin,
+        LiveNodeMixin
     ],
 
     propTypes: {
@@ -33,7 +35,8 @@ exports.LayoutCellNode = LayoutCellNode;
 var LayoutCellEditNode = React.createClass({
     mixins: [
         EditableNodeMixin,
-        ContainerNodeMixin
+        ContainerNodeMixin,
+        LiveNodeMixin
     ],
 
     propTypes: {
@@ -63,7 +66,7 @@ var LayoutCellEditNode = React.createClass({
 
         return (
             <div className={ classes }>
-                <span className="node__title">{ this.props.node.name }</span>
+                <span className="node__title">{ this.state.node.name }</span>
                 <div className="node__controls">
                     <NodeTypeSelector node={ this.props.node } />
                     <span className="button button--s" onClick={ this.onEditClick }>
@@ -75,7 +78,7 @@ var LayoutCellEditNode = React.createClass({
                     <form onSubmit={ this._onSubmit }>
                         <p>
                             <label>Columns</label>
-                            <input type="text" defaultValue={ this.props.node.settings.columns } ref="columns" />
+                            <input type="text" defaultValue={ this.state.node.settings.columns } ref="columns" />
                         </p>
                         <p>
                             <button className="button" type="submit">save</button>

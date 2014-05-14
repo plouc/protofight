@@ -41,6 +41,11 @@ function Protofight (config) {
     EventEmitter.call(this);
     this.currentNode = null;
     this.baseApiUrl  = 'http://localhost:4000/';
+
+    // Due to:
+    // warning: possible EventEmitter memory leak detected. 11 listeners added.
+    // Use emitter.setMaxListeners() to increase limit.
+    this.setMaxListeners(200);
 }
 
 Protofight.prototype = new EventEmitter;
@@ -105,6 +110,10 @@ Protofight.prototype.save = function (node) {
         contentType: 'application/json',
         data:        JSON.stringify(node)
     });
+
+    p.then(function (node) {
+        this.emit('node.update', node);
+    }.bind(this));
 };
 
 /**

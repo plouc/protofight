@@ -50078,7 +50078,7 @@ var NodeView = React.createClass({displayName: 'NodeView',
 });
 
 NodeStore.refreshNodes();
-},{"../stores/NodeStore":271,"./LeftPanel.jsx":247,"./RightPanel.jsx":252,"react":244}],252:[function(require,module,exports){
+},{"../stores/NodeStore":272,"./LeftPanel.jsx":247,"./RightPanel.jsx":252,"react":244}],252:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -50431,6 +50431,7 @@ var React              = require('react');
 var NodeTypeSelector   = require('../../NodeTypeSelector.jsx');
 var EditableNodeMixin  = require('../../../mixins/EditableNodeMixin.jsx');
 var ContainerNodeMixin = require('../../../mixins/ContainerNodeMixin.jsx');
+var LiveNodeMixin      = require('../../../mixins/LiveNodeMixin.jsx');
 
 var ContentContainerNode = React.createClass({displayName: 'ContentContainerNode',
     mixins: [
@@ -50456,7 +50457,8 @@ exports.ContentContainerNode = ContentContainerNode;
 var ContentContainerEditNode = React.createClass({displayName: 'ContentContainerEditNode',
     mixins: [
         EditableNodeMixin,
-        ContainerNodeMixin
+        ContainerNodeMixin,
+        LiveNodeMixin
     ],
 
     propTypes: {
@@ -50499,7 +50501,7 @@ var ContentContainerEditNode = React.createClass({displayName: 'ContentContainer
     }
 });
 exports.ContentContainerEditNode = ContentContainerEditNode;
-},{"../../../mixins/ContainerNodeMixin.jsx":269,"../../../mixins/EditableNodeMixin.jsx":270,"../../NodeTypeSelector.jsx":249,"react":244}],256:[function(require,module,exports){
+},{"../../../mixins/ContainerNodeMixin.jsx":269,"../../../mixins/EditableNodeMixin.jsx":270,"../../../mixins/LiveNodeMixin.jsx":271,"../../NodeTypeSelector.jsx":249,"react":244}],256:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -50548,11 +50550,13 @@ var React              = require('react');
 var NodeTypeSelector   = require('../../NodeTypeSelector.jsx');
 var EditableNodeMixin  = require('../../../mixins/EditableNodeMixin.jsx');
 var ContainerNodeMixin = require('../../../mixins/ContainerNodeMixin.jsx');
+var LiveNodeMixin      = require('../../../mixins/LiveNodeMixin.jsx');
 
 
 var LayoutCellNode = React.createClass({displayName: 'LayoutCellNode',
     mixins: [
-        ContainerNodeMixin
+        ContainerNodeMixin,
+        LiveNodeMixin
     ],
 
     propTypes: {
@@ -50575,7 +50579,8 @@ exports.LayoutCellNode = LayoutCellNode;
 var LayoutCellEditNode = React.createClass({displayName: 'LayoutCellEditNode',
     mixins: [
         EditableNodeMixin,
-        ContainerNodeMixin
+        ContainerNodeMixin,
+        LiveNodeMixin
     ],
 
     propTypes: {
@@ -50605,7 +50610,7 @@ var LayoutCellEditNode = React.createClass({displayName: 'LayoutCellEditNode',
 
         return (
             React.DOM.div( {className: classes }, 
-                React.DOM.span( {className:"node__title"},  this.props.node.name ),
+                React.DOM.span( {className:"node__title"},  this.state.node.name ),
                 React.DOM.div( {className:"node__controls"}, 
                     NodeTypeSelector( {node: this.props.node } ),
                     React.DOM.span( {className:"button button--s", onClick: this.onEditClick }, 
@@ -50617,7 +50622,7 @@ var LayoutCellEditNode = React.createClass({displayName: 'LayoutCellEditNode',
                     React.DOM.form( {onSubmit: this._onSubmit }, 
                         React.DOM.p(null, 
                             React.DOM.label(null, "Columns"),
-                            React.DOM.input( {type:"text", defaultValue: this.props.node.settings.columns,  ref:"columns"} )
+                            React.DOM.input( {type:"text", defaultValue: this.state.node.settings.columns,  ref:"columns"} )
                         ),
                         React.DOM.p(null, 
                             React.DOM.button( {className:"button", type:"submit"}, "save"),
@@ -50631,7 +50636,7 @@ var LayoutCellEditNode = React.createClass({displayName: 'LayoutCellEditNode',
     }
 });
 exports.LayoutCellEditNode = LayoutCellEditNode;
-},{"../../../mixins/ContainerNodeMixin.jsx":269,"../../../mixins/EditableNodeMixin.jsx":270,"../../NodeTypeSelector.jsx":249,"react":244}],259:[function(require,module,exports){
+},{"../../../mixins/ContainerNodeMixin.jsx":269,"../../../mixins/EditableNodeMixin.jsx":270,"../../../mixins/LiveNodeMixin.jsx":271,"../../NodeTypeSelector.jsx":249,"react":244}],259:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -50640,7 +50645,7 @@ var React              = require('react');
 var NodeTypeSelector   = require('../../NodeTypeSelector.jsx');
 var EditableNodeMixin  = require('../../../mixins/EditableNodeMixin.jsx');
 var ContainerNodeMixin = require('../../../mixins/ContainerNodeMixin.jsx');
-
+var LiveNodeMixin      = require('../../../mixins/LiveNodeMixin.jsx');
 
 var LayoutRowNode = React.createClass({displayName: 'LayoutRowNode',
     mixins: [
@@ -50666,7 +50671,8 @@ exports.LayoutRowNode = LayoutRowNode;
 var LayoutRowEditNode = React.createClass({displayName: 'LayoutRowEditNode',
     mixins: [
         EditableNodeMixin,
-        ContainerNodeMixin
+        ContainerNodeMixin,
+        LiveNodeMixin
     ],
 
     propTypes: {
@@ -50722,7 +50728,7 @@ var LayoutRowEditNode = React.createClass({displayName: 'LayoutRowEditNode',
     }
 });
 exports.LayoutRowEditNode = LayoutRowEditNode;
-},{"../../../mixins/ContainerNodeMixin.jsx":269,"../../../mixins/EditableNodeMixin.jsx":270,"../../NodeTypeSelector.jsx":249,"react":244}],260:[function(require,module,exports){
+},{"../../../mixins/ContainerNodeMixin.jsx":269,"../../../mixins/EditableNodeMixin.jsx":270,"../../../mixins/LiveNodeMixin.jsx":271,"../../NodeTypeSelector.jsx":249,"react":244}],260:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -51178,6 +51184,11 @@ function Protofight (config) {
     EventEmitter.call(this);
     this.currentNode = null;
     this.baseApiUrl  = 'http://localhost:4000/';
+
+    // Due to:
+    // warning: possible EventEmitter memory leak detected. 11 listeners added.
+    // Use emitter.setMaxListeners() to increase limit.
+    this.setMaxListeners(200);
 }
 
 Protofight.prototype = new EventEmitter;
@@ -51242,6 +51253,10 @@ Protofight.prototype.save = function (node) {
         contentType: 'application/json',
         data:        JSON.stringify(node)
     });
+
+    p.then(function (node) {
+        this.emit('node.update', node);
+    }.bind(this));
 };
 
 /**
@@ -65961,6 +65976,32 @@ module.exports = {
     }
 };
 },{}],271:[function(require,module,exports){
+/** @jsx React.DOM */'use strict';
+
+module.exports = {
+    getInitialState: function () {
+        return {
+            node: this.props.node
+        };
+    },
+
+    _onNodeUpdate: function (node) {
+        if (node._id === this.props.node._id) {
+            this.setState({
+                node: node
+            });
+        }
+    },
+
+    componentWillMount: function () {
+        this.props.app.on('node.update', this._onNodeUpdate);
+    },
+
+    componentWillUnmount: function () {
+        this.props.app.removeListener('node.update', this._onNodeUpdate);
+    }
+};
+},{}],272:[function(require,module,exports){
 'use strict';
 
 var AppDispatcher = require('../dispatchers/AppDispatcher');
