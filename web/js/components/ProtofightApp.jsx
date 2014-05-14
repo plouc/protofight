@@ -41,13 +41,29 @@ module.exports = ProtofightApp;
 
 var NodeView = React.createClass({
     getInitialState: function () {
+        this.props.app.on('create', function (node) {
+            this.setState({
+                viewMode: this.state.viewMode,
+                node:     node
+            });
+        }.bind(this));
+
+        this.props.app.on('select', function (node) {
+            this.setState({
+                viewMode: this.state.viewMode,
+                node:     node
+            });
+        }.bind(this));
+
         return {
+            node:     false,
             viewMode: 'struct'
         };
     },
 
     handleClick: function (mode, e) {
         this.setState({
+            node:     this.state.node,
             viewMode: mode
         });
     },
@@ -59,16 +75,16 @@ var NodeView = React.createClass({
         var nodePreview = '';
         var nodeRaw     = '';
 
-        if (this.props.node && this.state.viewMode == 'struct') {
-            nodeStruct  = this.props.app.getNodeComponent(this.props.node, 'edit');
+        if (this.state.node && this.state.viewMode == 'struct') {
+            nodeStruct = this.props.app.getNodeComponent(this.state.node, 'edit');
         }
 
-        if (this.props.node && this.state.viewMode == 'preview') {
-            nodePreview = this.props.app.getNodeComponent(this.props.node, 'view');
+        if (this.state.node && this.state.viewMode == 'preview') {
+            nodePreview = this.props.app.getNodeComponent(this.state.node, 'view');
         }
 
-        if (this.props.node && this.state.viewMode == 'raw') {
-            nodeRaw = JSON.stringify(this.props.node, '', 4);
+        if (this.state.node && this.state.viewMode == 'raw') {
+            nodeRaw = JSON.stringify(this.state.node, '', 4);
         }
 
         return (

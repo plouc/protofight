@@ -1,10 +1,11 @@
 /** @jsx React.DOM */
 
+'use strict';
+
 var React = require('react');
 
 var DataStaticJsonNode = React.createClass({
     propTypes: {
-        app:  React.PropTypes.instanceOf(Protofight).isRequired,
         node: React.PropTypes.object.isRequired
     },
 
@@ -14,3 +15,5 @@ var DataStaticJsonNode = React.createClass({
         );
     }
 });
+
+exports.DataStaticJsonNode = DataStaticJsonNode;

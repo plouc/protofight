@@ -244,7 +244,8 @@ a {
   margin: 0;
   padding: 10px 15px;
   font-family: consolas, menlo, monaco, monospace;
-  font-size: 12px; }
+  font-size: 12px;
+  min-height: 100%; }
   .node-view--raw .content-raw {
     display: block; }
 

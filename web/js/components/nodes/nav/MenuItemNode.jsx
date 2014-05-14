@@ -1,10 +1,11 @@
 /** @jsx React.DOM */
 
+'use strict';
+
 var React = require('react');
 
 var NavMenuItemNode = React.createClass({
     propTypes: {
-        app:  React.PropTypes.instanceOf(Protofight).isRequired,
         node: React.PropTypes.object.isRequired
     },
 
@@ -17,10 +18,12 @@ var NavMenuItemNode = React.createClass({
     }
 });
 
+exports.NavMenuItemNode = NavMenuItemNode;
+
+
 
 var NavMenuItemEditNode = React.createClass({
     propTypes: {
-        app:  React.PropTypes.instanceOf(Protofight).isRequired,
         node: React.PropTypes.object.isRequired
     },
 
@@ -91,3 +94,5 @@ var NavMenuItemEditNode = React.createClass({
         );
     }
 });
+
+exports.NavMenuItemEditNode = NavMenuItemEditNode;

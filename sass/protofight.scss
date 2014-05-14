@@ -116,6 +116,7 @@ $aside-toggle-size: 30px;
   padding: 10px 15px;
   font-family: consolas, menlo, monaco, monospace;
   font-size: 12px;
+  min-height: 100%;
   .node-view--raw & {
     display: block;
   }

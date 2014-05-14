@@ -1,10 +1,12 @@
 /** @jsx React.DOM */
 
-var React = require('react');
+'use strict';
+
+var React      = require('react');
+var Protofight = require('../../../lib/Protofight');
 
 var NavBreadcrumbsNode = React.createClass({
     propTypes: {
-        app:  React.PropTypes.instanceOf(Protofight).isRequired,
         node: React.PropTypes.object.isRequired
     },
 
@@ -35,3 +37,5 @@ var NavBreadcrumbsNode = React.createClass({
         );
     }
 });
+
+exports.NavBreadcrumbsNode = NavBreadcrumbsNode;

@@ -1,11 +1,11 @@
 /** @jsx React.DOM */
 
-var React = require('react');
-var d3    = require('d3');
+var React      = require('react');
+var d3         = require('d3');
+var nv         = require('../../../lib/nvd3');
 
 var ChartPieNode = React.createClass({
     propTypes: {
-        app:  React.PropTypes.instanceOf(Protofight).isRequired,
         node: React.PropTypes.object.isRequired
     },
 

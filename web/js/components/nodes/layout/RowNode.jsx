@@ -1,14 +1,18 @@
 /** @jsx React.DOM */
 
-var React = require('react');
+'use strict';
+
+var React      = require('react');
+var protofight;
 
 var LayoutRowNode = React.createClass({
     propTypes: {
-        app:  React.PropTypes.instanceOf(Protofight).isRequired,
         node: React.PropTypes.object.isRequired
     },
 
     render: function () {
+        protofight = require('../../../lib/Protofight').protofight();
+
         var children = protofight.buildChildNodeList(this.props.node, 'view');
 
         return (
@@ -17,11 +21,13 @@ var LayoutRowNode = React.createClass({
     }
 });
 
+exports.LayoutRowNode = LayoutRowNode;
+
+
 
 
 var LayoutRowEditNode = React.createClass({
     propTypes: {
-        app:  React.PropTypes.instanceOf(Protofight).isRequired,
         node: React.PropTypes.object.isRequired
     },
 
@@ -42,6 +48,8 @@ var LayoutRowEditNode = React.createClass({
     },
 
     render: function () {
+        protofight = require('../../../lib/Protofight').protofight();
+
         var children = protofight.buildChildNodeList(this.props.node, 'edit');
 
         var classes  = 'node';
@@ -75,3 +83,5 @@ var LayoutRowEditNode = React.createClass({
         );
     }
 });
+
+exports.LayoutRowEditNode = LayoutRowEditNode;

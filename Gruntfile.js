@@ -27,7 +27,8 @@
                 browserify: {
                     files: [
                         'web/js/**/*.js',
-                        'web/js/**/*.jsx'
+                        'web/js/**/*.jsx',
+                        '!web/js/bundle.js'
                     ],
                     tasks: ['browserify:dev']
                 }

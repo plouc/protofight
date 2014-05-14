@@ -2,9 +2,10 @@
 
 'use strict';
 
-var React = require('react');
+var React    = require('react');
+var classSet = require('react-addons').classSet;
 
-exports.NodeMenu = React.createClass({
+var NodeMenu = React.createClass({
     render: function () {
         var children = [];
         this.props.nodes.forEach(function (node) {
@@ -16,7 +17,11 @@ exports.NodeMenu = React.createClass({
     }
 });
 
-exports.NodeMenuItem = React.createClass({
+exports.NodeMenu = NodeMenu;
+
+
+
+var NodeMenuItem = React.createClass({
     getInitialState: function() {
         return {
             active: false
@@ -33,8 +38,7 @@ exports.NodeMenuItem = React.createClass({
     },
 
     render: function () {
-        var cx = React.addons.classSet;
-        var classes = cx({
+        var classes = classSet({
             'node-menu__item': true,
             '_is_active':      this.state.active
         });
@@ -43,3 +47,5 @@ exports.NodeMenuItem = React.createClass({
         );
     }
 });
+
+exports.NodeMenuItem = NodeMenuItem;

@@ -2,12 +2,11 @@
 
 'use strict';
 
-var React      = require('react');
-var Protofight = require('../lib/Protofight');
+var React = require('react');
+var protofight;
 
 var NodeType = React.createClass({
     propTypes: {
-        app: React.PropTypes.instanceOf(Protofight).isRequired
     },
 
     onClick: function (e) {
@@ -27,12 +26,13 @@ exports.NodeType = NodeType;
 
 var NodeTypes = React.createClass({
     propTypes: {
-        app: React.PropTypes.instanceOf(Protofight).isRequired
     },
 
     getInitialState: function() {
+        var nodeTypes = require('../lib/Protofight').Protofight.nodeTypes;
+
         return {
-            nodeTypes: Protofight.nodeTypes
+            nodeTypes: nodeTypes
         };
     },
 

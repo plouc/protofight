@@ -1,14 +1,18 @@
 /** @jsx React.DOM */
 
+'use strict';
+
 var React = require('react');
+var protofight;
 
 var LayoutCellNode = React.createClass({
     propTypes: {
-        app:  React.PropTypes.instanceOf(Protofight).isRequired,
         node: React.PropTypes.object.isRequired
     },
 
     render: function () {
+        protofight = require('../../../lib/Protofight').protofight();
+
         var children = protofight.buildChildNodeList(this.props.node, 'view');
         var classes  = 'grid__cell grid__cell--' + this.props.node.settings.columns;
 
@@ -18,11 +22,12 @@ var LayoutCellNode = React.createClass({
     }
 });
 
+exports.LayoutCellNode = LayoutCellNode;
+
 
 
 var LayoutCellEditNode = React.createClass({
     propTypes: {
-        app:  React.PropTypes.instanceOf(Protofight).isRequired,
         node: React.PropTypes.object.isRequired
     },
 
@@ -43,6 +48,8 @@ var LayoutCellEditNode = React.createClass({
     },
 
     render: function () {
+        protofight = require('../../../lib/Protofight').protofight();
+
         var children = protofight.buildChildNodeList(this.props.node, 'edit');
 
         var classes  = 'node';
@@ -76,3 +83,5 @@ var LayoutCellEditNode = React.createClass({
         );
     }
 });
+
+exports.LayoutCellEditNode = LayoutCellEditNode;

@@ -3,11 +3,12 @@
 'use strict';
 
 var React      = require('react');
-var Protofight = require('../../lib/Protofight');
+var Protofight = require('../../../lib/Protofight');
+var d3         = require('d3');
+var nv         = require('../../../lib/nvd3');
 
 var ChartSimpleLineNode = React.createClass({
     propTypes: {
-        app:  React.PropTypes.instanceOf(Protofight).isRequired,
         node: React.PropTypes.object.isRequired
     },
 
@@ -93,7 +94,6 @@ exports.ChartSimpleLineNode = ChartSimpleLineNode;
 
 var ChartSimpleLineEditNode = React.createClass({
     propTypes: {
-        app:  React.PropTypes.instanceOf(Protofight).isRequired,
         node: React.PropTypes.object.isRequired
     },
 

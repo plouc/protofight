@@ -1,10 +1,11 @@
 /** @jsx React.DOM */
 
+'use strict';
+
 var React = require('react');
 
 var ContentContainerNode = React.createClass({
     propTypes: {
-        app:  React.PropTypes.instanceOf(Protofight).isRequired,
         node: React.PropTypes.object.isRequired
     },
 
@@ -16,9 +17,12 @@ var ContentContainerNode = React.createClass({
     }
 });
 
+exports.ContentContainerNode = ContentContainerNode;
+
+
+
 var ContentContainerEditNode = React.createClass({
     propTypes: {
-        app:  React.PropTypes.instanceOf(Protofight).isRequired,
         node: React.PropTypes.object.isRequired
     },
 
@@ -29,3 +33,5 @@ var ContentContainerEditNode = React.createClass({
         );
     }
 });
+
+exports.ContentContainerEditNode = ContentContainerEditNode;
