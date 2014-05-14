@@ -4,22 +4,34 @@ var $ = require('jquery');
 var EventEmitter = require('events').EventEmitter;
 
 var React = require('react');
-var ChartPieNode = require('../components/nodes/chart/PieNode.jsx').ChartPieNode;
+
+// DATA VIZ
+var ChartPieNode            = require('../components/nodes/chart/PieNode.jsx').ChartPieNode;
+var ChartPieEditNode        = require('../components/nodes/chart/PieNode.jsx').ChartPieEditNode;
 var ChartSimpleLineNode     = require('../components/nodes/chart/SimpleLineNode.jsx').ChartSimpleLineNode;
 var ChartSimpleLineEditNode = require('../components/nodes/chart/SimpleLineNode.jsx').ChartSimpleLineEditNode;
+
+// CONTENT
 var ContentContainerNode     = require('../components/nodes/content/ContainerNode.jsx').ContentContainerNode;
 var ContentContainerEditNode = require('../components/nodes/content/ContainerNode.jsx').ContentContainerEditNode;
-var ContentTextNode = require('../components/nodes/content/TextNode.jsx').ContentTextNode;
+var ContentTextNode          = require('../components/nodes/content/TextNode.jsx').ContentTextNode;
+
+// DATA
 var DataStaticJsonNode = require('../components/nodes/data/StaticJsonNode.jsx').DataStaticJsonNode;
+
+// LAYOUT
 var LayoutCellNode     = require('../components/nodes/layout/CellNode.jsx').LayoutCellNode;
 var LayoutCellEditNode = require('../components/nodes/layout/CellNode.jsx').LayoutCellEditNode;
-var LayoutRowNode     = require('../components/nodes/layout/RowNode.jsx').LayoutRowNode;
-var LayoutRowEditNode = require('../components/nodes/layout/RowNode.jsx').LayoutRowEditNode;
-var NavBreadcrumbsNode = require('../components/nodes/nav/BreadcrumbsNode.jsx').NavBreadcrumbsNode;
-var NavMenuItemNode     = require('../components/nodes/nav/MenuItemNode.jsx').NavMenuItemNode;
-var NavMenuItemEditNode = require('../components/nodes/nav/MenuItemNode.jsx').NavMenuItemEditNode;
-var NavMenuNode     = require('../components/nodes/nav/MenuNode.jsx').NavMenuNode;
-var NavMenuEditNode = require('../components/nodes/nav/MenuNode.jsx').NavMenuEditNode;
+var LayoutRowNode      = require('../components/nodes/layout/RowNode.jsx').LayoutRowNode;
+var LayoutRowEditNode  = require('../components/nodes/layout/RowNode.jsx').LayoutRowEditNode;
+
+// NAV
+var NavBreadcrumbsNode     = require('../components/nodes/nav/BreadcrumbsNode.jsx').NavBreadcrumbsNode;
+var NavBreadcrumbsEditNode = require('../components/nodes/nav/BreadcrumbsNode.jsx').NavBreadcrumbsEditNode;
+var NavMenuItemNode        = require('../components/nodes/nav/MenuItemNode.jsx').NavMenuItemNode;
+var NavMenuItemEditNode    = require('../components/nodes/nav/MenuItemNode.jsx').NavMenuItemEditNode;
+var NavMenuNode            = require('../components/nodes/nav/MenuNode.jsx').NavMenuNode;
+var NavMenuEditNode        = require('../components/nodes/nav/MenuNode.jsx').NavMenuEditNode;
 
 function Protofight (config) {
     EventEmitter.call(this);
@@ -47,7 +59,6 @@ Protofight.prototype.mountNode = function (nodeId) {
     });
 
     p.done(function (node) {
-        console.log('select', node);
         this.augmentNode(node);
         this.emit('select', node);
     }.bind(this));
@@ -55,11 +66,17 @@ Protofight.prototype.mountNode = function (nodeId) {
     return p;
 };
 
-Protofight.prototype.createNode = function (type) {
+Protofight.prototype.createNode = function (type, parent) {
+    var parentId = null;
+    if (parent) {
+        parentId = parent._id;
+    }
+
     var newNode = {
         name:       type.name,
         type:       type.type,
         nodes:      [],
+        parent:     parentId,
         settings:   type.defaults || {}
     };
 
@@ -72,6 +89,8 @@ Protofight.prototype.createNode = function (type) {
     this.augmentNode(newNode);
 
     this.emit('create', newNode);
+
+    return p;
 };
 
 Protofight.prototype.save = function (node) {
@@ -203,7 +222,7 @@ Protofight.nodeTypes = [
         type:      'breadcrumbs',
         component: {
             view: 'NavBreadcrumbsNode',
-            edit: 'NavBreadcrumbsNode'
+            edit: 'NavBreadcrumbsEditNode'
         },
         accept:    null
     },
@@ -313,7 +332,7 @@ Protofight.nodeTypes = [
         type:      'chart.pie',
         component: {
             view: 'ChartPieNode',
-            edit: 'ChartPieNode'
+            edit: 'ChartPieEditNode'
         },
         accept:    [
             'data.static_json'

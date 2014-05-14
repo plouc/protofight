@@ -22,15 +22,13 @@ exports.NavMenuItemNode = NavMenuItemNode;
 
 
 
+var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
+
 var NavMenuItemEditNode = React.createClass({
+    mixins: [EditableNodeMixin],
+
     propTypes: {
         node: React.PropTypes.object.isRequired
-    },
-
-    getInitialState: function () {
-        return {
-            edit: false
-        };
     },
 
     onSubmit: function (e) {
@@ -44,12 +42,6 @@ var NavMenuItemEditNode = React.createClass({
         this.props.app.save(this.props.node);
 
         return false;
-    },
-
-    handleEditClick: function () {
-        this.setState({
-            edit: !this.state.edit
-        });
     },
 
     render: function () {
@@ -69,7 +61,7 @@ var NavMenuItemEditNode = React.createClass({
             <div className={ classes }>
                 <span className="node__title">{ this.props.node.name }</span>
                 <div className="node__controls">
-                    <span className="button button--s" onClick={ this.handleEditClick }>
+                    <span className="button button--s" onClick={ this.onEditClick }>
                         <i className="fa fa-pencil"></i>
                         <i className="fa fa-eye"></i>
                     </span>

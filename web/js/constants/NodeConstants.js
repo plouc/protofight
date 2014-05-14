@@ -4,6 +4,7 @@ var keyMirror = require('react/lib/keyMirror');
 
 module.exports = keyMirror({
     NODE_CREATE:              null,
+    NODE_CHILD_CREATE:        null,
     NODE_COMPLETE:            null,
     NODE_DESTROY:             null,
     NODE_DESTROY_COMPLETED:   null,

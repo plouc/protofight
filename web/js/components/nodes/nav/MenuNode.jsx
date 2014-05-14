@@ -2,45 +2,48 @@
 
 'use strict';
 
-var React      = require('react');
-var protofight;
+var React              = require('react');
+var ContainerNodeMixin = require('../../../mixins/ContainerNodeMixin.jsx');
 
 var NavMenuNode = React.createClass({
+    mixins: [
+        ContainerNodeMixin
+    ],
+
     propTypes: {
         node: React.PropTypes.object.isRequired
     },
 
     render: function () {
-        protofight = require('../../../lib/Protofight').protofight();
+        var children = this.getChildrenNodes('view');
 
-        var children = protofight.buildChildNodeList(this.props.node, 'view');
         return (
             <div className="menu">{ children }</div>
         );
     }
 });
-
 exports.NavMenuNode = NavMenuNode;
 
 
 
 var NavMenuEditNode = React.createClass({
+    mixins: [
+        ContainerNodeMixin
+    ],
+
     propTypes: {
         node: React.PropTypes.object.isRequired
     },
 
     render: function () {
-        protofight = require('../../../lib/Protofight').protofight();
-
-        var children = protofight.buildChildNodeList(this.props.node, 'edit');
+        var children = this.getChildrenNodes('edit');
 
         return (
             <div className="node">
-                <span class="node__title">{ this.props.node.name }</span>
+                <span className="node__title">{ this.props.node.name }</span>
                 <div>{ children }</div>
             </div>
         );
     }
 });
-
 exports.NavMenuEditNode = NavMenuEditNode;

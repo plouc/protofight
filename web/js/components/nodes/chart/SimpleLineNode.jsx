@@ -92,21 +92,14 @@ var ChartSimpleLineNode = React.createClass({
 exports.ChartSimpleLineNode = ChartSimpleLineNode;
 
 
+
+var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
+
 var ChartSimpleLineEditNode = React.createClass({
+    mixins: [EditableNodeMixin],
+
     propTypes: {
         node: React.PropTypes.object.isRequired
-    },
-
-    getInitialState: function () {
-        return {
-            edit: false
-        };
-    },
-
-    onEditClick: function () {
-        this.setState({
-            edit: !this.state.edit
-        });
     },
 
     onSubmit: function (e) {

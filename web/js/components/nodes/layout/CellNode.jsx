@@ -2,18 +2,23 @@
 
 'use strict';
 
-var React = require('react');
-var protofight;
+var React              = require('react');
+var NodeTypeSelector   = require('../../NodeTypeSelector.jsx');
+var EditableNodeMixin  = require('../../../mixins/EditableNodeMixin.jsx');
+var ContainerNodeMixin = require('../../../mixins/ContainerNodeMixin.jsx');
+
 
 var LayoutCellNode = React.createClass({
+    mixins: [
+        ContainerNodeMixin
+    ],
+
     propTypes: {
         node: React.PropTypes.object.isRequired
     },
 
     render: function () {
-        protofight = require('../../../lib/Protofight').protofight();
-
-        var children = protofight.buildChildNodeList(this.props.node, 'view');
+        var children = this.getChildrenNodes('view');
         var classes  = 'grid__cell grid__cell--' + this.props.node.settings.columns;
 
         return (
@@ -21,36 +26,26 @@ var LayoutCellNode = React.createClass({
         );
     }
 });
-
 exports.LayoutCellNode = LayoutCellNode;
 
 
 
 var LayoutCellEditNode = React.createClass({
+    mixins: [
+        EditableNodeMixin,
+        ContainerNodeMixin
+    ],
+
     propTypes: {
         node: React.PropTypes.object.isRequired
-    },
-
-    getInitialState: function () {
-        return {
-            edit: false
-        };
     },
 
     handleSubmit: function () {
         return false;
     },
 
-    handleEditClick: function () {
-        this.setState({
-            edit: !this.state.edit
-        });
-    },
-
     render: function () {
-        protofight = require('../../../lib/Protofight').protofight();
-
-        var children = protofight.buildChildNodeList(this.props.node, 'edit');
+        var children = this.getChildrenNodes('view');
 
         var classes  = 'node';
         if (this.state.edit) {
@@ -61,7 +56,8 @@ var LayoutCellEditNode = React.createClass({
             <div className={ classes }>
                 <span className="node__title">{ this.props.node.name }</span>
                 <div className="node__controls">
-                    <span className="button button--s" onClick={ this.handleEditClick }>
+                    <NodeTypeSelector node={ this.props.node } />
+                    <span className="button button--s" onClick={ this.onEditClick }>
                         <i className="fa fa-pencil"></i>
                         <i className="fa fa-eye"></i>
                     </span>
@@ -83,5 +79,4 @@ var LayoutCellEditNode = React.createClass({
         );
     }
 });
-
 exports.LayoutCellEditNode = LayoutCellEditNode;

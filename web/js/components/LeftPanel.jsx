@@ -8,26 +8,17 @@ var NodeMenu = require('./NodeMenu.jsx').NodeMenu;
 var LeftPanel = React.createClass({
     getInitialState: function () {
         return {
-            nodes:  [],
             closed: false
         };
     },
 
     onToggleClick: function (e) {
         this.setState({
-            nodes:  this.state.nodes,
             closed: !this.state.closed
         });
     },
 
     componentDidMount: function () {
-        this.props.app.listNodes()
-            .done(function (nodes) {
-                this.setState({
-                    nodes:  nodes,
-                    closed: this.state.closed
-                });
-            }.bind(this));
     },
 
     render: function () {
@@ -43,7 +34,7 @@ var LeftPanel = React.createClass({
                     <i className="fa fa-angle-left"></i>
                     <i className="fa fa-angle-right"></i>
                 </span>
-                <NodeMenu app={ this.props.app } nodes={ this.state.nodes } nodeClickedHandler={ this.props.nodeClickedHandler } />
+                <NodeMenu nodes={ this.props.nodes } nodeClickedHandler={ this.props.nodeClickedHandler } />
             </aside>
         )
     }

@@ -91,9 +91,11 @@ exports.pick = function (req, res) {
         '_id': { $in: req.query.ids }
     }, function (err, nodes) {
         var result = {};
-        nodes.forEach(function (node) {
-            result[node._id] = node;
-        });
+        if (nodes) {
+            nodes.forEach(function (node) {
+                result[node._id] = node;
+            });
+        }
 
         res.json(result);
     });

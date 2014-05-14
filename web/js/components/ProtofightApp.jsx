@@ -5,12 +5,33 @@
 var React      = require('react');
 var LeftPanel  = require('./LeftPanel.jsx');
 var RightPanel = require('./RightPanel.jsx');
+var NodeStore  = require('../stores/NodeStore');
+
+/**
+ * Retrieve the current Node data from the NodeStore
+ */
+function getNodeState() {
+    return {
+        nodes:       NodeStore.getNodes(),
+        currentNode: NodeStore.getCurrent()
+    };
+}
 
 var ProtofightApp = React.createClass({
     getInitialState: function () {
-        return {
-            currentNode: ''
-        };
+        return getNodeState();
+    },
+
+    componentDidMount: function() {
+        NodeStore.addChangeListener(this._onChange);
+    },
+
+    componentWillUnmount: function() {
+        NodeStore.removeChangeListener(this._onChange);
+    },
+
+    _onChange: function() {
+        this.setState(getNodeState());
     },
 
     handleNodeClick: function (component, e) {
@@ -27,7 +48,7 @@ var ProtofightApp = React.createClass({
 
         return (
             <div>
-                <LeftPanel app={ this.props.app } nodeClickedHandler={ this.handleNodeClick } />
+                <LeftPanel nodes={ this.state.nodes } nodeClickedHandler={ this.handleNodeClick } />
                 <NodeView app={ this.props.app } node={ this.state.currentNode } />
                 <RightPanel app={ this.props.app } />
             </div>
@@ -112,3 +133,5 @@ var NodeView = React.createClass({
         );
     }
 });
+
+NodeStore.refreshNodes();

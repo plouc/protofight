@@ -1,6 +1,6 @@
 'use strict';
 
-//var AppDispatcher = require('../dispatcher/AppDispatcher');
+var AppDispatcher = require('../dispatchers/AppDispatcher');
 var NodeConstants = require('../constants/NodeConstants');
 
 var NodeActions = {
@@ -8,10 +8,18 @@ var NodeActions = {
     /**
      * @param  {string} text
      */
-    create: function(text) {
+    create: function (text) {
         AppDispatcher.handleViewAction({
             actionType: NodeConstants.NODE_CREATE,
             text: text
+        });
+    },
+
+    createChildNode: function (node, type) {
+        AppDispatcher.handleViewAction({
+            actionType: NodeConstants.NODE_CHILD_CREATE,
+            node:       node,
+            type:       type
         });
     },
 
@@ -23,12 +31,12 @@ var NodeActions = {
         var id = todo.id;
         if (todo.complete) {
             AppDispatcher.handleViewAction({
-                actionType: TodoConstants.TODO_UNDO_COMPLETE,
+                actionType: NodeConstants.TODO_UNDO_COMPLETE,
                 id: id
             });
         } else {
             AppDispatcher.handleViewAction({
-                actionType: TodoConstants.TODO_COMPLETE,
+                actionType: NodeConstants.TODO_COMPLETE,
                 id: id
             });
         }
@@ -39,7 +47,7 @@ var NodeActions = {
      */
     toggleCompleteAll: function() {
         AppDispatcher.handleViewAction({
-            actionType: TodoConstants.TODO_TOGGLE_COMPLETE_ALL
+            actionType: NodeConstants.TODO_TOGGLE_COMPLETE_ALL
         });
     },
 
@@ -48,7 +56,7 @@ var NodeActions = {
      */
     destroy: function(id) {
         AppDispatcher.handleViewAction({
-            actionType: TodoConstants.TODO_DESTROY,
+            actionType: NodeConstants.TODO_DESTROY,
             id: id
         });
     },
@@ -58,10 +66,10 @@ var NodeActions = {
      */
     destroyCompleted: function() {
         AppDispatcher.handleViewAction({
-            actionType: TodoConstants.TODO_DESTROY_COMPLETED
+            actionType: NodeConstants.TODO_DESTROY_COMPLETED
         });
     }
 
 };
 
-module.exports = TodoActions;
+module.exports = NodeActions;
