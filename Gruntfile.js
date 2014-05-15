@@ -20,12 +20,21 @@ var uglify   = require('uglify-js');
                     options: {
                         loadPath: '.'
                     }
+                },
+                prod: {
+                    files: {
+                        'web/css/protofight.css': 'sass/protofight.scss'
+                    },
+                    options: {
+                        loadPath: '.',
+                        style:    'compressed'
+                    }
                 }
             },
             watch: {
                 sass: {
                     files: ['**/*.scss'],
-                    tasks: ['sass']
+                    tasks: ['sass:dev']
                 },
                 browserify: {
                     files: [
@@ -33,11 +42,19 @@ var uglify   = require('uglify-js');
                         'web/js/**/*.jsx',
                         '!web/js/bundle.js'
                     ],
-                    tasks: ['browserify:dev']
+                    tasks: ['browserify2:dev']
                 }
             },
             browserify2: {
                 dev: {
+                    entry:   './web/js/App.js',
+                    compile: './web/js/bundle.js',
+                    debug:   false,
+                    beforeHook: function (bundle){
+                        bundle.transform(reactify)
+                    }
+                },
+                prod: {
                     entry:   './web/js/App.js',
                     compile: './web/js/bundle.js',
                     debug:   false,
