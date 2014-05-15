@@ -8,9 +8,11 @@ var config   = require('./config/config')[env];
 var mongoose = require('mongoose');
 var index    = require('./lib/index');
 
+var mongoUrl = process.env.MONGOLAB_URI ? process.env.MONGOLAB_URI : config.mongoose.url;
+
 var connectMongo = function () {
     var options = { server: { socketOptions: { keepAlive: 1 } } }
-    mongoose.connect(config.mongoose.url, options)
+    mongoose.connect(mongoUrl, options);
 };
 connectMongo();
 
