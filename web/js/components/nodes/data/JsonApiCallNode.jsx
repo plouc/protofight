@@ -74,6 +74,12 @@ var DataJsonApiCallEditNode = React.createClass({
         }
     },
 
+    _onTestClearClick: function (e) {
+        this.setState({
+            rawApiResponse: 'no response to display'
+        });
+    },
+
     render: function () {
         var classes  = 'node';
         if (this.state.edit) {
@@ -105,6 +111,7 @@ var DataJsonApiCallEditNode = React.createClass({
                         </p>
                         <p>
                             <span className="button" onClick={ this._onTestClick }>test call</span>
+                            <span className="button" onClick={ this._onTestClearClick }>clear response</span>
                         </p>
                         <div className="json-api-call__raw-response">
                             <pre>{ this.state.rawApiResponse }</pre>
