@@ -12,9 +12,7 @@ var NodeType = React.createClass({
     onClick: function (e) {
         e.preventDefault();
 
-        console.log('onClick', this.props.data);
-
-        this.props.app.createNode(this.props.data);
+        this.props.app.create(this.props.data);
     },
 
     render: function () {
@@ -23,16 +21,14 @@ var NodeType = React.createClass({
         );
     }
 });
-
 exports.NodeType = NodeType;
 
-var NodeTypes = React.createClass({
-    propTypes: {
-    },
 
+
+var NodeTypes = React.createClass({
     getInitialState: function() {
         return {
-            nodeTypes: nodeTypes.all
+            nodeTypes: nodeTypes.getTypes(['page'])
         };
     },
 
@@ -48,5 +44,4 @@ var NodeTypes = React.createClass({
         );
     }
 });
-
 exports.NodeTypes = NodeTypes;

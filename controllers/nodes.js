@@ -4,8 +4,16 @@ var extend   = require('util')._extend;
 var index    = require('../lib/index').index;
 
 exports.list = function (req, res) {
+
+    var criteria = {};
+
+    if (req.query.type) {
+        var types = req.query.type.split(',');
+        criteria.type = { $in: types };
+    }
+
     Node
-        .find()
+        .find(criteria)
         .sort({'name': 1})
         .limit(100)
         .exec(function (err, nodes) {

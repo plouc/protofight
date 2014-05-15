@@ -3,12 +3,11 @@
 var keyMirror = require('react/lib/keyMirror');
 
 module.exports = keyMirror({
-    NODE_CREATE:              null,
-    NODE_CHILD_CREATE:        null,
-    NODE_COMPLETE:            null,
-    NODE_DESTROY:             null,
-    NODE_DESTROY_COMPLETED:   null,
-    NODE_TOGGLE_COMPLETE_ALL: null,
-    NODE_UNDO_COMPLETE:       null,
-    NODE_UPDATE_TEXT:         null
+    NODE_UPDATE:       null,
+    NODE_CREATE:       null,
+    NODE_CREATED:      null,
+    NODE_CHILD_CREATE: null,
+    NODE_COMPLETE:     null,
+    NODE_DESTROY:      null,
+    NODE_DESTROYED:    null
 });

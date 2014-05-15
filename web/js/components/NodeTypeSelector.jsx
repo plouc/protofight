@@ -2,15 +2,14 @@
 
 'use strict';
 
-var React       = require('react');
-var NodeActions = require('../actions/NodeActions');
-var nodeTypes   = require('../lib/nodeTypes');
+var React     = require('react');
+var nodeTypes = require('../lib/nodeTypes');
 
 var NodeTypeSelectorItem = React.createClass({
     _onTypeClick: function (e) {
         e.preventDefault();
 
-        NodeActions.createChildNode(this.props.node, this.props.type);
+        this.props.app.create(this.props.type, this.props.node);
     },
 
     render: function () {
@@ -36,7 +35,7 @@ var NodeTypeSelector = React.createClass({
     render: function () {
         var children = [];
         nodeTypes.getAllowedTypes(this.props.node.type).forEach(function (type) {
-            children.push(<NodeTypeSelectorItem  key={ type.type } node={ this.props.node } type={ type } />);
+            children.push(<NodeTypeSelectorItem  key={ type.type } node={ this.props.node } type={ type } app={ this.props.app } />);
         }.bind(this));
 
         var classes = 'node-type-selector';

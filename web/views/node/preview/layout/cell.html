@@ -1,8 +1,0 @@
-<div class="grid__cell grid__cell--{{ node.settings.columns }}">
-    <ng-include
-        src="'views/node/preview/' + nodeTemplate(node) + '.html'"
-        ng-repeat="node in node.nodes"
-        ng-if="node"
-    >
-    </ng-include>
-</div>

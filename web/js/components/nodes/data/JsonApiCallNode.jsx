@@ -2,19 +2,19 @@
 
 'use strict';
 
+var $                 = require('jquery');
 var React             = require('react');
-var EditableNodeMixin = require('../../mixins/EditableNodeMixin');
 var LiveNodeMixin     = require('../../mixins/LiveNodeMixin');
+var EditableNodeMixin = require('../../mixins/EditableNodeMixin');
 var NodeMeta          = require('../../NodeMeta.jsx');
-var marked            = require('marked');
 
-/**
- * Content markdown node.
- */
-var ContentMarkdownNode = React.createClass({
+var DataJsonApiCallNode = React.createClass({
     mixins: [
         LiveNodeMixin
     ],
+
+    componentWillMount: function () {
+    },
 
     propTypes: {
         node: React.PropTypes.object.isRequired
@@ -22,49 +22,60 @@ var ContentMarkdownNode = React.createClass({
 
     render: function () {
         return (
-            <div dangerouslySetInnerHTML={{ __html: marked(this.state.node.settings.content) }}>
-            </div>
+            <pre>{ this.state.node.settings.httpMethod } { this.state.node.settings.url }</pre>
         );
     }
 });
-exports.ContentMarkdownNode = ContentMarkdownNode;
+exports.DataJsonApiCallNode = DataJsonApiCallNode;
 
 
 
-/**
- * Content markdown node for structure/edition.
- */
-var ContentMarkdownEditNode = React.createClass({
+var DataJsonApiCallEditNode = React.createClass({
     mixins: [
-        EditableNodeMixin,
-        LiveNodeMixin
+        LiveNodeMixin,
+        EditableNodeMixin
     ],
 
     propTypes: {
         node: React.PropTypes.object.isRequired
     },
 
+    getInitialState: function () {
+        return {
+            rawApiResponse: 'no response to display'
+        };
+    },
+
     _onSubmit: function (e) {
         e.preventDefault();
 
         var settings = {
-            content: this.refs.content.getDOMNode().value
+            httpMethod: this.refs.httpMethod.getDOMNode().value,
+            url:        this.refs.url.getDOMNode().value
         };
 
-        this.props.node.name     = this.refs.name.getDOMNode().value;
+        this.props.node.name = this.refs.name.getDOMNode().value;
         this.props.node.settings = settings;
         this.props.app.save(this.props.node);
 
         return false;
     },
 
-    _onContentChange: function() {
-        this.state.node.settings.content = this.refs.content.getDOMNode().value;
-        this.forceUpdate();
+    _onTestClick: function (e) {
+        if (this.state.node.hasValidSettings()) {
+            this.setState({
+                rawApiResponse: 'loading…'
+            });
+            this.state.node.getData().then(function (data) {
+                this.setState({
+                    rawApiResponse: JSON.stringify(data, null, 4)
+                });
+            }.bind(this));
+        }
     },
 
     render: function () {
-        var classes = 'node';
+        var classes  = 'node';
         if (this.state.edit) {
             classes += ' node--editing';
         }
@@ -86,16 +97,17 @@ var ContentMarkdownEditNode = React.createClass({
                             <input type="text" defaultValue={ this.state.node.name } ref="name" />
                         </p>
                         <p>
-                            <label>Content</label>
-                            <textarea defaultValue={ this.state.node.settings.content } ref="content"
-                                      onChange={ this._onContentChange }
-                                      cols="80" rows="10"
-                                      className="form-control form-control--full"/>
+                            <label>Http method</label>
+                            <input type="text" defaultValue={ this.state.node.settings.httpMethod } ref="httpMethod" />
+
+                            <label>Url</label>
+                            <input type="text" defaultValue={ this.state.node.settings.url } ref="url" />
                         </p>
-                        <div>
-                            <span>Preview</span>
-                            <div dangerouslySetInnerHTML={{ __html: marked(this.state.node.settings.content) }}>
-                            </div>
+                        <p>
+                            <span className="button" onClick={ this._onTestClick }>test call</span>
+                        </p>
+                        <div className="json-api-call__raw-response">
+                            <pre>{ this.state.rawApiResponse }</pre>
                         </div>
                         <p>
                             <button className="button" type="submit">save</button>
@@ -107,4 +119,4 @@ var ContentMarkdownEditNode = React.createClass({
         );
     }
 });
-exports.ContentMarkdownEditNode = ContentMarkdownEditNode;
+exports.DataJsonApiCallEditNode = DataJsonApiCallEditNode;

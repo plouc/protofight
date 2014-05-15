@@ -2,36 +2,27 @@
 
 'use strict';
 
-var React      = require('react');
-var LeftPanel  = require('./LeftPanel.jsx');
-var RightPanel = require('./RightPanel.jsx');
-var NodeStore  = require('../stores/NodeStore');
+var React                  = require('react');
+var LeftPanel              = require('./LeftPanel.jsx');
+var RightPanel             = require('./RightPanel.jsx');
+var NodeConstants          = require('../constants/NodeConstants');
+var NodeComponentQualifier = require('../lib/NodeComponentQualifier');
 
-/**
- * Retrieve the current Node data from the NodeStore
- */
-function getNodeState() {
-    return {
-        nodes:       NodeStore.getNodes(),
-        currentNode: NodeStore.getCurrent()
-    };
-}
 
 var ProtofightApp = React.createClass({
     getInitialState: function () {
-        return getNodeState();
+        return {
+            nodes: []
+        };
     },
 
     componentDidMount: function() {
-        NodeStore.addChangeListener(this._onChange);
-    },
-
-    componentWillUnmount: function() {
-        NodeStore.removeChangeListener(this._onChange);
-    },
-
-    _onChange: function() {
-        this.setState(getNodeState());
+        this.props.app.listNodes()
+            .then(function (nodes) {
+                this.setState({
+                    nodes: nodes
+                });
+            }.bind(this));
     },
 
     handleNodeClick: function (component, e) {
@@ -55,7 +46,6 @@ var ProtofightApp = React.createClass({
         );
     }
 });
-
 module.exports = ProtofightApp;
 
 
@@ -97,11 +87,11 @@ var NodeView = React.createClass({
         var nodeRaw     = '';
 
         if (this.state.node && this.state.viewMode == 'struct') {
-            nodeStruct = this.props.app.getNodeComponent(this.state.node, 'edit');
+            nodeStruct = NodeComponentQualifier.getNodeComponent(this.state.node, 'edit', this.props.app);
         }
 
         if (this.state.node && this.state.viewMode == 'preview') {
-            nodePreview = this.props.app.getNodeComponent(this.state.node, 'view');
+            nodePreview = NodeComponentQualifier.getNodeComponent(this.state.node, 'view', this.props.app);
         }
 
         if (this.state.node && this.state.viewMode == 'raw') {
@@ -133,5 +123,3 @@ var NodeView = React.createClass({
         );
     }
 });
-
-NodeStore.refreshNodes();

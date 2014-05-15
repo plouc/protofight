@@ -3,8 +3,8 @@
 'use strict';
 
 var React             = require('react');
-var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
-var LiveNodeMixin      = require('../../../mixins/LiveNodeMixin.jsx');
+var EditableNodeMixin = require('../../mixins/EditableNodeMixin');
+var LiveNodeMixin     = require('../../mixins/LiveNodeMixin');
 
 var NavMenuItemNode = React.createClass({
     mixins: [

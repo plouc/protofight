@@ -4,9 +4,9 @@
 
 var React              = require('react');
 var NodeTypeSelector   = require('../../NodeTypeSelector.jsx');
-var EditableNodeMixin  = require('../../../mixins/EditableNodeMixin.jsx');
-var ContainerNodeMixin = require('../../../mixins/ContainerNodeMixin.jsx');
-var LiveNodeMixin      = require('../../../mixins/LiveNodeMixin.jsx');
+var EditableNodeMixin  = require('../../mixins/EditableNodeMixin');
+var ContainerNodeMixin = require('../../mixins/ContainerNodeMixin');
+var LiveNodeMixin      = require('../../mixins/LiveNodeMixin');
 
 var NavBreadcrumbsNode = React.createClass({
     mixins: [
@@ -57,7 +57,7 @@ var NavBreadcrumbsEditNode = React.createClass({
             <div className={ classes }>
                 <span className="node__title">{ this.props.node.name }</span>
                 <div className="node__controls">
-                    <NodeTypeSelector node={ this.props.node } />
+                    <NodeTypeSelector node={ this.props.node } app={ this.props.app }/>
                     <span className="button button--s" onClick={ this.onEditClick }>
                         <i className="fa fa-pencil"></i>
                         <i className="fa fa-eye"></i>

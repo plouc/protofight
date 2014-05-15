@@ -2,13 +2,14 @@
 
 'use strict';
 
-var React             = require('react');
-var Protofight        = require('../../../lib/Protofight');
-var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
-var LiveNodeMixin     = require('../../../mixins/LiveNodeMixin.jsx');
-var NodeMeta          = require('../../NodeMeta.jsx');
-var d3                = require('d3');
-var nv                = require('../../../lib/nvd3');
+var React              = require('react');
+var EditableNodeMixin  = require('../../mixins/EditableNodeMixin');
+var LiveNodeMixin      = require('../../mixins/LiveNodeMixin');
+var ContainerNodeMixin = require('../../mixins/ContainerNodeMixin');
+var NodeMeta           = require('../../NodeMeta.jsx');
+var NodeTypeSelector   = require('../../NodeTypeSelector.jsx');
+var d3                 = require('d3');
+var nv                 = require('../../../lib/nvd3');
 
 var ChartSimpleLineNode = React.createClass({
     mixins: [
@@ -101,6 +102,7 @@ exports.ChartSimpleLineNode = ChartSimpleLineNode;
 
 var ChartSimpleLineEditNode = React.createClass({
     mixins: [
+        ContainerNodeMixin,
         EditableNodeMixin,
         LiveNodeMixin
     ],
@@ -125,10 +127,13 @@ var ChartSimpleLineEditNode = React.createClass({
             this.props.node.settings = {};
         }
 
+        var children = this.getChildrenNodes('edit');
+
         return (
             <div className={ classes }>
                 <span className="node__title">{ this.props.node.name }</span>
                 <div className="node__controls">
+                    <NodeTypeSelector node={ this.props.node } app={ this.props.app }/>
                     <span className="button button--s" onClick={ this.onEditClick }>
                         <i className="fa fa-pencil"></i>
                         <i className="fa fa-eye"></i>
@@ -162,10 +167,11 @@ var ChartSimpleLineEditNode = React.createClass({
                         </p>
                         <p>
                             <button className="button" type="submit">save</button>
-                            <span className="button button--warning" onClick={ this.onEditClick }>cancel</span>
+                            <span className="button button--warning" onClick={ this._onCancelEditClick }>cancel</span>
                         </p>
                     </form>
                 </div>
+                <div>{ children }</div>
             </div>
         );
     }

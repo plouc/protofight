@@ -1,46 +1,10 @@
 'use strict';
 
-var $            = require('jquery');
-var EventEmitter = require('events').EventEmitter;
-var nodeTypes    = require('./nodeTypes');
-var React        = require('react');
-
-var components = {
-    // DATA VIZ
-    ChartPieNode:            require('../components/nodes/chart/PieNode.jsx').ChartPieNode,
-    ChartPieEditNode:        require('../components/nodes/chart/PieNode.jsx').ChartPieEditNode,
-    ChartSimpleLineNode:     require('../components/nodes/chart/SimpleLineNode.jsx').ChartSimpleLineNode,
-    ChartSimpleLineEditNode: require('../components/nodes/chart/SimpleLineNode.jsx').ChartSimpleLineEditNode,
-
-    // CONTENT
-    ContentPageNode:          require('../components/nodes/content/PageNode.jsx').ContentPageNode,
-    ContentPageEditNode:      require('../components/nodes/content/PageNode.jsx').ContentPageEditNode,
-    ContentContainerNode:     require('../components/nodes/content/ContainerNode.jsx').ContentContainerNode,
-    ContentContainerEditNode: require('../components/nodes/content/ContainerNode.jsx').ContentContainerEditNode,
-    ContentTextNode:          require('../components/nodes/content/TextNode.jsx').ContentTextNode,
-    ContentTextEditNode:      require('../components/nodes/content/TextNode.jsx').ContentTextEditNode,
-    ContentMarkdownNode:      require('../components/nodes/content/MarkdownNode.jsx').ContentMarkdownNode,
-    ContentMarkdownEditNode:  require('../components/nodes/content/MarkdownNode.jsx').ContentMarkdownEditNode,
-
-    // DATA
-    DataStaticJsonNode: require('../components/nodes/data/StaticJsonNode.jsx').DataStaticJsonNode,
-
-    // LAYOUT
-    LayoutCellNode:     require('../components/nodes/layout/CellNode.jsx').LayoutCellNode,
-    LayoutCellEditNode: require('../components/nodes/layout/CellNode.jsx').LayoutCellEditNode,
-    LayoutRowNode:      require('../components/nodes/layout/RowNode.jsx').LayoutRowNode,
-    LayoutRowEditNode:  require('../components/nodes/layout/RowNode.jsx').LayoutRowEditNode,
-
-    // NAV
-    NavBreadcrumbsNode:         require('../components/nodes/nav/Breadcrumbs.jsx').NavBreadcrumbsNode,
-    NavBreadcrumbsEditNode:     require('../components/nodes/nav/Breadcrumbs.jsx').NavBreadcrumbsEditNode,
-    NavBreadcrumbsItemNode:     require('../components/nodes/nav/Breadcrumbs.jsx').NavBreadcrumbsItemNode,
-    NavBreadcrumbsItemEditNode: require('../components/nodes/nav/Breadcrumbs.jsx').NavBreadcrumbsItemEditNode,
-    NavMenuItemNode:            require('../components/nodes/nav/MenuItemNode.jsx').NavMenuItemNode,
-    NavMenuItemEditNode:        require('../components/nodes/nav/MenuItemNode.jsx').NavMenuItemEditNode,
-    NavMenuNode:                require('../components/nodes/nav/MenuNode.jsx').NavMenuNode,
-    NavMenuEditNode:            require('../components/nodes/nav/MenuNode.jsx').NavMenuEditNode
-};
+var $             = require('jquery');
+var EventEmitter  = require('events').EventEmitter;
+var nodeTypes     = require('./nodeTypes');
+var React         = require('react');
+var NodeConstants = require('../constants/NodeConstants');
 
 function Protofight (config) {
     EventEmitter.call(this);
@@ -58,9 +22,10 @@ function Protofight (config) {
 
 Protofight.prototype = new EventEmitter;
 
-Protofight.prototype.listNodes = function () {
+Protofight.prototype.listNodes = function (params) {
     var p = $.ajax({
-        url: this.baseApiUrl + 'nodes'
+        url:  this.baseApiUrl + 'nodes',
+        data: params
     });
 
     p.done(function (nodes) {
@@ -83,7 +48,7 @@ Protofight.prototype.mountNode = function (nodeId) {
     return p;
 };
 
-Protofight.prototype.createNode = function (type, parent) {
+Protofight.prototype.create = function (type, parent) {
     var parentId = null;
     if (parent) {
         parentId = parent._id;
@@ -108,11 +73,10 @@ Protofight.prototype.createNode = function (type, parent) {
         this.augmentNode(newNode);
         if (parent && parent._id) {
             parent.nodes.push(node);
-            this.emit('node.update', parent);
+            this.emit(NodeConstants.NODE_UPDATE, parent);
         }
+        this.emit(NodeConstants.NODE_CREATED, node);
     }.bind(this));
-
-    //this.emit('create', newNode);
 
     return promise;
 };
@@ -130,47 +94,31 @@ Protofight.prototype.save = function (node) {
     });
 
     promise.then(function (node) {
-        this.emit('node.update', node);
+        this.augmentNode(node);
+        this.emit(NodeConstants.NODE_UPDATE, node);
     }.bind(this));
 
     return promise;
 };
 
 /**
- * Returns matching react component for given node in given mode (view/edit).
  *
- * @param {object} node
- * @param {string} mode
- * @returns {*}
+ * @param nodeId
  */
-Protofight.prototype.getNodeComponent = function (node, mode) {
-    var type = nodeTypes.getType(node.type);
-
-    if (!type.component || !type.component[mode] || !components[type.component[mode]]) {
-        throw new Error('Unable to instantiate component for type "' + type.type + '" with mode "' + mode + '"');
-    }
-
-    return components[type.component[mode]]({
-        key:  node._id,
-        node: node,
-        app:  this
+Protofight.prototype.remove = function (node) {
+    var promise = $.ajax({
+        url:    this.baseApiUrl + 'nodes/' + node._id,
+        method: 'DELETE'
     });
-};
 
-/**
- * Build child node components from given parent node.
- *
- * @param {object} node
- * @param {string} mode
- * @returns {Array}
- */
-Protofight.prototype.buildChildNodeList = function (node, mode) {
-    var children = [];
-    node.nodes.forEach(function (childNode) {
-        children.push(this.getNodeComponent(childNode, mode));
+    promise.then(function () {
+        if (node.parent) {
+
+        }
+        this.emit(NodeConstants.NODE_DESTROYED, node);
     }.bind(this));
 
-    return children;
+    return promise;
 };
 
 /**
@@ -190,29 +138,60 @@ Protofight.prototype.augmentNodes = function (nodes) {
  * @param {object} node
  */
 Protofight.prototype.augmentNode = function (node) {
-    if (node.type === 'breadcrumbs') {
-        node.getItems = function () {
-            return $.ajax({
-                url: 'http://localhost:4000/nodes/pick',
-                data: {
-                    ids: node.ancestors
+    switch (node.type) {
+        case 'breadcrumbs':
+            node.getItems = function () {
+                return $.ajax({
+                    url: 'http://localhost:4000/nodes/pick',
+                    data: {
+                        ids: node.ancestors
+                    }
+                });
+            };
+            break;
+
+        case 'data.json_api_call':
+            node.hasValidSettings = function () {
+                if (this.settings.httpMethod && this.settings.httpMethod !== ''
+                 && this.settings.url && this.settings.url !== '') {
+                    return true;
                 }
-            });
-        };
+
+                return false;
+            };
+
+            node.getData = function () {
+                if (!this.hasValidSettings()) {
+                    throw new Error('Invalid settings detected, unable to fetch data.');
+                }
+
+                return $.ajax({
+                    url:    this.settings.url,
+                    method: this.settings.httpMethod
+                });
+            };
+            break;
+
+        default:
+            break;
     }
+
+    node.getFirstChildOfType = function (typeId) {
+        if (!node.nodes || node.nodes.length === 0) {
+            return null;
+        }
+
+        for (var i = 0; i < node.nodes.length; i++) {
+            var child = node.nodes[i];
+            if (child.type === typeId) {
+                return child;
+            }
+        }
+    };
 
     if (node.nodes && node.nodes.length > 0) {
         this.augmentNodes(node.nodes);
     }
 };
 
-exports.Protofight = Protofight;
-
-var _protofight;
-exports.protofight = function (config) {
-    if (!_protofight) {
-        _protofight = new Protofight(config);
-    }
-
-    return _protofight;
-};
+module.exports = Protofight;

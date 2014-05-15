@@ -1,5 +1,7 @@
 'use strict';
 
+var NodeConstants = require('../../constants/NodeConstants');
+
 module.exports = {
     getInitialState: function () {
         return {
@@ -16,10 +18,10 @@ module.exports = {
     },
 
     componentWillMount: function () {
-        this.props.app.on('node.update', this._onNodeUpdate);
+        this.props.app.on(NodeConstants.NODE_UPDATE, this._onNodeUpdate);
     },
 
     componentWillUnmount: function () {
-        this.props.app.removeListener('node.update', this._onNodeUpdate);
+        this.props.app.removeListener(NodeConstants.NODE_UPDATE, this._onNodeUpdate);
     }
 };

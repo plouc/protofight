@@ -5,9 +5,10 @@
 var React         = require('react');
 var ProtofightApp = require('./components/ProtofightApp.jsx');
 var $             = require('jquery');
+var Protofight    = require('./lib/Protofight');
 
 $(document).ready(function () {
-    var protofight = require('./lib/Protofight').protofight();
+    var protofight = new Protofight();
 
     React.renderComponent(<ProtofightApp app={ protofight }/>, $('._js_proto').get(0));
 });

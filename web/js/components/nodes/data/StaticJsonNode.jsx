@@ -3,7 +3,7 @@
 'use strict';
 
 var React         = require('react');
-var LiveNodeMixin = require('../../../mixins/LiveNodeMixin.jsx');
+var LiveNodeMixin = require('../../mixins/LiveNodeMixin');
 
 var DataStaticJsonNode = React.createClass({
     mixins: [

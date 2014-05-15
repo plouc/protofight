@@ -4,9 +4,10 @@
 
 var React              = require('react');
 var NodeTypeSelector   = require('../../NodeTypeSelector.jsx');
-var EditableNodeMixin  = require('../../../mixins/EditableNodeMixin.jsx');
-var ContainerNodeMixin = require('../../../mixins/ContainerNodeMixin.jsx');
-var LiveNodeMixin      = require('../../../mixins/LiveNodeMixin.jsx');
+var EditableNodeMixin  = require('../../mixins/EditableNodeMixin');
+var ContainerNodeMixin = require('../../mixins/ContainerNodeMixin');
+var LiveNodeMixin      = require('../../mixins/LiveNodeMixin');
+var NodeMeta           = require('../../NodeMeta.jsx');
 
 var LayoutRowNode = React.createClass({
     mixins: [
@@ -66,13 +67,14 @@ var LayoutRowEditNode = React.createClass({
             <div className={ classes }>
                 <span className="node__title">{ this.props.node.name }</span>
                 <div className="node__controls">
-                    <NodeTypeSelector node={ this.props.node } />
+                    <NodeTypeSelector node={ this.props.node } app={ this.props.app }/>
                     <span className="button button--s" onClick={ this.onEditClick }>
                         <i className="fa fa-pencil"></i>
                         <i className="fa fa-eye"></i>
                     </span>
                 </div>
                 <div className="node--edit">
+                    <NodeMeta node={ this.state.node }/>
                     <form onSubmit={ this._onSubmit }>
                         <p>
                             <label>Columns</label>
@@ -80,7 +82,7 @@ var LayoutRowEditNode = React.createClass({
                         </p>
                         <p>
                             <button className="button" type="submit">save</button>
-                            <span className="button button--warning">cancel</span>
+                            <span className="button button--warning" onClick={ this._onCancelEditClick }>cancel</span>
                         </p>
                     </form>
                 </div>

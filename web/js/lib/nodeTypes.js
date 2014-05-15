@@ -7,9 +7,7 @@ var _ = require('lodash');
  */
 exports.all = [
     //---------------------------------------------------------
-    //
     // CONTENT related types
-    //
     //---------------------------------------------------------
     {
         name:      'Page',
@@ -24,7 +22,8 @@ exports.all = [
             'markdown',
             'menu',
             'container',
-            'chart',
+            'chart.pie',
+            'chart.simple_line',
             'breadcrumbs',
             'layout.row'
         ]
@@ -42,7 +41,8 @@ exports.all = [
             'markdown',
             'menu',
             'container',
-            'chart',
+            'chart.pie',
+            'chart.simple_line',
             'breadcrumbs',
             'layout.row'
         ]
@@ -86,9 +86,7 @@ exports.all = [
     },
 
     //---------------------------------------------------------
-    //
     // NAV related types
-    //
     //---------------------------------------------------------
     {
         name:      'Breadcrumbs',
@@ -136,9 +134,7 @@ exports.all = [
     },
 
     //---------------------------------------------------------
-    //
     // DATA related types
-    //
     //---------------------------------------------------------
     {
         name:      'Static json',
@@ -152,11 +148,24 @@ exports.all = [
             content: '{}'
         }
     },
+    {
+        name:      'Json API call',
+        type:      'data.json_api_call',
+        component: {
+            view: 'DataJsonApiCallNode',
+            edit: 'DataJsonApiCallEditNode'
+        },
+        accept:    null,
+        defaults: {
+            url:         '',
+            httpMethod:  'GET',
+            queryParams: {},
+            headers:     {}
+        }
+    },
 
     //---------------------------------------------------------
-    //
     // LAYOUT related types
-    //
     //---------------------------------------------------------
     {
         name:      'Row',
@@ -190,28 +199,15 @@ exports.all = [
             'markdown',
             'menu',
             'container',
-            'chart',
+            'chart.pie',
+            'chart.simple_line',
             'breadcrumbs'
         ]
     },
 
     //---------------------------------------------------------
-    //
     // DATA VIZ related types
-    //
     //---------------------------------------------------------
-    {
-        name:      'Chart',
-        type:      'chart',
-        component: {
-            view: 'ChartSimpleLineNode',
-            edit: 'ChartSimpleLineEditNode'
-        },
-        accept:    [
-            'data.static_json'
-        ]
-    },
-
     {
         name:      'Pie chart',
         type:      'chart.pie',
@@ -220,7 +216,8 @@ exports.all = [
             edit: 'ChartPieEditNode'
         },
         accept:    [
-            'data.static_json'
+            'data.static_json',
+            'data.json_api_call'
         ],
         defaults:  {
             showLabels:         true,
@@ -237,10 +234,29 @@ exports.all = [
             view: 'ChartSimpleLineNode',
             edit: 'ChartSimpleLineEditNode'
         },
-        accept:    ['data.static_json']
+        accept:    [
+            'data.static_json',
+            'data.json_api_call'
+        ]
     }
 ];
 
+/**
+ *
+ * @param types
+ * @returns {*}
+ */
+exports.getTypes = function (types) {
+    return _.filter(exports.all, function (type) {
+        return _.contains(types, type.type);
+    });
+};
+
+/**
+ *
+ * @param typeId
+ * @returns {*}
+ */
 exports.getAllowedTypes = function (typeId) {
     var type = exports.getType(typeId);
 
@@ -260,6 +276,11 @@ exports.getAllowedTypes = function (typeId) {
     });
 };
 
+/**
+ *
+ * @param typeId
+ * @returns {*}
+ */
 exports.getType = function (typeId) {
     for (var i = 0; i < exports.all.length; i++) {
         var type = exports.all[i];
