@@ -1,11 +1,17 @@
 /** @jsx React.DOM */
 
-var React = require('react');
-var d3    = require('d3');
-var nv    = require('../../../lib/nvd3');
+var React             = require('react');
+var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
+var LiveNodeMixin     = require('../../../mixins/LiveNodeMixin.jsx');
+var d3                = require('d3');
+var nv                = require('../../../lib/nvd3');
 var protofight;
 
 var ChartPieNode = React.createClass({
+    mixins: [
+        LiveNodeMixin
+    ],
+
     propTypes: {
         node: React.PropTypes.object.isRequired
     },
@@ -66,15 +72,15 @@ var ChartPieNode = React.createClass({
         );
     }
 });
-
 exports.ChartPieNode = ChartPieNode;
 
 
 
-var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
-
 var ChartPieEditNode = React.createClass({
-    mixins: [EditableNodeMixin],
+    mixins: [
+        EditableNodeMixin,
+        LiveNodeMixin
+    ],
 
     propTypes: {
         node: React.PropTypes.object.isRequired
@@ -89,14 +95,11 @@ var ChartPieEditNode = React.createClass({
         };
         console.log('saving chart pie node', settings);
 
-
-
-
         return false;
     },
 
     render: function () {
-        var classes  = 'node';
+        var classes = 'node';
         if (this.state.edit) {
             classes += ' node--editing';
         }

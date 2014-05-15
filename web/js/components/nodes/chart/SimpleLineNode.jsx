@@ -2,12 +2,18 @@
 
 'use strict';
 
-var React      = require('react');
-var Protofight = require('../../../lib/Protofight');
-var d3         = require('d3');
-var nv         = require('../../../lib/nvd3');
+var React             = require('react');
+var Protofight        = require('../../../lib/Protofight');
+var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
+var LiveNodeMixin     = require('../../../mixins/LiveNodeMixin.jsx');
+var d3                = require('d3');
+var nv                = require('../../../lib/nvd3');
 
 var ChartSimpleLineNode = React.createClass({
+    mixins: [
+        LiveNodeMixin
+    ],
+
     propTypes: {
         node: React.PropTypes.object.isRequired
     },
@@ -88,15 +94,15 @@ var ChartSimpleLineNode = React.createClass({
         );
     }
 });
-
 exports.ChartSimpleLineNode = ChartSimpleLineNode;
 
 
 
-var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
-
 var ChartSimpleLineEditNode = React.createClass({
-    mixins: [EditableNodeMixin],
+    mixins: [
+        EditableNodeMixin,
+        LiveNodeMixin
+    ],
 
     propTypes: {
         node: React.PropTypes.object.isRequired
@@ -162,5 +168,4 @@ var ChartSimpleLineEditNode = React.createClass({
         );
     }
 });
-
 exports.ChartSimpleLineEditNode = ChartSimpleLineEditNode;

@@ -6,10 +6,12 @@ var React              = require('react');
 var NodeTypeSelector   = require('../../NodeTypeSelector.jsx');
 var EditableNodeMixin  = require('../../../mixins/EditableNodeMixin.jsx');
 var ContainerNodeMixin = require('../../../mixins/ContainerNodeMixin.jsx');
+var LiveNodeMixin      = require('../../../mixins/LiveNodeMixin.jsx');
 
 var NavBreadcrumbsNode = React.createClass({
     mixins: [
-        ContainerNodeMixin
+        ContainerNodeMixin,
+        LiveNodeMixin
     ],
 
     propTypes: {
@@ -31,7 +33,8 @@ exports.NavBreadcrumbsNode = NavBreadcrumbsNode;
 var NavBreadcrumbsEditNode = React.createClass({
     mixins: [
         EditableNodeMixin,
-        ContainerNodeMixin
+        ContainerNodeMixin,
+        LiveNodeMixin
     ],
 
     propTypes: {

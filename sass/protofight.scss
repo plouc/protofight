@@ -161,11 +161,11 @@ $aside-toggle-size: 30px;
 .node {
   display: block;
   position: relative;
-  border: 1px solid #ddd;
-  padding: 7px 12px;
+  border: 1px dotted #ccc;
+  padding: 7px 5px;
   border-radius: 2px;
-  margin-bottom: 7px;
-  background-color: #eee;
+  margin-bottom: 5px;
+  background-color: #fff;
   &--edit {
     display: none;
   }
@@ -193,8 +193,9 @@ $aside-toggle-size: 30px;
 .node__title {
   font-family: 'Montserrat', sans-serif;
   color: #225c82;
-  margin-bottom: 7px;
   display: block;
+  padding: 0 7px;
+  margin-bottom: 5px;
 }
 .node__meta {
   font-size: 12px;

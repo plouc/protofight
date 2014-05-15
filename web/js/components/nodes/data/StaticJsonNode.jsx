@@ -2,16 +2,21 @@
 
 'use strict';
 
-var React = require('react');
+var React         = require('react');
+var LiveNodeMixin = require('../../../mixins/LiveNodeMixin.jsx');
 
 var DataStaticJsonNode = React.createClass({
+    mixins: [
+        LiveNodeMixin
+    ],
+
     propTypes: {
         node: React.PropTypes.object.isRequired
     },
 
     render: function () {
         return (
-            <pre>{ this.props.settings.content }</pre>
+            <pre>{ this.state.node.settings.content }</pre>
         );
     }
 });

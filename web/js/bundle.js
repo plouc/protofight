@@ -50119,12 +50119,18 @@ module.exports = RightPanel;
 },{"./NodeTypes.jsx":250,"react":244}],253:[function(require,module,exports){
 /** @jsx React.DOM */
 
-var React = require('react');
-var d3    = require('d3');
-var nv    = require('../../../lib/nvd3');
+var React             = require('react');
+var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
+var LiveNodeMixin     = require('../../../mixins/LiveNodeMixin.jsx');
+var d3                = require('d3');
+var nv                = require('../../../lib/nvd3');
 var protofight;
 
 var ChartPieNode = React.createClass({displayName: 'ChartPieNode',
+    mixins: [
+        LiveNodeMixin
+    ],
+
     propTypes: {
         node: React.PropTypes.object.isRequired
     },
@@ -50185,15 +50191,15 @@ var ChartPieNode = React.createClass({displayName: 'ChartPieNode',
         );
     }
 });
-
 exports.ChartPieNode = ChartPieNode;
 
 
 
-var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
-
 var ChartPieEditNode = React.createClass({displayName: 'ChartPieEditNode',
-    mixins: [EditableNodeMixin],
+    mixins: [
+        EditableNodeMixin,
+        LiveNodeMixin
+    ],
 
     propTypes: {
         node: React.PropTypes.object.isRequired
@@ -50208,14 +50214,11 @@ var ChartPieEditNode = React.createClass({displayName: 'ChartPieEditNode',
         };
         console.log('saving chart pie node', settings);
 
-
-
-
         return false;
     },
 
     render: function () {
-        var classes  = 'node';
+        var classes = 'node';
         if (this.state.edit) {
             classes += ' node--editing';
         }
@@ -50255,17 +50258,23 @@ var ChartPieEditNode = React.createClass({displayName: 'ChartPieEditNode',
 });
 
 exports.ChartPieEditNode = ChartPieEditNode;
-},{"../../../lib/nvd3":268,"../../../mixins/EditableNodeMixin.jsx":270,"d3":3,"react":244}],254:[function(require,module,exports){
+},{"../../../lib/nvd3":268,"../../../mixins/EditableNodeMixin.jsx":270,"../../../mixins/LiveNodeMixin.jsx":271,"d3":3,"react":244}],254:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
 
-var React      = require('react');
-var Protofight = require('../../../lib/Protofight');
-var d3         = require('d3');
-var nv         = require('../../../lib/nvd3');
+var React             = require('react');
+var Protofight        = require('../../../lib/Protofight');
+var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
+var LiveNodeMixin     = require('../../../mixins/LiveNodeMixin.jsx');
+var d3                = require('d3');
+var nv                = require('../../../lib/nvd3');
 
 var ChartSimpleLineNode = React.createClass({displayName: 'ChartSimpleLineNode',
+    mixins: [
+        LiveNodeMixin
+    ],
+
     propTypes: {
         node: React.PropTypes.object.isRequired
     },
@@ -50346,15 +50355,15 @@ var ChartSimpleLineNode = React.createClass({displayName: 'ChartSimpleLineNode',
         );
     }
 });
-
 exports.ChartSimpleLineNode = ChartSimpleLineNode;
 
 
 
-var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
-
 var ChartSimpleLineEditNode = React.createClass({displayName: 'ChartSimpleLineEditNode',
-    mixins: [EditableNodeMixin],
+    mixins: [
+        EditableNodeMixin,
+        LiveNodeMixin
+    ],
 
     propTypes: {
         node: React.PropTypes.object.isRequired
@@ -50420,9 +50429,8 @@ var ChartSimpleLineEditNode = React.createClass({displayName: 'ChartSimpleLineEd
         );
     }
 });
-
 exports.ChartSimpleLineEditNode = ChartSimpleLineEditNode;
-},{"../../../lib/Protofight":266,"../../../lib/nvd3":268,"../../../mixins/EditableNodeMixin.jsx":270,"d3":3,"react":244}],255:[function(require,module,exports){
+},{"../../../lib/Protofight":266,"../../../lib/nvd3":268,"../../../mixins/EditableNodeMixin.jsx":270,"../../../mixins/LiveNodeMixin.jsx":271,"d3":3,"react":244}],255:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -50435,7 +50443,8 @@ var LiveNodeMixin      = require('../../../mixins/LiveNodeMixin.jsx');
 
 var ContentContainerNode = React.createClass({displayName: 'ContentContainerNode',
     mixins: [
-        ContainerNodeMixin
+        ContainerNodeMixin,
+        LiveNodeMixin
     ],
 
     propTypes: {
@@ -50506,42 +50515,121 @@ exports.ContentContainerEditNode = ContentContainerEditNode;
 
 'use strict';
 
-var React = require('react');
+var React             = require('react');
+var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
+var LiveNodeMixin     = require('../../../mixins/LiveNodeMixin.jsx');
 
+/**
+ * Content text node.
+ */
 var ContentTextNode = React.createClass({displayName: 'ContentTextNode',
+    mixins: [
+        LiveNodeMixin
+    ],
+
     propTypes: {
         node: React.PropTypes.object.isRequired
     },
 
     render: function () {
         return (
-            React.DOM.p(null,  this.props.node.settings.content )
+            React.DOM.div(null,  this.props.node.settings.content )
         );
     }
 });
-
 exports.ContentTextNode = ContentTextNode;
-},{"react":244}],257:[function(require,module,exports){
+
+
+
+/**
+ * Content text node for structure/edition.
+ */
+var ContentTextEditNode = React.createClass({displayName: 'ContentTextEditNode',
+    mixins: [
+        EditableNodeMixin,
+        LiveNodeMixin
+    ],
+
+    propTypes: {
+        node: React.PropTypes.object.isRequired
+    },
+
+    _onSubmit: function (e) {
+        e.preventDefault();
+
+        var settings = {
+            content: this.refs.content.getDOMNode().value
+        };
+
+        this.props.node.name     = this.refs.name.getDOMNode().value;
+        this.props.node.settings = settings;
+        this.props.app.save(this.props.node);
+
+        return false;
+    },
+
+    render: function () {
+        var classes = 'node';
+        if (this.state.edit) {
+            classes += ' node--editing';
+        }
+
+        return (
+            React.DOM.div( {className: classes }, 
+                React.DOM.span( {className:"node__title"},  this.state.node.name ),
+                React.DOM.div( {className:"node__controls"}, 
+                    React.DOM.span( {className:"button button--s", onClick: this.onEditClick }, 
+                        React.DOM.i( {className:"fa fa-pencil"}),
+                        React.DOM.i( {className:"fa fa-eye"})
+                    )
+                ),
+                React.DOM.div( {className:"node--edit"}, 
+                    React.DOM.form( {onSubmit: this._onSubmit }, 
+                        React.DOM.p(null, 
+                            React.DOM.label(null, "Name"),
+                            React.DOM.input( {type:"text", defaultValue: this.props.node.name,  ref:"name"} )
+                        ),
+                        React.DOM.p(null, 
+                            React.DOM.label(null, "Content"),
+                            React.DOM.textarea( {defaultValue: this.props.node.settings.content,  ref:"content"} )
+                        ),
+                        React.DOM.p(null, 
+                            React.DOM.button( {className:"button", type:"submit"}, "save"),
+                            React.DOM.span( {className:"button button--warning", onClick: this._onCancelEditClick }, "cancel")
+                        )
+                    )
+                )
+            )
+        );
+    }
+});
+exports.ContentTextEditNode = ContentTextEditNode;
+},{"../../../mixins/EditableNodeMixin.jsx":270,"../../../mixins/LiveNodeMixin.jsx":271,"react":244}],257:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
 
-var React = require('react');
+var React         = require('react');
+var LiveNodeMixin = require('../../../mixins/LiveNodeMixin.jsx');
 
 var DataStaticJsonNode = React.createClass({displayName: 'DataStaticJsonNode',
+    mixins: [
+        LiveNodeMixin
+    ],
+
     propTypes: {
         node: React.PropTypes.object.isRequired
     },
 
     render: function () {
         return (
-            React.DOM.pre(null,  this.props.settings.content )
+            React.DOM.pre(null,  this.state.node.settings.content )
         );
     }
 });
 
 exports.DataStaticJsonNode = DataStaticJsonNode;
-},{"react":244}],258:[function(require,module,exports){
+},{"../../../mixins/LiveNodeMixin.jsx":271,"react":244}],258:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -50649,7 +50737,8 @@ var LiveNodeMixin      = require('../../../mixins/LiveNodeMixin.jsx');
 
 var LayoutRowNode = React.createClass({displayName: 'LayoutRowNode',
     mixins: [
-        ContainerNodeMixin
+        ContainerNodeMixin,
+        LiveNodeMixin
     ],
 
     propTypes: {
@@ -50737,10 +50826,12 @@ var React              = require('react');
 var NodeTypeSelector   = require('../../NodeTypeSelector.jsx');
 var EditableNodeMixin  = require('../../../mixins/EditableNodeMixin.jsx');
 var ContainerNodeMixin = require('../../../mixins/ContainerNodeMixin.jsx');
+var LiveNodeMixin      = require('../../../mixins/LiveNodeMixin.jsx');
 
 var NavBreadcrumbsNode = React.createClass({displayName: 'NavBreadcrumbsNode',
     mixins: [
-        ContainerNodeMixin
+        ContainerNodeMixin,
+        LiveNodeMixin
     ],
 
     propTypes: {
@@ -50762,7 +50853,8 @@ exports.NavBreadcrumbsNode = NavBreadcrumbsNode;
 var NavBreadcrumbsEditNode = React.createClass({displayName: 'NavBreadcrumbsEditNode',
     mixins: [
         EditableNodeMixin,
-        ContainerNodeMixin
+        ContainerNodeMixin,
+        LiveNodeMixin
     ],
 
     propTypes: {
@@ -50860,15 +50952,20 @@ var NavBreadcrumbsItemEditNode = React.createClass({displayName: 'NavBreadcrumbs
     }
 });
 exports.NavBreadcrumbsItemEditNode = NavBreadcrumbsItemEditNode;
-},{"../../../mixins/ContainerNodeMixin.jsx":269,"../../../mixins/EditableNodeMixin.jsx":270,"../../NodeTypeSelector.jsx":249,"react":244}],261:[function(require,module,exports){
+},{"../../../mixins/ContainerNodeMixin.jsx":269,"../../../mixins/EditableNodeMixin.jsx":270,"../../../mixins/LiveNodeMixin.jsx":271,"../../NodeTypeSelector.jsx":249,"react":244}],261:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
 
 var React             = require('react');
 var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
+var LiveNodeMixin      = require('../../../mixins/LiveNodeMixin.jsx');
 
 var NavMenuItemNode = React.createClass({displayName: 'NavMenuItemNode',
+    mixins: [
+        LiveNodeMixin
+    ],
+
     propTypes: {
         node: React.PropTypes.object.isRequired
     },
@@ -50886,7 +50983,10 @@ exports.NavMenuItemNode = NavMenuItemNode;
 
 
 var NavMenuItemEditNode = React.createClass({displayName: 'NavMenuItemEditNode',
-    mixins: [EditableNodeMixin],
+    mixins: [
+        EditableNodeMixin,
+        LiveNodeMixin
+    ],
 
     propTypes: {
         node: React.PropTypes.object.isRequired
@@ -50948,7 +51048,7 @@ var NavMenuItemEditNode = React.createClass({displayName: 'NavMenuItemEditNode',
     }
 });
 exports.NavMenuItemEditNode = NavMenuItemEditNode;
-},{"../../../mixins/EditableNodeMixin.jsx":270,"react":244}],262:[function(require,module,exports){
+},{"../../../mixins/EditableNodeMixin.jsx":270,"../../../mixins/LiveNodeMixin.jsx":271,"react":244}],262:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -50956,10 +51056,12 @@ exports.NavMenuItemEditNode = NavMenuItemEditNode;
 var React              = require('react');
 var NodeTypeSelector   = require('../../NodeTypeSelector.jsx');
 var ContainerNodeMixin = require('../../../mixins/ContainerNodeMixin.jsx');
+var LiveNodeMixin      = require('../../../mixins/LiveNodeMixin.jsx');
 
 var NavMenuNode = React.createClass({displayName: 'NavMenuNode',
     mixins: [
-        ContainerNodeMixin
+        ContainerNodeMixin,
+        LiveNodeMixin
     ],
 
     propTypes: {
@@ -50980,7 +51082,8 @@ exports.NavMenuNode = NavMenuNode;
 
 var NavMenuEditNode = React.createClass({displayName: 'NavMenuEditNode',
     mixins: [
-        ContainerNodeMixin
+        ContainerNodeMixin,
+        LiveNodeMixin
     ],
 
     propTypes: {
@@ -50992,7 +51095,7 @@ var NavMenuEditNode = React.createClass({displayName: 'NavMenuEditNode',
 
         return (
             React.DOM.div( {className:"node"}, 
-                React.DOM.span( {className:"node__title"},  this.props.node.name ),
+                React.DOM.span( {className:"node__title"},  this.state.node.name ),
                 React.DOM.div( {className:"node__controls"}, 
                     NodeTypeSelector( {node: this.props.node } ),
                     React.DOM.span( {className:"button button--s", onClick: this.onEditClick }, 
@@ -51006,7 +51109,7 @@ var NavMenuEditNode = React.createClass({displayName: 'NavMenuEditNode',
     }
 });
 exports.NavMenuEditNode = NavMenuEditNode;
-},{"../../../mixins/ContainerNodeMixin.jsx":269,"../../NodeTypeSelector.jsx":249,"react":244}],263:[function(require,module,exports){
+},{"../../../mixins/ContainerNodeMixin.jsx":269,"../../../mixins/LiveNodeMixin.jsx":271,"../../NodeTypeSelector.jsx":249,"react":244}],263:[function(require,module,exports){
 'use strict';
 
 var keyMirror = require('react/lib/keyMirror');
@@ -51159,6 +51262,7 @@ var components = {
     ContentContainerNode:     require('../components/nodes/content/ContainerNode.jsx').ContentContainerNode,
     ContentContainerEditNode: require('../components/nodes/content/ContainerNode.jsx').ContentContainerEditNode,
     ContentTextNode:          require('../components/nodes/content/TextNode.jsx').ContentTextNode,
+    ContentTextEditNode:      require('../components/nodes/content/TextNode.jsx').ContentTextEditNode,
 
     // DATA
     DataStaticJsonNode: require('../components/nodes/data/StaticJsonNode.jsx').DataStaticJsonNode,
@@ -51186,8 +51290,11 @@ function Protofight (config) {
     this.baseApiUrl  = 'http://localhost:4000/';
 
     // Due to:
-    // warning: possible EventEmitter memory leak detected. 11 listeners added.
-    // Use emitter.setMaxListeners() to increase limit.
+    //   warning:
+    //     possible EventEmitter memory leak detected.
+    //     11 listeners added.
+    //     Use emitter.setMaxListeners() to increase limit.
+    //
     this.setMaxListeners(200);
 }
 
@@ -51232,31 +51339,43 @@ Protofight.prototype.createNode = function (type, parent) {
         settings:   type.defaults || {}
     };
 
-    var p = $.ajax({
+    var promise = $.ajax({
         url:         this.baseApiUrl + 'nodes',
         method:      'POST',
         contentType: 'application/json',
         data:        JSON.stringify(newNode)
     });
 
-    this.augmentNode(newNode);
+    promise.then(function (node) {
+        this.augmentNode(newNode);
+        if (parent && parent._id) {
+            parent.nodes.push(node);
+            this.emit('node.update', parent);
+        }
+    }.bind(this));
 
-    this.emit('create', newNode);
+    //this.emit('create', newNode);
 
-    return p;
+    return promise;
 };
 
+/**
+ * @param node
+ * @returns {*}
+ */
 Protofight.prototype.save = function (node) {
-    var p = $.ajax({
+    var promise = $.ajax({
         url:         this.baseApiUrl + 'nodes/' + node._id,
         method:      'PUT',
         contentType: 'application/json',
         data:        JSON.stringify(node)
     });
 
-    p.then(function (node) {
+    promise.then(function (node) {
         this.emit('node.update', node);
     }.bind(this));
+
+    return promise;
 };
 
 /**
@@ -51375,7 +51494,7 @@ exports.all = [
         type:      'text',
         component: {
             view: 'ContentTextNode',
-            edit: 'ContentTextNode'
+            edit: 'ContentTextEditNode'
         },
         accept:    null,
         defaults: {
@@ -51387,7 +51506,7 @@ exports.all = [
         type:      'code',
         component: {
             view: 'ContentTextNode',
-            edit: 'ContentTextNode'
+            edit: 'ContentTextEditNode'
         },
         accept:    null,
         defaults: {
@@ -65956,7 +66075,7 @@ module.exports = {
     getChildrenNodes: function (mode) {
         var protofight = require('../lib/Protofight').protofight();
 
-        return protofight.buildChildNodeList(this.props.node, mode);
+        return protofight.buildChildNodeList(this.state.node, mode);
     }
 };
 },{"../lib/Protofight":266}],270:[function(require,module,exports){
@@ -65967,6 +66086,12 @@ module.exports = {
         return {
             edit: false
         };
+    },
+
+    _onCancelEditClick: function (e) {
+        this.setState({
+            edit: false
+        });
     },
 
     onEditClick: function (e) {

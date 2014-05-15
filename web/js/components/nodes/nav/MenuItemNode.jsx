@@ -4,8 +4,13 @@
 
 var React             = require('react');
 var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
+var LiveNodeMixin      = require('../../../mixins/LiveNodeMixin.jsx');
 
 var NavMenuItemNode = React.createClass({
+    mixins: [
+        LiveNodeMixin
+    ],
+
     propTypes: {
         node: React.PropTypes.object.isRequired
     },
@@ -23,7 +28,10 @@ exports.NavMenuItemNode = NavMenuItemNode;
 
 
 var NavMenuItemEditNode = React.createClass({
-    mixins: [EditableNodeMixin],
+    mixins: [
+        EditableNodeMixin,
+        LiveNodeMixin
+    ],
 
     propTypes: {
         node: React.PropTypes.object.isRequired

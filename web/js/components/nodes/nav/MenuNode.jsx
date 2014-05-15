@@ -5,10 +5,12 @@
 var React              = require('react');
 var NodeTypeSelector   = require('../../NodeTypeSelector.jsx');
 var ContainerNodeMixin = require('../../../mixins/ContainerNodeMixin.jsx');
+var LiveNodeMixin      = require('../../../mixins/LiveNodeMixin.jsx');
 
 var NavMenuNode = React.createClass({
     mixins: [
-        ContainerNodeMixin
+        ContainerNodeMixin,
+        LiveNodeMixin
     ],
 
     propTypes: {
@@ -29,7 +31,8 @@ exports.NavMenuNode = NavMenuNode;
 
 var NavMenuEditNode = React.createClass({
     mixins: [
-        ContainerNodeMixin
+        ContainerNodeMixin,
+        LiveNodeMixin
     ],
 
     propTypes: {
@@ -41,7 +44,7 @@ var NavMenuEditNode = React.createClass({
 
         return (
             <div className="node">
-                <span className="node__title">{ this.props.node.name }</span>
+                <span className="node__title">{ this.state.node.name }</span>
                 <div className="node__controls">
                     <NodeTypeSelector node={ this.props.node } />
                     <span className="button button--s" onClick={ this.onEditClick }>

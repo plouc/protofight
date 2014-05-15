@@ -16,6 +16,7 @@ var components = {
     ContentContainerNode:     require('../components/nodes/content/ContainerNode.jsx').ContentContainerNode,
     ContentContainerEditNode: require('../components/nodes/content/ContainerNode.jsx').ContentContainerEditNode,
     ContentTextNode:          require('../components/nodes/content/TextNode.jsx').ContentTextNode,
+    ContentTextEditNode:      require('../components/nodes/content/TextNode.jsx').ContentTextEditNode,
 
     // DATA
     DataStaticJsonNode: require('../components/nodes/data/StaticJsonNode.jsx').DataStaticJsonNode,
@@ -43,8 +44,11 @@ function Protofight (config) {
     this.baseApiUrl  = 'http://localhost:4000/';
 
     // Due to:
-    // warning: possible EventEmitter memory leak detected. 11 listeners added.
-    // Use emitter.setMaxListeners() to increase limit.
+    //   warning:
+    //     possible EventEmitter memory leak detected.
+    //     11 listeners added.
+    //     Use emitter.setMaxListeners() to increase limit.
+    //
     this.setMaxListeners(200);
 }
 
@@ -89,31 +93,43 @@ Protofight.prototype.createNode = function (type, parent) {
         settings:   type.defaults || {}
     };
 
-    var p = $.ajax({
+    var promise = $.ajax({
         url:         this.baseApiUrl + 'nodes',
         method:      'POST',
         contentType: 'application/json',
         data:        JSON.stringify(newNode)
     });
 
-    this.augmentNode(newNode);
+    promise.then(function (node) {
+        this.augmentNode(newNode);
+        if (parent && parent._id) {
+            parent.nodes.push(node);
+            this.emit('node.update', parent);
+        }
+    }.bind(this));
 
-    this.emit('create', newNode);
+    //this.emit('create', newNode);
 
-    return p;
+    return promise;
 };
 
+/**
+ * @param node
+ * @returns {*}
+ */
 Protofight.prototype.save = function (node) {
-    var p = $.ajax({
+    var promise = $.ajax({
         url:         this.baseApiUrl + 'nodes/' + node._id,
         method:      'PUT',
         contentType: 'application/json',
         data:        JSON.stringify(node)
     });
 
-    p.then(function (node) {
+    promise.then(function (node) {
         this.emit('node.update', node);
     }.bind(this));
+
+    return promise;
 };
 
 /**

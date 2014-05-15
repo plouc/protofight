@@ -10,7 +10,8 @@ var LiveNodeMixin      = require('../../../mixins/LiveNodeMixin.jsx');
 
 var LayoutRowNode = React.createClass({
     mixins: [
-        ContainerNodeMixin
+        ContainerNodeMixin,
+        LiveNodeMixin
     ],
 
     propTypes: {

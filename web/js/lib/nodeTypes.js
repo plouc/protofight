@@ -33,7 +33,7 @@ exports.all = [
         type:      'text',
         component: {
             view: 'ContentTextNode',
-            edit: 'ContentTextNode'
+            edit: 'ContentTextEditNode'
         },
         accept:    null,
         defaults: {
@@ -45,7 +45,7 @@ exports.all = [
         type:      'code',
         component: {
             view: 'ContentTextNode',
-            edit: 'ContentTextNode'
+            edit: 'ContentTextEditNode'
         },
         accept:    null,
         defaults: {
