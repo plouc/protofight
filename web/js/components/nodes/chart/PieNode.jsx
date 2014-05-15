@@ -3,6 +3,7 @@
 var React             = require('react');
 var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
 var LiveNodeMixin     = require('../../../mixins/LiveNodeMixin.jsx');
+var NodeMeta          = require('../../NodeMeta.jsx');
 var d3                = require('d3');
 var nv                = require('../../../lib/nvd3');
 var protofight;
@@ -118,6 +119,7 @@ var ChartPieEditNode = React.createClass({
                     </span>
                 </div>
                 <div className="node--edit">
+                    <NodeMeta node={ this.state.node }/>
                     <form onSubmit={ this._onSubmit }>
                         <p>
                             <label>Show label</label>

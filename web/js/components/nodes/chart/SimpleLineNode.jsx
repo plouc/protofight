@@ -6,6 +6,7 @@ var React             = require('react');
 var Protofight        = require('../../../lib/Protofight');
 var EditableNodeMixin = require('../../../mixins/EditableNodeMixin.jsx');
 var LiveNodeMixin     = require('../../../mixins/LiveNodeMixin.jsx');
+var NodeMeta          = require('../../NodeMeta.jsx');
 var d3                = require('d3');
 var nv                = require('../../../lib/nvd3');
 
@@ -134,6 +135,7 @@ var ChartSimpleLineEditNode = React.createClass({
                     </span>
                 </div>
                 <div className="node--edit">
+                    <NodeMeta node={ this.state.node }/>
                     <form onSubmit={ this.onSubmit }>
                         <p>
                             <label>Margin left</label>

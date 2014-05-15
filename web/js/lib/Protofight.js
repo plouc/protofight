@@ -13,10 +13,14 @@ var components = {
     ChartSimpleLineEditNode: require('../components/nodes/chart/SimpleLineNode.jsx').ChartSimpleLineEditNode,
 
     // CONTENT
+    ContentPageNode:          require('../components/nodes/content/PageNode.jsx').ContentPageNode,
+    ContentPageEditNode:      require('../components/nodes/content/PageNode.jsx').ContentPageEditNode,
     ContentContainerNode:     require('../components/nodes/content/ContainerNode.jsx').ContentContainerNode,
     ContentContainerEditNode: require('../components/nodes/content/ContainerNode.jsx').ContentContainerEditNode,
     ContentTextNode:          require('../components/nodes/content/TextNode.jsx').ContentTextNode,
     ContentTextEditNode:      require('../components/nodes/content/TextNode.jsx').ContentTextEditNode,
+    ContentMarkdownNode:      require('../components/nodes/content/MarkdownNode.jsx').ContentMarkdownNode,
+    ContentMarkdownEditNode:  require('../components/nodes/content/MarkdownNode.jsx').ContentMarkdownEditNode,
 
     // DATA
     DataStaticJsonNode: require('../components/nodes/data/StaticJsonNode.jsx').DataStaticJsonNode,

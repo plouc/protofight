@@ -200,10 +200,16 @@ $aside-toggle-size: 30px;
 .node__meta {
   font-size: 12px;
   list-style: none;
-  padding: 0;
   color: #999;
+  background: #eee;
+  margin: 0 -5px;
+  padding: 3px 10px;
   li {
     display: inline-block;
+    margin-left: 7px;
+    &:first-child {
+      margin-left: 0;
+    }
   }
   strong {
     color: #225c82;

@@ -318,10 +318,15 @@ a {
 .node__meta {
   font-size: 12px;
   list-style: none;
-  padding: 0;
-  color: #999; }
+  color: #999;
+  background: #eee;
+  margin: 0 -5px;
+  padding: 3px 10px; }
   .node__meta li {
-    display: inline-block; }
+    display: inline-block;
+    margin-left: 7px; }
+    .node__meta li:first-child {
+      margin-left: 0; }
   .node__meta strong {
     color: #225c82; }
 

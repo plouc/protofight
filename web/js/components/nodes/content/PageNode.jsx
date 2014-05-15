@@ -7,9 +7,8 @@ var NodeTypeSelector   = require('../../NodeTypeSelector.jsx');
 var EditableNodeMixin  = require('../../../mixins/EditableNodeMixin.jsx');
 var ContainerNodeMixin = require('../../../mixins/ContainerNodeMixin.jsx');
 var LiveNodeMixin      = require('../../../mixins/LiveNodeMixin.jsx');
-var NodeMeta           = require('../../NodeMeta.jsx');
 
-var ContentContainerNode = React.createClass({
+var ContentPageNode = React.createClass({
     mixins: [
         ContainerNodeMixin,
         LiveNodeMixin
@@ -27,11 +26,11 @@ var ContentContainerNode = React.createClass({
         );
     }
 });
-exports.ContentContainerNode = ContentContainerNode;
+exports.ContentPageNode = ContentPageNode;
 
 
 
-var ContentContainerEditNode = React.createClass({
+var ContentPageEditNode = React.createClass({
     mixins: [
         EditableNodeMixin,
         ContainerNodeMixin,
@@ -61,7 +60,6 @@ var ContentContainerEditNode = React.createClass({
                     </span>
                 </div>
                 <div className="node--edit">
-                    <NodeMeta node={ this.state.node }/>
                     <form onSubmit={ this.handleSubmit }>
                         <p>
                             <label>Name</label>
@@ -75,7 +73,7 @@ var ContentContainerEditNode = React.createClass({
                 </div>
                 <div>{ children }</div>
             </div>
-        );
+            );
     }
 });
-exports.ContentContainerEditNode = ContentContainerEditNode;
+exports.ContentPageEditNode = ContentPageEditNode;

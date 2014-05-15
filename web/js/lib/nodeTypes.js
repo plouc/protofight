@@ -12,6 +12,24 @@ exports.all = [
     //
     //---------------------------------------------------------
     {
+        name:      'Page',
+        type:      'page',
+        component: {
+            view: 'ContentPageNode',
+            edit: 'ContentPageEditNode'
+        },
+        accept:   [
+            'code',
+            'text',
+            'markdown',
+            'menu',
+            'container',
+            'chart',
+            'breadcrumbs',
+            'layout.row'
+        ]
+    },
+    {
         name:      'Node container',
         type:      'container',
         component: {
@@ -21,6 +39,7 @@ exports.all = [
         accept:   [
             'code',
             'text',
+            'markdown',
             'menu',
             'container',
             'chart',
@@ -50,6 +69,18 @@ exports.all = [
         accept:    null,
         defaults: {
             lang:    '',
+            content: ''
+        }
+    },
+    {
+        name:      'Markdown node',
+        type:      'markdown',
+        component: {
+            view: 'ContentMarkdownNode',
+            edit: 'ContentMarkdownEditNode'
+        },
+        accept:    null,
+        defaults: {
             content: ''
         }
     },
@@ -156,6 +187,7 @@ exports.all = [
         accept:   [
             'code',
             'text',
+            'markdown',
             'menu',
             'container',
             'chart',
