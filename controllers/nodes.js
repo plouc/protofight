@@ -89,7 +89,14 @@ exports.update = function (req, res) {
                 return res.send({ status : 500 });
             }
 
-            res.json(node);
+            Node.findChildren(node._id, function (err, children) {
+                if (err) {
+                    res.status(500);
+                    return res.send({ status : 500 });
+                }
+
+                res.json(children);
+            });
         });
     });
 };
@@ -128,7 +135,7 @@ exports.children = function (req, res) {
         }
 
         res.json(children);
-    })
+    });
 };
 
 function deepNodeRemoval(node, res) {

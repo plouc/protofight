@@ -41,6 +41,19 @@ var ContentPageEditNode = React.createClass({
         node: React.PropTypes.object.isRequired
     },
 
+    _onSubmit: function (e) {
+        e.preventDefault();
+
+        var settings = {
+        };
+
+        this.state.node.name = this.refs.name.getDOMNode().value;
+        this.state.node.settings = settings;
+        this.props.app.save(this.state.node);
+
+        return false;
+    },
+
     render: function () {
         var children = this.getChildrenNodes('edit');
 
@@ -51,29 +64,29 @@ var ContentPageEditNode = React.createClass({
 
         return (
             <div className={ classes }>
-                <span className="node__title">{ this.props.node.name }</span>
+                <span className="node__title">{ this.state.node.name }</span>
                 <div className="node__controls">
-                    <NodeTypeSelector node={ this.props.node } app={ this.props.app }/>
+                    <NodeTypeSelector node={ this.state.node } app={ this.props.app }/>
                     <span className="button button--s" onClick={ this.onEditClick }>
                         <i className="fa fa-pencil"></i>
                         <i className="fa fa-eye"></i>
                     </span>
                 </div>
                 <div className="node--edit">
-                    <form onSubmit={ this.handleSubmit }>
+                    <form onSubmit={ this._onSubmit }>
                         <p>
                             <label>Name</label>
-                            <input type="text" defaultValue={ this.props.node.name } ref="name" />
+                            <input type="text" defaultValue={ this.state.node.name } ref="name" />
                         </p>
                         <p>
                             <button className="button" type="submit">save</button>
-                            <span className="button button--warning">cancel</span>
+                            <span className="button button--warning" onClick={ this._onCancelEditClick }>cancel</span>
                         </p>
                     </form>
                 </div>
                 <div>{ children }</div>
             </div>
-            );
+        );
     }
 });
 exports.ContentPageEditNode = ContentPageEditNode;

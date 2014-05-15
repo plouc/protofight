@@ -34,6 +34,18 @@ Protofight.prototype.listNodes = function (params) {
     return p;
 };
 
+Protofight.prototype.children = function (node) {
+    var promise = $.ajax({
+        url: '/nodes/' + node._id + '/children'
+    });
+
+    promise.done(function (node) {
+        this.augmentNode(node);
+    }.bind(this));
+
+    return promise;
+};
+
 Protofight.prototype.mountNode = function (nodeId) {
     var p = $.ajax({
         url: '/nodes/' + nodeId + '/children'

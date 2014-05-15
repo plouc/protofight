@@ -51067,7 +51067,7 @@ var ContentContainerEditNode = React.createClass({displayName: 'ContentContainer
                         ),
                         React.DOM.p(null, 
                             React.DOM.button( {className:"button", type:"submit"}, "save"),
-                            React.DOM.span( {className:"button button--warning"}, "cancel")
+                            React.DOM.span( {className:"button button--warning", onClick: this._onCancelEditClick }, "cancel")
                         )
                     )
                 ),
@@ -51232,6 +51232,19 @@ var ContentPageEditNode = React.createClass({displayName: 'ContentPageEditNode',
         node: React.PropTypes.object.isRequired
     },
 
+    _onSubmit: function (e) {
+        e.preventDefault();
+
+        var settings = {
+        };
+
+        this.state.node.name = this.refs.name.getDOMNode().value;
+        this.state.node.settings = settings;
+        this.props.app.save(this.state.node);
+
+        return false;
+    },
+
     render: function () {
         var children = this.getChildrenNodes('edit');
 
@@ -51242,29 +51255,29 @@ var ContentPageEditNode = React.createClass({displayName: 'ContentPageEditNode',
 
         return (
             React.DOM.div( {className: classes }, 
-                React.DOM.span( {className:"node__title"},  this.props.node.name ),
+                React.DOM.span( {className:"node__title"},  this.state.node.name ),
                 React.DOM.div( {className:"node__controls"}, 
-                    NodeTypeSelector( {node: this.props.node,  app: this.props.app }),
+                    NodeTypeSelector( {node: this.state.node,  app: this.props.app }),
                     React.DOM.span( {className:"button button--s", onClick: this.onEditClick }, 
                         React.DOM.i( {className:"fa fa-pencil"}),
                         React.DOM.i( {className:"fa fa-eye"})
                     )
                 ),
                 React.DOM.div( {className:"node--edit"}, 
-                    React.DOM.form( {onSubmit: this.handleSubmit }, 
+                    React.DOM.form( {onSubmit: this._onSubmit }, 
                         React.DOM.p(null, 
                             React.DOM.label(null, "Name"),
-                            React.DOM.input( {type:"text", defaultValue: this.props.node.name,  ref:"name"} )
+                            React.DOM.input( {type:"text", defaultValue: this.state.node.name,  ref:"name"} )
                         ),
                         React.DOM.p(null, 
                             React.DOM.button( {className:"button", type:"submit"}, "save"),
-                            React.DOM.span( {className:"button button--warning"}, "cancel")
+                            React.DOM.span( {className:"button button--warning", onClick: this._onCancelEditClick }, "cancel")
                         )
                     )
                 ),
                 React.DOM.div(null,  children )
             )
-            );
+        );
     }
 });
 exports.ContentPageEditNode = ContentPageEditNode;
@@ -52124,6 +52137,18 @@ Protofight.prototype.listNodes = function (params) {
     }.bind(this));
 
     return p;
+};
+
+Protofight.prototype.children = function (node) {
+    var promise = $.ajax({
+        url: '/nodes/' + node._id + '/children'
+    });
+
+    promise.done(function (node) {
+        this.augmentNode(node);
+    }.bind(this));
+
+    return promise;
 };
 
 Protofight.prototype.mountNode = function (nodeId) {
