@@ -1,3 +1,6 @@
+var reactify = require('reactify');
+var uglify   = require('uglify-js');
+
 (function () {
     'use strict';
 
@@ -33,39 +36,35 @@
                     tasks: ['browserify:dev']
                 }
             },
-            browserify: {
-                options: {
-                    debug:      true,
-                    transform:  ['reactify'],
-                    extensions: ['.jsx']
-                },
+            browserify2: {
                 dev: {
-                    options: {
-                        alias: ['react:']  // Make React available externally for dev tools
+                    entry:   './web/js/App.js',
+                    compile: './web/js/bundle.js',
+                    debug:   false,
+                    beforeHook: function (bundle){
+                        bundle.transform(reactify)
                     },
-                    src:  ['web/js/App.js'],
-                    dest: 'web/js/bundle.js'
-                },
-                production: {
-                    options: {
-                        debug: false
-                    },
-                    src: '<%= browserify.dev.src %>',
-                    dest: 'build/bundle.js'
+                    afterHook: function (src){
+                        var result = uglify.minify(src, {
+                            fromString: true
+                        });
+
+                        return result.code;
+                    }
                 }
             }
         });
 
         grunt.loadNpmTasks('grunt-contrib-sass');
         grunt.loadNpmTasks('grunt-contrib-watch');
-        grunt.loadNpmTasks('grunt-browserify');
+        grunt.loadNpmTasks('grunt-browserify2');
 
         grunt.option('force', false);
 
         grunt.registerTask('default', function () {
             return grunt.task.run([
                 'sass',
-                'browserify:dev'
+                'browserify2:dev'
             ]);
         });
     };
