@@ -21,10 +21,10 @@
     "d3": "^3.4.6",
     "jquery": "2.1.1",
     "es6-promise": "~0.1.1",
-    "marked": "^0.3.2"
+    "marked": "^0.3.2",
+    "bower": "latest"
   },
   "devDependencies": {
-    "bower": "latest",
     "grunt": "latest",
     "grunt-cli": "latest",
     "time-grunt": "latest",
