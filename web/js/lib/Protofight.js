@@ -9,7 +9,6 @@ var NodeConstants = require('../constants/NodeConstants');
 function Protofight (config) {
     EventEmitter.call(this);
     this.currentNode = null;
-    this.baseApiUrl  = 'http://localhost:4000/';
 
     // Due to:
     //   warning:
@@ -24,7 +23,7 @@ Protofight.prototype = new EventEmitter;
 
 Protofight.prototype.listNodes = function (params) {
     var p = $.ajax({
-        url:  this.baseApiUrl + 'nodes',
+        url:  '/nodes',
         data: params
     });
 
@@ -37,7 +36,7 @@ Protofight.prototype.listNodes = function (params) {
 
 Protofight.prototype.mountNode = function (nodeId) {
     var p = $.ajax({
-        url: this.baseApiUrl + 'nodes/' + nodeId + '/children'
+        url: '/nodes/' + nodeId + '/children'
     });
 
     p.done(function (node) {
@@ -63,7 +62,7 @@ Protofight.prototype.create = function (type, parent) {
     };
 
     var promise = $.ajax({
-        url:         this.baseApiUrl + 'nodes',
+        url:         '/nodes',
         method:      'POST',
         contentType: 'application/json',
         data:        JSON.stringify(newNode)
@@ -87,7 +86,7 @@ Protofight.prototype.create = function (type, parent) {
  */
 Protofight.prototype.save = function (node) {
     var promise = $.ajax({
-        url:         this.baseApiUrl + 'nodes/' + node._id,
+        url:         '/nodes/' + node._id,
         method:      'PUT',
         contentType: 'application/json',
         data:        JSON.stringify(node)
@@ -107,7 +106,7 @@ Protofight.prototype.save = function (node) {
  */
 Protofight.prototype.remove = function (node) {
     var promise = $.ajax({
-        url:    this.baseApiUrl + 'nodes/' + node._id,
+        url:    '/nodes/' + node._id,
         method: 'DELETE'
     });
 
@@ -142,7 +141,7 @@ Protofight.prototype.augmentNode = function (node) {
         case 'breadcrumbs':
             node.getItems = function () {
                 return $.ajax({
-                    url: 'http://localhost:4000/nodes/pick',
+                    url: '/nodes/pick',
                     data: {
                         ids: node.ancestors
                     }

@@ -8,6 +8,7 @@ var config   = require('./config/config')[env];
 var mongoose = require('mongoose');
 var index    = require('./lib/index');
 
+// try to use heroku mongolab addon env var or use config
 var mongoUrl = process.env.MONGOLAB_URI ? process.env.MONGOLAB_URI : config.mongoose.url;
 
 var connectMongo = function () {
