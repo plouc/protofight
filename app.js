@@ -19,6 +19,7 @@ connectMongo();
 
 //index.create(config.elasticsearch);
 
+app.use(express.compress());
 app.use(express.bodyParser());
 app.use(express.static(__dirname + '/web'));
 app.get('/', function(req, res, next){
