@@ -51,6 +51,9 @@ var NavMenuEditNode = React.createClass({
                         <i className="fa fa-pencil"></i>
                         <i className="fa fa-eye"></i>
                     </span>
+                    <span className="button button--danger button--s" onClick={ this._onDeleteClick }>
+                        <i className="fa fa-times"></i>
+                    </span>
                 </div>
                 <div>{ children }</div>
             </div>

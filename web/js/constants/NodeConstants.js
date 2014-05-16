@@ -9,5 +9,7 @@ module.exports = keyMirror({
     NODE_CHILD_CREATE: null,
     NODE_COMPLETE:     null,
     NODE_DESTROY:      null,
-    NODE_DESTROYED:    null
+    NODE_DESTROYED:    null,
+    NODE_FETCH:        null,
+    NODE_FETCHED:      null
 });

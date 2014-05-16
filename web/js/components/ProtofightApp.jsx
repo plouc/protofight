@@ -25,21 +25,10 @@ var ProtofightApp = React.createClass({
             }.bind(this));
     },
 
-    handleNodeClick: function (component, e) {
-        this.props.app.mountNode(component.props.key)
-            .done(function (node) {
-                this.setState({
-                    currentNode: node
-                });
-            }.bind(this));
-    },
-
     render: function () {
-        //ng-class="{ 'site-content--left-closed': !asideLeft, 'site-content--right-closed': !asideRight }"
-
         return (
             <div>
-                <LeftPanel nodes={ this.state.nodes } nodeClickedHandler={ this.handleNodeClick } />
+                <LeftPanel nodes={ this.state.nodes } app={ this.props.app } />
                 <NodeView app={ this.props.app } node={ this.state.currentNode } />
                 <RightPanel app={ this.props.app } />
             </div>
@@ -51,18 +40,36 @@ module.exports = ProtofightApp;
 
 
 var NodeView = React.createClass({
+    _onNodeDestroyed: function () {
+        this.props.app.emit(NodeConstants.NODE_FETCH, this.state.node._id);
+    },
+
+    _onNodeUpdate: function () {
+        this.props.app.emit(NodeConstants.NODE_FETCH, this.state.node._id);
+    },
+
+    _onNodeFetched: function (node) {
+        this.setState({
+            node: node
+        });
+    },
+
+    componentWillMount: function () {
+        this.props.app.on(NodeConstants.NODE_FETCHED,   this._onNodeFetched);
+        this.props.app.on(NodeConstants.NODE_DESTROYED, this._onNodeDestroyed);
+        this.props.app.on(NodeConstants.NODE_UPDATE,    this._onNodeUpdate);
+    },
+
+    componentWillUnmount: function () {
+        this.props.app.removeListener(NodeConstants.NODE_FETCHED,   this._onNodeFetched);
+        this.props.app.removeListener(NodeConstants.NODE_DESTROYED, this._onNodeDestroyed);
+        this.props.app.removeListener(NodeConstants.NODE_UPDATE,    this._onNodeUpdate);
+    },
+
     getInitialState: function () {
         this.props.app.on('create', function (node) {
             this.setState({
-                viewMode: this.state.viewMode,
-                node:     node
-            });
-        }.bind(this));
-
-        this.props.app.on('select', function (node) {
-            this.setState({
-                viewMode: this.state.viewMode,
-                node:     node
+                node: node
             });
         }.bind(this));
 

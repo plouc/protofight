@@ -17,6 +17,18 @@ function Protofight (config) {
     //     Use emitter.setMaxListeners() to increase limit.
     //
     this.setMaxListeners(200);
+
+    this.on(NodeConstants.NODE_DESTROY, function (node) {
+        this.remove(node).then(function () {
+            this.emit(NodeConstants.NODE_DESTROYED, node);
+        }.bind(this));
+    }.bind(this));
+
+    this.on(NodeConstants.NODE_FETCH, function (id) {
+        this.children(id).then(function (node) {
+            this.emit(NodeConstants.NODE_FETCHED, node);
+        }.bind(this));
+    }.bind(this));
 }
 
 Protofight.prototype = new EventEmitter;
@@ -35,28 +47,22 @@ Protofight.prototype.listNodes = function (params) {
 };
 
 Protofight.prototype.children = function (node) {
+    var nodeId;
+    if (node instanceof Object) {
+        nodeId = node._id;
+    } else {
+        nodeId = node;
+    }
+
     var promise = $.ajax({
-        url: '/nodes/' + node._id + '/children'
+        url: '/nodes/' + nodeId + '/children'
     });
 
-    promise.done(function (node) {
+    promise.then(function (node) {
         this.augmentNode(node);
     }.bind(this));
 
     return promise;
-};
-
-Protofight.prototype.mountNode = function (nodeId) {
-    var p = $.ajax({
-        url: '/nodes/' + nodeId + '/children'
-    });
-
-    p.done(function (node) {
-        this.augmentNode(node);
-        this.emit('select', node);
-    }.bind(this));
-
-    return p;
 };
 
 Protofight.prototype.create = function (type, parent) {
@@ -122,13 +128,6 @@ Protofight.prototype.remove = function (node) {
         method: 'DELETE'
     });
 
-    promise.then(function () {
-        if (node.parent) {
-
-        }
-        this.emit(NodeConstants.NODE_DESTROYED, node);
-    }.bind(this));
-
     return promise;
 };
 
@@ -187,6 +186,7 @@ Protofight.prototype.augmentNode = function (node) {
             break;
     }
 
+    /*
     node.getFirstChildOfType = function (typeId) {
         if (!node.nodes || node.nodes.length === 0) {
             return null;
@@ -199,6 +199,7 @@ Protofight.prototype.augmentNode = function (node) {
             }
         }
     };
+    */
 
     if (node.nodes && node.nodes.length > 0) {
         this.augmentNodes(node.nodes);

@@ -28,7 +28,7 @@ var LeftPanel = React.createClass({
                     <i className="fa fa-angle-left"></i>
                     <i className="fa fa-angle-right"></i>
                 </span>
-                <NodeMenu nodes={ this.props.nodes } nodeClickedHandler={ this.props.nodeClickedHandler } />
+                <NodeMenu nodes={ this.props.nodes } app={ this.props.app } />
             </aside>
         )
     }

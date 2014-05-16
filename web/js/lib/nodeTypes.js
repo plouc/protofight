@@ -141,7 +141,7 @@ exports.all = [
         type:      'data.static_json',
         component: {
             view: 'DataStaticJsonNode',
-            edit: 'DataStaticJsonNode'
+            edit: 'DataStaticJsonEditNode'
         },
         accept:    null,
         defaults: {

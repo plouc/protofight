@@ -21,6 +21,7 @@ var components = {
 
     // DATA
     DataStaticJsonNode:      require('../components/nodes/data/StaticJsonNode.jsx').DataStaticJsonNode,
+    DataStaticJsonEditNode:  require('../components/nodes/data/StaticJsonNode.jsx').DataStaticJsonEditNode,
     DataJsonApiCallNode:     require('../components/nodes/data/JsonApiCallNode.jsx').DataJsonApiCallNode,
     DataJsonApiCallEditNode: require('../components/nodes/data/JsonApiCallNode.jsx').DataJsonApiCallEditNode,
 

@@ -169,12 +169,6 @@ $aside-toggle-size: 30px;
   &--edit {
     display: none;
   }
-  &__controls {
-    > * {
-      display: block;
-      float: right;
-    }
-  }
   &:last-child {
     margin-bottom: 0;
   }
@@ -228,6 +222,14 @@ $aside-toggle-size: 30px;
   right: 5px;
   .fa-eye {
     display: none;
+  }
+  > * {
+    display: block;
+    float: right;
+    margin-left: 2px;
+    &:last-child {
+      margin-left: 0;
+    }
   }
 }
 .node--container {
@@ -347,7 +349,8 @@ input[type="url"] {
     background-color: #fff;
     border-radius: 2px;
     padding: 5px;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+    border: 1px solid #ddd;
     &__item {
       display: block;
       white-space: pre;
