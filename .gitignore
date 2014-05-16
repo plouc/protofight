@@ -2,3 +2,4 @@ web/vendor
 node_modules
 .idea
 .sass-cache
+.notes.txt
