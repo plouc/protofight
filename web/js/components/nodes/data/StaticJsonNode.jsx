@@ -62,7 +62,7 @@ var DataStaticJsonEditNode = React.createClass({
                     <form onSubmit={ this.handleSubmit }>
                         <p>
                             <button className="button" type="submit">save</button>
-                            <span className="button button--warning">cancel</span>
+                            <span className="button button--warning" onClick={ this._onCancelEditClick }>cancel</span>
                         </p>
                     </form>
                 </div>
