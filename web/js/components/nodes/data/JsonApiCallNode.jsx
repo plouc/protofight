@@ -66,11 +66,23 @@ var DataJsonApiCallEditNode = React.createClass({
             this.setState({
                 rawApiResponse: 'loading…'
             });
-            this.state.node.getData().then(function (data) {
-                this.setState({
-                    rawApiResponse: JSON.stringify(data, null, 4)
-                });
-            }.bind(this));
+            this.state.node.getData()
+                .then(
+                    function (data) {
+                        this.setState({
+                            rawApiResponse: JSON.stringify(data, null, 4)
+                        });
+                    }.bind(this),
+                    function (err) {
+                        var errorMessage = 'An error occured while fetching data: ';
+                        if (err.status && err.statusText) {
+                            errorMessage += '[' + err.status + '] ' + err.statusText;
+                        }
+                        this.setState({
+                            rawApiResponse: errorMessage
+                        });
+                    }.bind(this)
+                );
         }
     },
 
@@ -111,7 +123,7 @@ var DataJsonApiCallEditNode = React.createClass({
                         </p>
                         <p>
                             <span className="button" onClick={ this._onTestClick }>test call</span>
-                            <span className="button" onClick={ this._onTestClearClick }>clear response</span>
+                            <span className="button button--warning" onClick={ this._onTestClearClick }>clear response</span>
                         </p>
                         <div className="json-api-call__raw-response">
                             <pre>{ this.state.rawApiResponse }</pre>

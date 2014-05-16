@@ -7,6 +7,7 @@ var NodeTypeSelector   = require('../../NodeTypeSelector.jsx');
 var EditableNodeMixin  = require('../../mixins/EditableNodeMixin');
 var ContainerNodeMixin = require('../../mixins/ContainerNodeMixin');
 var LiveNodeMixin      = require('../../mixins/LiveNodeMixin');
+var NodeMeta           = require('../../NodeMeta.jsx');
 
 var ContentPageNode = React.createClass({
     mixins: [
@@ -73,6 +74,7 @@ var ContentPageEditNode = React.createClass({
                     </span>
                 </div>
                 <div className="node--edit">
+                    <NodeMeta node={ this.state.node }/>
                     <form onSubmit={ this._onSubmit }>
                         <p>
                             <label>Name</label>

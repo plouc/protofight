@@ -175,13 +175,18 @@ $aside-toggle-size: 30px;
       float: right;
     }
   }
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 .node--editing {
   background-color: #fff;
+  border-style: solid;
+  border-color: #78a3ba;
   > .node--edit {
     display: block;
   }
-  .node__controls {
+  > .node__controls {
     .fa-pencil {
       display: none;
     }
@@ -203,7 +208,9 @@ $aside-toggle-size: 30px;
   color: #999;
   background: #eee;
   margin: 0 -5px;
-  padding: 3px 10px;
+  padding: 4px 10px;
+  border-top:    1px solid #ddd;
+  border-bottom: 1px solid #ddd;
   li {
     display: inline-block;
     margin-left: 7px;
