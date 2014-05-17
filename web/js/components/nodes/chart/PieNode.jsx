@@ -4,6 +4,7 @@ var React              = require('react');
 var EditableNodeMixin  = require('../../mixins/EditableNodeMixin');
 var LiveNodeMixin      = require('../../mixins/LiveNodeMixin');
 var ContainerNodeMixin = require('../../mixins/ContainerNodeMixin');
+var RemovableNodeMixin = require('../../mixins/RemovableNodeMixin');
 var NodeMeta           = require('../../NodeMeta.jsx');
 var NodeTypeSelector   = require('../../NodeTypeSelector.jsx');
 var d3                 = require('d3');
@@ -82,6 +83,7 @@ var ChartPieEditNode = React.createClass({
     mixins: [
         ContainerNodeMixin,
         EditableNodeMixin,
+        RemovableNodeMixin,
         LiveNodeMixin
     ],
 

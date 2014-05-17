@@ -7,8 +7,12 @@ var ProtofightApp = require('./components/ProtofightApp.jsx');
 var $             = require('jquery');
 var Protofight    = require('./lib/Protofight');
 
+var NodeSearch = require('./components/NodeSearch.jsx');
+
 $(document).ready(function () {
     var protofight = new Protofight();
 
-    React.renderComponent(<ProtofightApp app={ protofight }/>, $('._js_proto').get(0));
+    React.renderComponent(<NodeSearch app={ protofight }/>, $('._js_proto').get(0));
+
+    //React.renderComponent(<ProtofightApp app={ protofight }/>, $('._js_proto').get(0));
 });

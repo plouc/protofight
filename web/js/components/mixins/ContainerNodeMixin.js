@@ -4,6 +4,8 @@ var NodeComponentQualifier = require('../../lib/NodeComponentQualifier');
 
 module.exports = {
     getChildrenNodes: function (mode) {
-        return NodeComponentQualifier.getChildNodesComponents(this.state.node, mode, this.props.app);
+        var children = NodeComponentQualifier.getChildNodesComponents(this.props.node, mode, this.props.app);
+
+        return children;
     }
 };

@@ -29,6 +29,18 @@ function Protofight (config) {
             this.emit(NodeConstants.NODE_FETCHED, node);
         }.bind(this));
     }.bind(this));
+
+    this.on(NodeConstants.NODE_LIST_FETCH, function () {
+        this.listNodes().then(function (nodes) {
+            this.emit(NodeConstants.NODE_LIST_FETCHED, nodes);
+        }.bind(this));
+    }.bind(this));
+
+    this.on(NodeConstants.NODE_SEARCH_QUERY, function (term) {
+        this.search(term).then(function (nodes) {
+            this.emit(NodeConstants.NODE_SEARCH_RESULT, nodes);
+        }.bind(this));
+    }.bind(this));
 }
 
 Protofight.prototype = new EventEmitter;
@@ -44,6 +56,17 @@ Protofight.prototype.listNodes = function (params) {
     }.bind(this));
 
     return p;
+};
+
+Protofight.prototype.search = function (query) {
+    var promise = $.ajax({
+        url:  '/nodes',
+        data: {
+            term: query
+        }
+    });
+
+    return promise;
 };
 
 Protofight.prototype.children = function (node) {

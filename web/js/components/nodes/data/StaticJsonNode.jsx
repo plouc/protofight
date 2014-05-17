@@ -2,10 +2,11 @@
 
 'use strict';
 
-var React             = require('react');
-var LiveNodeMixin     = require('../../mixins/LiveNodeMixin');
-var EditableNodeMixin = require('../../mixins/EditableNodeMixin');
-var NodeConstants     = require('../../../constants/NodeConstants');
+var React              = require('react');
+var LiveNodeMixin      = require('../../mixins/LiveNodeMixin');
+var EditableNodeMixin  = require('../../mixins/EditableNodeMixin');
+var RemovableNodeMixin = require('../../mixins/RemovableNodeMixin');
+var NodeConstants      = require('../../../constants/NodeConstants');
 
 var DataStaticJsonNode = React.createClass({
     mixins: [
@@ -29,15 +30,12 @@ exports.DataStaticJsonNode = DataStaticJsonNode;
 var DataStaticJsonEditNode = React.createClass({
     mixins: [
         EditableNodeMixin,
+        RemovableNodeMixin,
         LiveNodeMixin
     ],
 
     propTypes: {
         node: React.PropTypes.object.isRequired
-    },
-
-    _onDeleteClick: function (e) {
-        this.props.app.emit(NodeConstants.NODE_DESTROY, this.props.node);
     },
 
     render: function () {
@@ -48,7 +46,7 @@ var DataStaticJsonEditNode = React.createClass({
 
         return (
             <div className={ classes }>
-                <span className="node__title">{ this.props.node.name }</span>
+                <span className="node__title">{ this.state.node.name }</span>
                 <div className="node__controls">
                     <span className="button button--s" onClick={ this.onEditClick }>
                         <i className="fa fa-pencil"></i>
@@ -67,7 +65,7 @@ var DataStaticJsonEditNode = React.createClass({
                     </form>
                 </div>
             </div>
-            );
+        );
     }
 });
 exports.DataStaticJsonEditNode = DataStaticJsonEditNode;

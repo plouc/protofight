@@ -2,13 +2,15 @@
 
 'use strict';
 
-var React     = require('react');
-var nodeTypes = require('../lib/nodeTypes');
+var React         = require('react');
+var nodeTypes     = require('../lib/nodeTypes');
+var NodeConstants = require('../constants/NodeConstants');
 
 var NodeTypeSelectorItem = React.createClass({
     _onTypeClick: function (e) {
         e.preventDefault();
 
+        this.props.app.emit(NodeConstants.NODE_APPEND_CHILD, this.props.type, this.props.node);
         this.props.app.create(this.props.type, this.props.node);
     },
 

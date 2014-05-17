@@ -9,28 +9,6 @@ var EditableNodeMixin  = require('../../mixins/EditableNodeMixin');
 var RemovableNodeMixin = require('../../mixins/RemovableNodeMixin');
 var NodeMeta           = require('../../NodeMeta.jsx');
 
-var DataJsonApiCallNode = React.createClass({
-    mixins: [
-        LiveNodeMixin
-    ],
-
-    componentWillMount: function () {
-    },
-
-    propTypes: {
-        node: React.PropTypes.object.isRequired
-    },
-
-    render: function () {
-        return (
-            <pre>{ this.state.node.settings.httpMethod } { this.state.node.settings.url }</pre>
-        );
-    }
-});
-exports.DataJsonApiCallNode = DataJsonApiCallNode;
-
-
-
 var DataJsonApiCallEditNode = React.createClass({
     mixins: [
         LiveNodeMixin,
@@ -143,4 +121,5 @@ var DataJsonApiCallEditNode = React.createClass({
         );
     }
 });
-exports.DataJsonApiCallEditNode = DataJsonApiCallEditNode;
+
+module.exports = DataJsonApiCallEditNode;

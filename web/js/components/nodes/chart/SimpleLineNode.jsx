@@ -6,6 +6,7 @@ var React              = require('react');
 var EditableNodeMixin  = require('../../mixins/EditableNodeMixin');
 var LiveNodeMixin      = require('../../mixins/LiveNodeMixin');
 var ContainerNodeMixin = require('../../mixins/ContainerNodeMixin');
+var RemovableNodeMixin = require('../../mixins/RemovableNodeMixin');
 var NodeMeta           = require('../../NodeMeta.jsx');
 var NodeTypeSelector   = require('../../NodeTypeSelector.jsx');
 var d3                 = require('d3');
@@ -104,6 +105,7 @@ var ChartSimpleLineEditNode = React.createClass({
     mixins: [
         ContainerNodeMixin,
         EditableNodeMixin,
+        RemovableNodeMixin,
         LiveNodeMixin
     ],
 
@@ -111,9 +113,11 @@ var ChartSimpleLineEditNode = React.createClass({
         node: React.PropTypes.object.isRequired
     },
 
-    onSubmit: function (e) {
-        console.log(e);
+    _onSubmit: function (e) {
         e.preventDefault();
+
+
+
         return false;
     },
 
@@ -144,7 +148,7 @@ var ChartSimpleLineEditNode = React.createClass({
                 </div>
                 <div className="node--edit">
                     <NodeMeta node={ this.state.node }/>
-                    <form onSubmit={ this.onSubmit }>
+                    <form onSubmit={ this._onSubmit }>
                         <p>
                             <label>Margin left</label>
                             <input type="text" defaultValue={ this.props.node.settings.marginLeft } />

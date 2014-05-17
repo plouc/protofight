@@ -5,6 +5,7 @@
 var React              = require('react');
 var NodeTypeSelector   = require('../../NodeTypeSelector.jsx');
 var ContainerNodeMixin = require('../../mixins/ContainerNodeMixin');
+var RemovableNodeMixin = require('../../mixins/RemovableNodeMixin');
 var LiveNodeMixin      = require('../../mixins/LiveNodeMixin');
 
 var NavMenuNode = React.createClass({
@@ -32,6 +33,7 @@ exports.NavMenuNode = NavMenuNode;
 var NavMenuEditNode = React.createClass({
     mixins: [
         ContainerNodeMixin,
+        RemovableNodeMixin,
         LiveNodeMixin
     ],
 

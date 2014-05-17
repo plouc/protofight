@@ -2,11 +2,12 @@
 
 'use strict';
 
-var React             = require('react');
-var EditableNodeMixin = require('../../mixins/EditableNodeMixin');
-var LiveNodeMixin     = require('../../mixins/LiveNodeMixin');
-var NodeMeta          = require('../../NodeMeta.jsx');
-var marked            = require('marked');
+var React              = require('react');
+var EditableNodeMixin  = require('../../mixins/EditableNodeMixin');
+var RemovableNodeMixin = require('../../mixins/RemovableNodeMixin');
+var LiveNodeMixin      = require('../../mixins/LiveNodeMixin');
+var NodeMeta           = require('../../NodeMeta.jsx');
+var marked             = require('marked');
 
 /**
  * Content markdown node.
@@ -37,6 +38,7 @@ exports.ContentMarkdownNode = ContentMarkdownNode;
 var ContentMarkdownEditNode = React.createClass({
     mixins: [
         EditableNodeMixin,
+        RemovableNodeMixin,
         LiveNodeMixin
     ],
 

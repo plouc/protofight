@@ -5,6 +5,7 @@
 var React              = require('react');
 var NodeTypeSelector   = require('../../NodeTypeSelector.jsx');
 var EditableNodeMixin  = require('../../mixins/EditableNodeMixin');
+var RemovableNodeMixin = require('../../mixins/RemovableNodeMixin');
 var ContainerNodeMixin = require('../../mixins/ContainerNodeMixin');
 var LiveNodeMixin      = require('../../mixins/LiveNodeMixin');
 var NodeMeta           = require('../../NodeMeta.jsx');
@@ -35,6 +36,7 @@ var LayoutRowEditNode = React.createClass({
     mixins: [
         EditableNodeMixin,
         ContainerNodeMixin,
+        RemovableNodeMixin,
         LiveNodeMixin
     ],
 

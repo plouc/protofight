@@ -12,6 +12,13 @@ exports.list = function (req, res) {
         criteria.type = { $in: types };
     }
 
+    if (req.query.term) {
+        criteria.name = {
+            $regex:   req.query.term,
+            $options: 'i'
+        };
+    }
+
     Node
         .find(criteria)
         .sort({'name': 1})

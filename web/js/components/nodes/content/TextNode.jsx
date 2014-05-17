@@ -2,9 +2,10 @@
 
 'use strict';
 
-var React             = require('react');
-var EditableNodeMixin = require('../../mixins/EditableNodeMixin');
-var LiveNodeMixin     = require('../../mixins/LiveNodeMixin');
+var React              = require('react');
+var EditableNodeMixin  = require('../../mixins/EditableNodeMixin');
+var RemovableNodeMixin = require('../../mixins/RemovableNodeMixin');
+var LiveNodeMixin      = require('../../mixins/LiveNodeMixin');
 
 /**
  * Content text node.
@@ -34,6 +35,7 @@ exports.ContentTextNode = ContentTextNode;
 var ContentTextEditNode = React.createClass({
     mixins: [
         EditableNodeMixin,
+        RemovableNodeMixin,
         LiveNodeMixin
     ],
 
