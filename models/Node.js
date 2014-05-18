@@ -9,12 +9,15 @@ var NodeSchema = new Schema({
     settings:  Schema.Types.Mixed,
     createdAt: Date,
     updatedAt: Date,
+    // parent nodes
     ancestors: [
         {
             type: Schema.Types.ObjectId,
             ref:  'Node'
         }
     ],
+
+    // child nodes
     nodes:  [
         {
             type: Schema.Types.ObjectId,
@@ -87,7 +90,7 @@ function buildTree(nodes, cb) {
     }
 
     cb(null, byDepth[lowestDepth][0]);
-};
+}
 
 NodeSchema.statics.findChildren = function (id, cb) {
     var query = this

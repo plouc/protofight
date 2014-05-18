@@ -3,16 +3,31 @@
 'use strict';
 
 var React         = require('react');
-var ProtofightApp = require('./components/ProtofightApp.jsx');
 var $             = require('jquery');
-var Protofight    = require('./lib/Protofight');
+var ProtofightApp = require('./core/components/ProtofightApp.jsx');
+var Protofight    = require('./core/Protofight');
 
-var NodeSearch = require('./components/NodeSearch.jsx');
+require('./nodes/ChartLine/index');
+require('./nodes/ChartPie/index');
+require('./nodes/DataJsonApiCall/index');
+require('./nodes/DataStaticJson/index');
+require('./nodes/ContentContainer/index');
+require('./nodes/ContentMarkdown/index');
+require('./nodes/ContentText/index');
+require('./nodes/ContentCode/index');
+require('./nodes/ContentPage/index');
+require('./nodes/LayoutCell/index');
+require('./nodes/LayoutRow/index');
+require('./nodes/NavBreadcrumbsItem/index');
+require('./nodes/NavBreadcrumbs/index');
+require('./nodes/NavMenu/index');
+require('./nodes/NavMenuItem/index');
+
+var NodeRegistry = require('./core/registry/NodeRegistry');
+
 
 $(document).ready(function () {
     var protofight = new Protofight();
 
-    React.renderComponent(<NodeSearch app={ protofight }/>, $('._js_proto').get(0));
-
-    //React.renderComponent(<ProtofightApp app={ protofight }/>, $('._js_proto').get(0));
+    React.renderComponent(<ProtofightApp app={ protofight }/>, $('._js_proto').get(0));
 });
