@@ -1,11 +1,12 @@
+'use strict';
+
 var reactify = require('reactify');
 var uglify   = require('uglify-js');
+var glob     = require('glob');
+var fs       = require('fs');
+var path     = require('path');
 
 (function () {
-    'use strict';
-
-    var path = require('path'),
-        fs   = require('fs');
 
     module.exports = function (grunt) {
         require('time-grunt')(grunt);
@@ -34,7 +35,7 @@ var uglify   = require('uglify-js');
             watch: {
                 sass: {
                     files: ['**/*.scss'],
-                    tasks: ['sass:dev']
+                    tasks: ['collect-nodes-sass', 'sass:dev']
                 },
                 browserify: {
                     files: [
@@ -77,6 +78,17 @@ var uglify   = require('uglify-js');
         grunt.loadNpmTasks('grunt-browserify2');
 
         grunt.option('force', false);
+
+        grunt.registerTask('collect-nodes-sass', function () {
+            var files   = glob.sync('web/js/nodes/*/sass/node.scss');
+            var imports = [];
+            files.forEach(function (file) {
+                imports.push('@import "' + file + '";');
+            });
+
+            var fs = require('fs');
+            fs.writeFileSync('sass/_nodes.scss', imports.join("\n"));
+        });
 
         grunt.registerTask('default', function () {
             return grunt.task.run([

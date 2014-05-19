@@ -1,8 +1,8 @@
 'use strict';
 
 var NodeRegistry     = require('../../core/registry/NodeRegistry');
-var ChartLineNode     = require('./ChartLineNode.jsx');
-var ChartLineEditNode = require('./ChartLineEditNode.jsx');
+var ChartLineNode     = require('./components/ChartLineNode.jsx');
+var ChartLineEditNode = require('./components/ChartLineEditNode.jsx');
 
 NodeRegistry.register({
     type: 'chart.line',

@@ -18,10 +18,8 @@ require('./nodes/ContentCode/index');
 require('./nodes/ContentPage/index');
 require('./nodes/LayoutCell/index');
 require('./nodes/LayoutRow/index');
-require('./nodes/NavBreadcrumbsItem/index');
 require('./nodes/NavBreadcrumbs/index');
 require('./nodes/NavMenu/index');
-require('./nodes/NavMenuItem/index');
 
 var NodeRegistry = require('./core/registry/NodeRegistry');
 

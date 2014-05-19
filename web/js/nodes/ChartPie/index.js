@@ -1,8 +1,8 @@
 'use strict';
 
 var NodeRegistry     = require('../../core/registry/NodeRegistry');
-var ChartPieNode     = require('./ChartPieNode.jsx');
-var ChartPieEditNode = require('./ChartPieEditNode.jsx');
+var ChartPieNode     = require('./components/ChartPieNode.jsx');
+var ChartPieEditNode = require('./components/ChartPieEditNode.jsx');
 
 NodeRegistry.register({
     name: 'Pie chart',

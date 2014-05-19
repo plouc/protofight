@@ -5,6 +5,7 @@ var EventEmitter  = require('events').EventEmitter;
 var nodeTypes     = require('./nodeTypes');
 var React         = require('react');
 var NodeConstants = require('./constants/NodeConstants');
+var NodeRegistry  = require('./registry/NodeRegistry');
 
 function Protofight (config) {
     EventEmitter.call(this);
@@ -51,9 +52,9 @@ Protofight.prototype.listNodes = function (params) {
         data: params
     });
 
-    p.done(function (nodes) {
-        this.augmentNodes(nodes);
-    }.bind(this));
+    //p.done(function (nodes) {
+    //    this.augmentNodes(nodes);
+    //}.bind(this));
 
     return p;
 };
@@ -171,58 +172,10 @@ Protofight.prototype.augmentNodes = function (nodes) {
  * @param {object} node
  */
 Protofight.prototype.augmentNode = function (node) {
-    switch (node.type) {
-        case 'breadcrumbs':
-            node.getItems = function () {
-                return $.ajax({
-                    url: '/nodes/pick',
-                    data: {
-                        ids: node.ancestors
-                    }
-                });
-            };
-            break;
-
-        case 'data.json_api_call':
-            node.hasValidSettings = function () {
-                if (this.settings.httpMethod && this.settings.httpMethod !== ''
-                 && this.settings.url && this.settings.url !== '') {
-                    return true;
-                }
-
-                return false;
-            };
-
-            node.getData = function () {
-                if (!this.hasValidSettings()) {
-                    throw new Error('Invalid settings detected, unable to fetch data.');
-                }
-
-                return $.ajax({
-                    url:    this.settings.url,
-                    method: this.settings.httpMethod
-                });
-            };
-            break;
-
-        default:
-            break;
+    var type = NodeRegistry.getTypeConfig(node.type);
+    if (type.augment) {
+        type.augment(node);
     }
-
-    /*
-    node.getFirstChildOfType = function (typeId) {
-        if (!node.nodes || node.nodes.length === 0) {
-            return null;
-        }
-
-        for (var i = 0; i < node.nodes.length; i++) {
-            var child = node.nodes[i];
-            if (child.type === typeId) {
-                return child;
-            }
-        }
-    };
-    */
 
     if (node.nodes && node.nodes.length > 0) {
         this.augmentNodes(node.nodes);

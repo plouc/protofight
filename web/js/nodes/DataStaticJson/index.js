@@ -1,8 +1,8 @@
 'use strict';
 
 var NodeRegistry           = require('../../core/registry/NodeRegistry');
-var DataStaticJsonNode     = require('./DataStaticJsonNode.jsx');
-var DataStaticJsonEditNode = require('./DataStaticJsonEditNode.jsx');
+var DataStaticJsonNode     = require('./components/DataStaticJsonNode.jsx');
+var DataStaticJsonEditNode = require('./components/DataStaticJsonEditNode.jsx');
 
 
 NodeRegistry.register({

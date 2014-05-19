@@ -1,8 +1,8 @@
 'use strict';
 
 var NodeRegistry      = require('../../core/registry/NodeRegistry');
-var LayoutRowNode     = require('./LayoutRowNode.jsx');
-var LayoutRowEditNode = require('./LayoutRowEditNode.jsx');
+var LayoutRowNode     = require('./components/LayoutRowNode.jsx');
+var LayoutRowEditNode = require('./components/LayoutRowEditNode.jsx');
 
 
 NodeRegistry.register({

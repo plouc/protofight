@@ -51,7 +51,6 @@ a {
 @import 'components/__components';
 
 @include button('.button', true);
-@include breadcrumbs('.breadcrumbs', true);
 
 
 $aside-width: 260px;
@@ -192,6 +191,14 @@ $aside-toggle-size: 30px;
 .node__children {
   display: none;
 }
+.node__toggle-children {
+  .fa-chevron-down { display: inline-block; }
+  .fa-chevron-up   { display: none;         }
+}
+.node--children-on .node__toggle-children {
+  .fa-chevron-down { display: none;         }
+  .fa-chevron-up   { display: inline-block; }
+}
 .node--children-on > .node__children {
   display: block;
 }
@@ -272,28 +279,6 @@ input[type="url"] {
 .form-control--full {
   width: 100%;
 }
-
-
-
-.menu {
-  background-color: #225c82;
-  color: #fff;
-  border-radius: 2px;
-  margin-bottom: 15px;
-  padding: 0 12px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
-}
-.menu__item {
-  a {
-    display: inline-block;
-    text-decoration: none;
-    padding: 7px 12px;
-    &:hover {
-      background-color: #2e7daf;
-    }
-  }
-}
-
 .component {
   display: block;
   padding: 5px 9px;
@@ -438,3 +423,5 @@ input[type="url"] {
 .grid__cell--12 {
   width: 100%;
 }
+
+@import "nodes";

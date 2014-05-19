@@ -1,0 +1,37 @@
+/*———————————————————————————————————————————————\
+
+  MENU COMPONENT
+
+\———————————————————————————————————————————————*/
+
+// dependencies
+@import 'sass/core/utils/_utils';
+
+
+
+/*———————————————————————————————————————————————\
+  MENU STRUCTURE
+\———————————————————————————————————————————————*/
+@include define('menu') {
+  %menu {
+    padding: 0 12px;
+  }
+
+  %menu__item {
+    display: inline-block;
+    text-decoration: none;
+  }
+}
+
+
+
+/*———————————————————————————————————————————————\
+  MENU SKINNING
+\———————————————————————————————————————————————*/
+@include define('menu-skin-default') {
+  %menu-skin-default {
+  }
+
+  %menu-skin-default__item {
+  }
+}

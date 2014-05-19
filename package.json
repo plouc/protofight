@@ -19,7 +19,8 @@
     "marked": "^0.3.2",
     "bower": "latest",
     "grunt-browserify2": "^0.1.8",
-    "uglify-js": "^2.4.13"
+    "uglify-js": "^2.4.13",
+    "glob": "^3.2.9"
   },
   "devDependencies": {
     "grunt": "latest",

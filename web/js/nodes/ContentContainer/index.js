@@ -1,8 +1,9 @@
 'use strict';
 
 var NodeRegistry             = require('../../core/registry/NodeRegistry');
-var ContentContainerNode     = require('./ContentContainerNode.jsx');
-var ContentContainerEditNode = require('./ContentContainerEditNode.jsx');
+var ContentContainerNode     = require('./components/ContentContainerNode.jsx');
+var ContentContainerEditNode = require('./components/ContentContainerEditNode.jsx');
+
 
 NodeRegistry.register({
     name: 'Container',

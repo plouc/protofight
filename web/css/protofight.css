@@ -87,48 +87,6 @@ a {
   background-color: #ff8551;
   color: #fff; }
 
-/*———————————————————————————————————————————————\
-
-  BREADCRUMBS COMPONENT
-
-\———————————————————————————————————————————————*/
-/* _____ SYSTEM TOOLS _____ */
-/*———————————————————————————————————————————————\
-  BREADCRUMBS STRUCTURE
-\———————————————————————————————————————————————*/
-.breadcrumbs {
-  margin: 10px 0;
-  list-style: none;
-  border-radius: 2px;
-  padding: 5px 12px; }
-
-.breadcrumbs__item {
-  display: inline-block; }
-
-.breadcrumbs__item:before {
-  margin: 0 5px;
-  display: inline-block; }
-
-.breadcrumbs__item:first-child:before {
-  display: none; }
-
-/*———————————————————————————————————————————————\
-  BREADCRUMBS SKINNING
-\———————————————————————————————————————————————*/
-.breadcrumbs {
-  color: #777;
-  background-color: #eee; }
-
-.breadcrumbs__item:before {
-  content: "/";
-  color: #225c82; }
-
-.breadcrumbs__item._is-active {
-  font-weight: bold;
-  color: #333; }
-  .breadcrumbs__item._is-active:before {
-    font-weight: normal; }
-
 .aside {
   width: 260px;
   position: fixed;
@@ -312,6 +270,16 @@ a {
 .node__children {
   display: none; }
 
+.node__toggle-children .fa-chevron-down {
+  display: inline-block; }
+.node__toggle-children .fa-chevron-up {
+  display: none; }
+
+.node--children-on .node__toggle-children .fa-chevron-down {
+  display: none; }
+.node--children-on .node__toggle-children .fa-chevron-up {
+  display: inline-block; }
+
 .node--children-on > .node__children {
   display: block; }
 
@@ -384,21 +352,6 @@ input[type="url"] {
 
 .form-control--full {
   width: 100%; }
-
-.menu {
-  background-color: #225c82;
-  color: #fff;
-  border-radius: 2px;
-  margin-bottom: 15px;
-  padding: 0 12px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25); }
-
-.menu__item a {
-  display: inline-block;
-  text-decoration: none;
-  padding: 7px 12px; }
-  .menu__item a:hover {
-    background-color: #2e7daf; }
 
 .component {
   display: block;
@@ -513,3 +466,72 @@ input[type="url"] {
 
 .grid__cell--12 {
   width: 100%; }
+
+/*———————————————————————————————————————————————\
+
+  BREADCRUMBS COMPONENT
+
+\———————————————————————————————————————————————*/
+/* _____ SYSTEM TOOLS _____ */
+/*———————————————————————————————————————————————\
+  BREADCRUMBS STRUCTURE
+\———————————————————————————————————————————————*/
+.breadcrumbs {
+  margin: 10px 0;
+  list-style: none;
+  border-radius: 2px;
+  padding: 5px 12px; }
+
+.breadcrumbs__item {
+  display: inline-block; }
+
+.breadcrumbs__item:before {
+  margin: 0 5px;
+  display: inline-block; }
+
+.breadcrumbs__item:first-child:before {
+  display: none; }
+
+/*———————————————————————————————————————————————\
+  BREADCRUMBS SKINNING
+\———————————————————————————————————————————————*/
+.breadcrumbs {
+  color: #777;
+  background-color: #eee; }
+
+.breadcrumbs__item:before {
+  content: "/";
+  color: #225c82; }
+
+.breadcrumbs__item._is-active {
+  font-weight: bold;
+  color: #333; }
+  .breadcrumbs__item._is-active:before {
+    font-weight: normal; }
+
+/*———————————————————————————————————————————————\
+
+  MENU COMPONENT
+
+\———————————————————————————————————————————————*/
+/* _____ SYSTEM TOOLS _____ */
+/*———————————————————————————————————————————————\
+  MENU STRUCTURE
+\———————————————————————————————————————————————*/
+/*———————————————————————————————————————————————\
+  MENU SKINNING
+\———————————————————————————————————————————————*/
+.menu {
+  background-color: #225c82;
+  color: #fff;
+  border-radius: 2px;
+  margin-bottom: 15px;
+  padding: 0 12px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25); }
+
+.menu__item a {
+  display: inline-block;
+  text-decoration: none;
+  padding: 7px 12px; }
+  .menu__item a:hover {
+    background-color: #2e7daf; }

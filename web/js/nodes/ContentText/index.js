@@ -1,8 +1,8 @@
 'use strict';
 
 var NodeRegistry        = require('../../core/registry/NodeRegistry');
-var ContentTextNode     = require('./ContentTextNode.jsx');
-var ContentTextEditNode = require('./ContentTextEditNode.jsx');
+var ContentTextNode     = require('./components/ContentTextNode.jsx');
+var ContentTextEditNode = require('./components/ContentTextEditNode.jsx');
 
 
 NodeRegistry.register({
