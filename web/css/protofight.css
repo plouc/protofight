@@ -309,6 +309,12 @@ a {
   .node--editing > .node__controls .fa-eye {
     display: inline-block; }
 
+.node__children {
+  display: none; }
+
+.node--children-on > .node__children {
+  display: block; }
+
 .node__title {
   font-family: 'Montserrat', sans-serif;
   color: #225c82;

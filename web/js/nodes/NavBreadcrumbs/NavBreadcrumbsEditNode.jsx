@@ -43,15 +43,24 @@ var NavBreadcrumbsEditNode = React.createClass({
         if (this.state.edit) {
             classes += ' node--editing';
         }
+        if (this.state.childrenVisible) {
+            classes += ' node--children-on';
+        }
 
         return (
             <div className={ classes }>
-                <span className="node__title">{ this.props.node.name }</span>
+                <span className="node__title">{ this.props.node.name } { this.state.node.nodes.length } item(s)</span>
                 <div className="node__controls">
                     <NodeTypeSelector node={ this.props.node } app={ this.props.app }/>
+                    <span className="button button--danger button--s" onClick={ this._onDeleteClick }>
+                        <i className="fa fa-times"></i>
+                    </span>
                     <span className="button button--s" onClick={ this.onEditClick }>
                         <i className="fa fa-pencil"></i>
                         <i className="fa fa-eye"></i>
+                    </span>
+                    <span className="button button--s" onClick={ this._onToggleChildrenClick }>
+                        <i className="fa fa-caret-down"></i>
                     </span>
                 </div>
                 <div className="node--edit">
@@ -67,7 +76,9 @@ var NavBreadcrumbsEditNode = React.createClass({
                         </p>
                     </form>
                 </div>
-                <div>{ children }</div>
+                <div className="node__children">
+                    { children }
+                </div>
             </div>
         );
     }

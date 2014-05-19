@@ -189,6 +189,12 @@ $aside-toggle-size: 30px;
     }
   }
 }
+.node__children {
+  display: none;
+}
+.node--children-on > .node__children {
+  display: block;
+}
 .node__title {
   font-family: 'Montserrat', sans-serif;
   color: #225c82;
