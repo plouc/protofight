@@ -4,6 +4,7 @@ var NodeRegistry             = require('../../core/registry/NodeRegistry');
 var ContentMarkdownNode     = require('./ContentMarkdownNode.jsx');
 var ContentMarkdownEditNode = require('./ContentMarkdownEditNode.jsx');
 
+
 NodeRegistry.register({
     name: 'Markdown',
     type: 'content.markdown',
@@ -11,5 +12,8 @@ NodeRegistry.register({
         view: ContentMarkdownNode,
         edit: ContentMarkdownEditNode
     },
-    accept: null
+    accept: null,
+    defaults: {
+        content: ''
+    }
 });

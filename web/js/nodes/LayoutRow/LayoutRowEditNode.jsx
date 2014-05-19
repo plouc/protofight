@@ -31,6 +31,7 @@ var LayoutRowEditNode = React.createClass({
         };
 
         this.props.node.settings = settings;
+        this.props.node.name     = this.refs.name.getDOMNode().value;
         this.props.app.save(this.props.node);
 
         return false;
@@ -61,8 +62,12 @@ var LayoutRowEditNode = React.createClass({
                     <NodeMeta node={ this.state.node }/>
                     <form onSubmit={ this._onSubmit }>
                         <p>
+                            <label>Name</label>
+                            <input type="text" defaultValue={ this.state.node.name } ref="name" />
+                        </p>
+                        <p>
                             <label>Columns</label>
-                            <input type="text" defaultValue={ this.props.node.settings.columns } ref="columns" />
+                            <input type="text" defaultValue={ this.state.node.settings.columns } ref="columns" />
                         </p>
                         <p>
                             <button className="button" type="submit">save</button>

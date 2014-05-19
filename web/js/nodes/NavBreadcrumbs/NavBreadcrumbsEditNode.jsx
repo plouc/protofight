@@ -8,6 +8,7 @@ var EditableNodeMixin  = require('../../core/mixins/EditableNodeMixin');
 var ContainerNodeMixin = require('../../core/mixins/ContainerNodeMixin');
 var RemovableNodeMixin = require('../../core/mixins/RemovableNodeMixin');
 var LiveNodeMixin      = require('../../core/mixins/LiveNodeMixin');
+var NodeMeta           = require('../../core/components/NodeMeta.jsx');
 
 
 var NavBreadcrumbsEditNode = React.createClass({
@@ -22,7 +23,16 @@ var NavBreadcrumbsEditNode = React.createClass({
         node: React.PropTypes.object.isRequired
     },
 
-    handleSubmit: function () {
+    _onSubmit: function (e) {
+        e.preventDefault();
+
+        var settings = {
+        };
+
+        this.props.node.name     = this.refs.name.getDOMNode().value;
+        this.props.node.settings = settings;
+        this.props.app.save(this.props.node);
+
         return false;
     },
 
@@ -45,10 +55,15 @@ var NavBreadcrumbsEditNode = React.createClass({
                     </span>
                 </div>
                 <div className="node--edit">
-                    <form onSubmit={ this.handleSubmit }>
+                    <NodeMeta node={ this.state.node }/>
+                    <form onSubmit={ this._onSubmit }>
+                        <p>
+                            <label>Name</label>
+                            <input type="text" defaultValue={ this.state.node.name } ref="name" />
+                        </p>
                         <p>
                             <button className="button" type="submit">save</button>
-                            <span className="button button--warning">cancel</span>
+                            <span className="button button--warning" onClick={ this._onCancelEditClick }>cancel</span>
                         </p>
                     </form>
                 </div>

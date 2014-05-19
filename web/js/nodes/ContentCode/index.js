@@ -1,6 +1,8 @@
 'use strict';
 
-var NodeRegistry = require('../../core/registry/NodeRegistry');
+var NodeRegistry        = require('../../core/registry/NodeRegistry');
+var ContentCodeNode     = require('./ContentCodeNode.jsx');
+var ContentCodeEditNode = require('./ContentCodeEditNode.jsx');
 
 
 NodeRegistry.register({
@@ -10,5 +12,9 @@ NodeRegistry.register({
     defaults: {
         lang:    '',
         content: ''
+    },
+    component: {
+        view: ContentCodeNode,
+        edit: ContentCodeEditNode
     }
 });

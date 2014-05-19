@@ -31,6 +31,9 @@ var ChartPieEditNode = React.createClass({
             showLegend: this.refs.showLegend.getDOMNode().value
         };
 
+        this.props.node.name = this.refs.name.getDOMNode().value;
+        this.props.app.save(this.props.node);
+
         return false;
     },
 
@@ -62,6 +65,10 @@ var ChartPieEditNode = React.createClass({
                 <div className="node--edit">
                     <NodeMeta node={ this.state.node }/>
                     <form onSubmit={ this._onSubmit }>
+                        <p>
+                            <label>Name</label>
+                            <input type="text" defaultValue={ this.state.node.name } ref="name" />
+                        </p>
                         <p>
                             <label>Show label</label>
                             <input type="checkbox" defaultValue={ this.props.node.settings.showLabel } ref="showLabel" />

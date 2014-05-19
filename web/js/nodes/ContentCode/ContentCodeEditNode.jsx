@@ -4,17 +4,14 @@
 
 var React              = require('react');
 var EditableNodeMixin  = require('../../core/mixins/EditableNodeMixin');
-var ContainerNodeMixin = require('../../core/mixins/ContainerNodeMixin');
 var RemovableNodeMixin = require('../../core/mixins/RemovableNodeMixin');
 var LiveNodeMixin      = require('../../core/mixins/LiveNodeMixin');
-var NodeTypeSelector   = require('../../core/components/NodeTypeSelector.jsx');
 var NodeMeta           = require('../../core/components/NodeMeta.jsx');
 
 
-var LayoutCellEditNode = React.createClass({
+var ContentCodeEditNode = React.createClass({
     mixins: [
         EditableNodeMixin,
-        ContainerNodeMixin,
         RemovableNodeMixin,
         LiveNodeMixin
     ],
@@ -27,22 +24,19 @@ var LayoutCellEditNode = React.createClass({
         e.preventDefault();
 
         var settings = {
-            columns:     this.refs.columns.getDOMNode().value,
-            offsetLeft:  this.refs.offsetLeft.getDOMNode().value,
-            offsetRight: this.refs.offsetRight.getDOMNode().value
+            lang:    this.refs.lang.getDOMNode().value,
+            content: this.refs.content.getDOMNode().value
         };
 
-        this.props.node.settings = settings;
         this.props.node.name     = this.refs.name.getDOMNode().value;
+        this.props.node.settings = settings;
         this.props.app.save(this.props.node);
 
         return false;
     },
 
     render: function () {
-        var children = this.getChildrenNodes('edit');
-
-        var classes  = 'node';
+        var classes = 'node';
         if (this.state.edit) {
             classes += ' node--editing';
         }
@@ -51,7 +45,6 @@ var LayoutCellEditNode = React.createClass({
             <div className={ classes }>
                 <span className="node__title">{ this.state.node.name }</span>
                 <div className="node__controls">
-                    <NodeTypeSelector node={ this.props.node } app={ this.props.app }/>
                     <span className="button button--s" onClick={ this.onEditClick }>
                         <i className="fa fa-pencil"></i>
                         <i className="fa fa-eye"></i>
@@ -68,16 +61,12 @@ var LayoutCellEditNode = React.createClass({
                             <input type="text" defaultValue={ this.state.node.name } ref="name" />
                         </p>
                         <p>
-                            <label>Columns</label>
-                            <input type="text" defaultValue={ this.state.node.settings.columns } ref="columns" />
+                            <label>Language</label>
+                            <input type="text" defaultValue={ this.state.node.lang } ref="lang" />
                         </p>
                         <p>
-                            <label>Offset left</label>
-                            <input type="text" defaultValue={ this.state.node.settings.offsetLeft } ref="offsetLeft" />
-                        </p>
-                        <p>
-                            <label>Offset right</label>
-                            <input type="text" defaultValue={ this.state.node.settings.offsetRight } ref="offsetRight" />
+                            <label>Content</label>
+                            <textarea defaultValue={ this.state.node.settings.content } ref="content" />
                         </p>
                         <p>
                             <button className="button" type="submit">save</button>
@@ -85,10 +74,9 @@ var LayoutCellEditNode = React.createClass({
                         </p>
                     </form>
                 </div>
-                <div>{ children }</div>
             </div>
         );
     }
 });
 
-module.exports = LayoutCellEditNode;
+module.exports = ContentCodeEditNode;
